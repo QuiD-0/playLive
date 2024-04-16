@@ -27,9 +27,20 @@ dependencies {
 }
 
 jar {
-    enabled = true
+    enabled = false
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '21'
+    }
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+

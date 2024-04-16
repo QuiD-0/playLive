@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration
 class HlsInfo {
 
     @Bean
-    fun hlsInfo() = LivePath(
+    fun livePath() = LivePath(
         video = "/home/ubuntu/hls",
         radio = "/home/ubuntu/radio"
     )
