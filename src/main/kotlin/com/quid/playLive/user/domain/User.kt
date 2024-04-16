@@ -7,5 +7,8 @@ data class User(
     val email: String,
     val password: String,
     val nickname: String,
+    val streamKey: String? = null,
     val regDate: LocalDateTime = LocalDateTime.now(),
-)
+) {
+    fun assignStreamKey(streamKey: String) = copy(streamKey = streamKey)
+}
