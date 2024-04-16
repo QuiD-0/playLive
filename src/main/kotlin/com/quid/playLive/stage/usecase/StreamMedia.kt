@@ -1,6 +1,6 @@
 package com.quid.playLive.stage.usecase
 
-import com.quid.playLive.config.LivePath
+import com.quid.playLive.config.ResourcePath
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
@@ -9,7 +9,7 @@ interface StreamMedia {
 
     @Service
     class LiveStream(
-        private val path: LivePath,
+        private val path: ResourcePath,
         private val resourceConnector: ResourceConnector
     ) : StreamMedia {
 
@@ -19,7 +19,7 @@ interface StreamMedia {
 
     @Service
     class RadioStream(
-        private val path: LivePath,
+        private val path: ResourcePath,
         private val resourceConnector: ResourceConnector
     ) : StreamMedia {
 
