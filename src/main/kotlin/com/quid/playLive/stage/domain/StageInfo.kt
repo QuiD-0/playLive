@@ -1,7 +1,7 @@
 package com.quid.playLive.stage.domain
 
 data class StageInfo(
-    val id: Long?,
+    val id: Long? = null,
     val userId: Long,
     val title: String = "[OnAir]",
     val description: String = "",
