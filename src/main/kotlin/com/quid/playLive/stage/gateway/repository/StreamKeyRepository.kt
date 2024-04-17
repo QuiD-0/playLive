@@ -1,6 +1,6 @@
 package com.quid.playLive.stage.gateway.repository
 
-import com.quid.playLive.stage.gateway.repository.cache.InMemoryStreamKey
+import com.quid.playLive.stage.gateway.repository.cache.StreamKeyRedisRepository
 import com.quid.playLive.member.gateway.repository.MemberRepository
 import org.springframework.stereotype.Repository
 
@@ -9,7 +9,7 @@ interface StreamKeyRepository {
 
     @Repository
     class StreamKeyRepositoryImpl(
-        private val cache: InMemoryStreamKey,
+        private val cache: StreamKeyRedisRepository,
         private val user: MemberRepository
     ) : StreamKeyRepository {
 

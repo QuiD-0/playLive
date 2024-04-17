@@ -2,7 +2,7 @@ package com.quid.playLive.stage.domain
 
 data class StageInfo(
     val id: Long? = null,
-    val userId: Long,
+    val memberSeq: Long,
     val title: String = "[OnAir]",
     val description: String = "",
     val waitingCurtain: String = "/assets/images/waiting-curtain.jpg",
