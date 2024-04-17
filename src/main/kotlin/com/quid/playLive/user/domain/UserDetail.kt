@@ -15,7 +15,7 @@ data class UserDetail(
         user.password
 
     override fun getUsername(): String =
-        user.email
+        user.username
 
     override fun isAccountNonExpired(): Boolean = true
 

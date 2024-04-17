@@ -8,12 +8,11 @@ interface ResourceConnector {
     operator fun invoke(channel: String, path: String): Resource
 
     @Service
-    class HlsPathResourceConnector : ResourceConnector {
-        override fun invoke(channel: String, path: String): Resource =
-            if (channel.endsWith(".ts")) {
-                FileSystemResource("$path/$channel")
-            } else {
-                FileSystemResource("$path/$channel.m3u8")
-            }
+    class HlsPathResourceConnector(
+        private val converter: ChannelToStreamKey
+    ) : ResourceConnector {
+        override fun invoke(channel: String, path: String): Resource = converter.channelToStreamKey(channel)
+            .let { "$path/$it" }
+            .let { FileSystemResource(it) }
     }
 }
