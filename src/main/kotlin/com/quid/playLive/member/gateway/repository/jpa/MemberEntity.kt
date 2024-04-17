@@ -5,29 +5,29 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "MEMBER", indexes = [Index(name = "IDX_MEMBER_USERNAME", columnList = "USERNAME")])
+@Table(name = "member", indexes = [Index(name = "IDX_MEMBER_USERNAME", columnList = "username")])
 class MemberEntity(
     @Id
-    @Column(name = "MEMBER_SEQ")
+    @Column(name = "member_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     val email: String,
 
-    @Column(name = "USERNAME")
+    @Column(name = "username")
     val username: String,
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     val password: String,
 
-    @Column(name = "NICKNAME")
+    @Column(name = "nickname")
     val nickname: String,
 
-    @Column(name = "STREAM_KEY")
+    @Column(name = "stream_key")
     val streamKey: String,
 
-    @Column(name = "REG_DATE")
+    @Column(name = "reg_date")
     val regDate: LocalDateTime,
 ) {
     constructor(member: Member) : this(
