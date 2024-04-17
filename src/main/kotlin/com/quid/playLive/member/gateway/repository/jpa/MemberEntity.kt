@@ -1,14 +1,14 @@
-package com.quid.playLive.user.gateway.repository.jpa
+package com.quid.playLive.member.gateway.repository.jpa
 
-import com.quid.playLive.user.domain.User
+import com.quid.playLive.member.domain.Member
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "USER", indexes = [Index(name = "IDX_USER_USERNAME", columnList = "USERNAME")])
-class UserEntity(
+@Table(name = "MEMBER", indexes = [Index(name = "IDX_MEMBER_USERNAME", columnList = "USERNAME")])
+class MemberEntity(
     @Id
-    @Column(name = "USER_SEQ")
+    @Column(name = "MEMBER_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
@@ -30,17 +30,17 @@ class UserEntity(
     @Column(name = "REG_DATE")
     val regDate: LocalDateTime,
 ) {
-    constructor(user: User) : this(
-        id = user.id,
-        email = user.email,
-        username = user.username,
-        password = user.password,
-        nickname = user.nickname,
-        streamKey = user.streamKey,
-        regDate = user.regDate
+    constructor(member: Member) : this(
+        id = member.id,
+        email = member.email,
+        username = member.username,
+        password = member.password,
+        nickname = member.nickname,
+        streamKey = member.streamKey,
+        regDate = member.regDate
     )
 
-    fun toDomain() = User(
+    fun toDomain() = Member(
         id = id,
         email = email,
         username = username,

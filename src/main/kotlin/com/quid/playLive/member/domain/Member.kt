@@ -1,9 +1,9 @@
-package com.quid.playLive.user.domain
+package com.quid.playLive.member.domain
 
 import java.time.LocalDateTime
 import java.util.UUID
 
-data class User(
+data class Member(
     val id: Long? = null,
     val email: String,
     val username: String,

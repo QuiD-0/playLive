@@ -1,4 +1,4 @@
-package com.quid.playLive.user.domain
+package com.quid.playLive.member.domain
 
 enum class AuthType {
     ROLE_STREAMER,

@@ -1,20 +1,20 @@
-package com.quid.playLive.user.domain
+package com.quid.playLive.member.domain
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class UserTest{
+class MemberTest{
 
     @Test
     fun makeUser(){
-        val user = User(
+        val member = Member(
             email = "test@email.com",
             username = "test",
             password = "test",
             nickname = "test",
         )
 
-        assertEquals("test", user.username)
-        assertNotNull(user.streamKey)
+        assertEquals("test", member.username)
+        assertNotNull(member.streamKey)
     }
 }

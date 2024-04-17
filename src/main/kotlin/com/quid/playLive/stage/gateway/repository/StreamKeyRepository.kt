@@ -1,7 +1,7 @@
 package com.quid.playLive.stage.gateway.repository
 
 import com.quid.playLive.stage.gateway.repository.cache.InMemoryStreamKey
-import com.quid.playLive.user.gateway.repository.UserRepository
+import com.quid.playLive.member.gateway.repository.MemberRepository
 import org.springframework.stereotype.Repository
 
 interface StreamKeyRepository {
@@ -10,7 +10,7 @@ interface StreamKeyRepository {
     @Repository
     class StreamKeyRepositoryImpl(
         private val cache: InMemoryStreamKey,
-        private val user: UserRepository
+        private val user: MemberRepository
     ) : StreamKeyRepository {
 
         override fun findByChannel(channel: String): String =

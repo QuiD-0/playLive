@@ -1,8 +1,8 @@
-package com.quid.playLive.user.domain
+package com.quid.playLive.member.domain
 
 import java.time.LocalDateTime
 
-data class UserAuthority(
+data class MemberAuthority(
     val id: Long? = null,
     val userSeq: Long,
     val authority: AuthType,

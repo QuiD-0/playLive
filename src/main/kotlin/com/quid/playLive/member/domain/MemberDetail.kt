@@ -1,21 +1,21 @@
-package com.quid.playLive.user.domain
+package com.quid.playLive.member.domain
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 
-data class UserDetail(
-    val user: User,
-    val authority: List<UserAuthority>,
+data class MemberDetail(
+    val member: Member,
+    val authority: List<MemberAuthority>,
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
         authority.map { GrantedAuthority { it.authority.name } }.toMutableList()
 
     override fun getPassword(): String =
-        user.password
+        member.password
 
     override fun getUsername(): String =
-        user.username
+        member.username
 
     override fun isAccountNonExpired(): Boolean = true
 
