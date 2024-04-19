@@ -13,7 +13,7 @@ class StageViewerApiController(
 ) {
 
     @PostMapping("/{channel}")
-    fun addStageViewer(@PathVariable channel: String, session: HttpSession): Unit =
+    fun addStageViewer(@PathVariable channel: String, session: HttpSession) =
         addViewer(channel, session.id)
 
     @GetMapping("/{channel}")
