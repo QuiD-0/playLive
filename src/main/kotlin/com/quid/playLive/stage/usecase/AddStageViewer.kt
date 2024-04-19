@@ -13,6 +13,6 @@ interface AddStageViewer {
         override fun invoke(channel: String, uuid: String): Unit =
             repository.findByChannel(channel)
                 .also { it.add(uuid) }
-                .let { repository.merge(it) }
+                .let { repository.save(it) }
     }
 }

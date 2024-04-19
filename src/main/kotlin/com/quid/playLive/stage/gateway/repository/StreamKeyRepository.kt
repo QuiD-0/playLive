@@ -1,7 +1,7 @@
 package com.quid.playLive.stage.gateway.repository
 
-import com.quid.playLive.stage.gateway.repository.cache.StreamKeyRedisRepository
 import com.quid.playLive.member.gateway.repository.MemberRepository
+import com.quid.playLive.stage.gateway.repository.cache.StreamKeyRedisRepository
 import org.springframework.stereotype.Repository
 
 interface StreamKeyRepository {
@@ -15,7 +15,7 @@ interface StreamKeyRepository {
 
         override fun findByChannel(channel: String): String =
             cache.findByChannel(channel)
+                ?.streamKey
                 ?: user.findByChannel(channel).streamKey
-                    .also { cache.merge(channel, it) }
     }
 }
