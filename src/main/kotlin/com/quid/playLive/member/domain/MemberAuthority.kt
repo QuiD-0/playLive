@@ -4,15 +4,15 @@ import java.time.LocalDateTime
 
 data class MemberAuthority(
     val id: Long? = null,
-    val userSeq: Long,
+    val memberSeq: Long,
     val authority: AuthType,
     val regDate: LocalDateTime = LocalDateTime.now(),
     val deleted: Boolean = false,
 ) {
-    constructor(userSeq: Long, authorityName: AuthType) : this(
+    constructor(memberSeq: Long, authorityName: String) : this(
         null,
-        userSeq,
-        authorityName,
+        memberSeq,
+        AuthType.valueOf(authorityName),
     )
 
     fun delete() = copy(deleted = true)

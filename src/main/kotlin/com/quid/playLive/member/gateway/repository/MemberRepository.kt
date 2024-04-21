@@ -11,6 +11,7 @@ interface MemberRepository {
     fun findById(id: Long): Member
     fun findByChannel(channel: String): Member
     fun save(member: Member): Member
+    fun findByUsername(username: String): Member
 
     @Repository
     class MemberRepositoryImpl(
@@ -31,6 +32,11 @@ interface MemberRepository {
 
         @Transactional
         override fun save(member: Member) = jpaMemberRepository.save(MemberEntity(member)).toDomain()
+
+        @Transactional(readOnly = true)
+        override fun findByUsername(username: String): Member =
+            jpaMemberRepository.findByUsername(username)?.toDomain()
+                ?: throw IllegalArgumentException("User not found")
 
     }
 }
