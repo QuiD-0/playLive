@@ -1,4 +1,4 @@
-package com.quid.playLive.token.gateway.web.response
+package com.quid.playLive.member.gateway.web.model
 
 data class TokenResponse(
     val accessToken: String,

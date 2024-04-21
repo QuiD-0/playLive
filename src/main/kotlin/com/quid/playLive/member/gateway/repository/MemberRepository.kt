@@ -12,6 +12,7 @@ interface MemberRepository {
     fun findByChannel(channel: String): Member
     fun save(member: Member): Member
     fun findByUsername(username: String): Member
+    fun existsByUsername(username: String): Boolean
 
     @Repository
     class MemberRepositoryImpl(
@@ -37,6 +38,9 @@ interface MemberRepository {
         override fun findByUsername(username: String): Member =
             jpaMemberRepository.findByUsername(username)?.toDomain()
                 ?: throw IllegalArgumentException("User not found")
+
+        override fun existsByUsername(username: String): Boolean =
+            jpaMemberRepository.existsByUsername(username)
 
     }
 }

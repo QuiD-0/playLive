@@ -12,4 +12,7 @@ data class Member(
     val streamKey: String = UUID.randomUUID().toString().replace("-", ""),
     val regDate: LocalDateTime = LocalDateTime.now(),
 ) {
+    fun encodePassword(encodedPassword : String): Member {
+        return this.copy(password = encodedPassword)
+    }
 }
