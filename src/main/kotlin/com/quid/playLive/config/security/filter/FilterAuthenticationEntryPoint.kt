@@ -22,7 +22,7 @@ class FilterAuthenticationEntryPoint(
             request!!,
             response!!,
             null,
-            authException ?: Exception("Authentication error")
+            request.getAttribute("Exception") as Exception
         )
     }
 }

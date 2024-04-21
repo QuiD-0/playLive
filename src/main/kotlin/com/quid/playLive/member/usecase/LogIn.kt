@@ -11,6 +11,7 @@ import com.quid.playLive.token.usecase.TokenEncoder
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 fun interface LogIn {
     operator fun invoke(username: String, password: String): TokenResponse
@@ -22,6 +23,7 @@ fun interface LogIn {
         private val refreshTokenRepository: RefreshTokenRepository,
     ) : LogIn {
 
+        @Transactional
         override fun invoke(username: String, password: String): TokenResponse {
             val accessToken = UsernamePasswordAuthenticationToken(username, password)
                 .let { authenticationManagerBuilder.getObject().authenticate(it) }

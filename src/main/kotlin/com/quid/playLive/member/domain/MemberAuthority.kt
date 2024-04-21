@@ -17,3 +17,8 @@ data class MemberAuthority(
 
     fun delete() = copy(deleted = true)
 }
+
+fun default(memberSeq: Long) = MemberAuthority(
+    memberSeq = memberSeq,
+    authority = AuthType.ROLE_USER,
+)
