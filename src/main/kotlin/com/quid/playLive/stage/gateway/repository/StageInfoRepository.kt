@@ -27,6 +27,5 @@ interface StageInfoRepository {
                 ?.toDomain()
                 ?: throw IllegalArgumentException("Stage not found")
         }
-
     }
 }
