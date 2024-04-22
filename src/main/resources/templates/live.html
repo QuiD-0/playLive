@@ -5,6 +5,7 @@
   <title>Title</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="/css/live.css">
 </head>
 <body>
 
@@ -46,11 +47,6 @@
 
   setInterval(function () {
     axios.post('/api/stage/viewer/[[${channel}]]')
-    .then(function (response) {
-      document.getElementById('viewer-count').innerText = response.data;
-    })
-    .catch(function () {
-    });
   }, 15_000);
 
   setInterval(function () {
