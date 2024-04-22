@@ -1,5 +1,6 @@
 package com.quid.playLive.stage.usecase
 
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
@@ -11,6 +12,8 @@ interface ResourceConnector {
     class HlsPathResourceConnector(
         private val converter: ChannelToStreamKey
     ) : ResourceConnector {
+        private val log = LoggerFactory.getLogger(this::class.java)
+
         override fun invoke(channel: String, path: String): Resource = channelToFile(channel)
 //        converter.channelToStreamKey(channel)
             .let { "$path/$it" }
@@ -21,7 +24,7 @@ interface ResourceConnector {
                 return FileSystemResource(it)
             } catch (e: Exception) {
                 if (count > 3) {
-                    throw Exception("File not found")
+                    log.error("Failed to get file: $it")
                 }
                 return getFile(it, count + 1)
             }
