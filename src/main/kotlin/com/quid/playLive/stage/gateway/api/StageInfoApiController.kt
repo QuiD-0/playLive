@@ -1,4 +1,4 @@
-package com.quid.playLive.stage.gateway.web
+package com.quid.playLive.stage.gateway.api
 
 import com.quid.playLive.stage.usecase.FindStageInfo
 import com.quid.playLive.stage.usecase.Uptime

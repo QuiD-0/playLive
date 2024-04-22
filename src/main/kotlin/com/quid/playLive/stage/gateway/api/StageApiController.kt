@@ -1,7 +1,7 @@
-package com.quid.playLive.stage.gateway.web
+package com.quid.playLive.stage.gateway.api
 
-import com.quid.playLive.config.ResourcePath
-import com.quid.playLive.stage.gateway.web.model.NginxNotifyRequest
+import com.quid.playLive.global.ResourcePath
+import com.quid.playLive.stage.gateway.api.model.NginxNotifyRequest
 import com.quid.playLive.stage.usecase.ResourceConnector
 import com.quid.playLive.stage.usecase.Uptime
 import org.springframework.web.bind.annotation.*
@@ -18,6 +18,9 @@ class StageApiController(
 
     @GetMapping("/radio/{channel}")
     fun getRadio(@PathVariable channel: String) = liveStream(channel, path.radio)
+
+    @GetMapping("/check/{channel}")
+    fun checkLive(@PathVariable channel: String) = uptime.exists(channel)
 
     @PostMapping("/play", consumes = ["application/x-www-form-urlencoded"])
     fun play(request: NginxNotifyRequest) {

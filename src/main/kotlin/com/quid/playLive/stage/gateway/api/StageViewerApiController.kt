@@ -1,4 +1,4 @@
-package com.quid.playLive.stage.gateway.web
+package com.quid.playLive.stage.gateway.api
 
 import com.quid.playLive.stage.usecase.AddStageViewer
 import com.quid.playLive.stage.usecase.FindStageViewer

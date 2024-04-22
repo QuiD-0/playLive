@@ -1,4 +1,4 @@
-package com.quid.playLive.config.api
+package com.quid.playLive.global.api
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler

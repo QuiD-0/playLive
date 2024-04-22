@@ -1,4 +1,4 @@
-package com.quid.playLive.token.gateway.web.request
+package com.quid.playLive.token.gateway.api.request
 
 data class RefreshTokenRequest(
     val accessToken: String,

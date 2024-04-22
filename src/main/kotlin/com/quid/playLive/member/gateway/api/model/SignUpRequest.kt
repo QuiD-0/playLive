@@ -1,4 +1,4 @@
-package com.quid.playLive.member.gateway.web.model
+package com.quid.playLive.member.gateway.api.model
 
 import com.quid.playLive.member.domain.Member
 

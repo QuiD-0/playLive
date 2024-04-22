@@ -1,4 +1,4 @@
-package com.quid.playLive.stage.gateway.web.model
+package com.quid.playLive.stage.gateway.api.model
 
 data class NginxNotifyRequest(
     val call: String?,

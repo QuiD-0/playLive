@@ -1,8 +1,8 @@
-package com.quid.playLive.member.gateway.web
+package com.quid.playLive.member.gateway.api
 
 import com.quid.playLive.member.domain.MemberDetail
-import com.quid.playLive.member.gateway.web.model.LogInRequest
-import com.quid.playLive.member.gateway.web.model.SignUpRequest
+import com.quid.playLive.member.gateway.api.model.LogInRequest
+import com.quid.playLive.member.gateway.api.model.SignUpRequest
 import com.quid.playLive.member.usecase.LogIn
 import com.quid.playLive.member.usecase.LogOut
 import com.quid.playLive.member.usecase.SignUp

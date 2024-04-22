@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<video id="video-player"
+       src=""
+       poster="https://afreehp.kr/update/bnr/bnr_penalty_type_1.png"
+       playsinline="" autoplay muted controls x-webkit-airplay="" webkit-playsinline=""
+       controlsList="noplaybackrate nodownload" width="1327px"></video>
+<div>
+  <span id="viewer-count">0</span><span>명 시청중</span>
+</div>
+<script>
+  axios.get('/api/stage/check/[[${channel}]]')
+  .then(function (response) {
+    if (response.data === true) {
+      play();
+    } else {
+      alert("오프라인입니다.");
+    }
+  })
+  .catch(function () {
+    alert("에러입니다.");
+  });
+
+  function play() {
+    var video = document.getElementById('video-player');
+    var videoSrc = '/api/stage/live/[[${channel}]]';
+
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+
+    } else if (Hls.isSupported()) {
+      var hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+    }
+    video.play();
+  }
+
+  setInterval(function () {
+    axios.post('/api/stage/viewer/[[${channel}]]')
+    .then(function (response) {
+      document.getElementById('viewer-count').innerText = response.data;
+    })
+    .catch(function () {
+    });
+  }, 15_000);
+
+  setInterval(function () {
+    axios.get('/api/stage/viewer/[[${channel}]]')
+    .then(function (response) {
+      document.getElementById('viewer-count').innerText = response.data;
+    })
+    .catch(function () {
+    });
+  }, 15_000);
+
+</script>
+</body>
+</html>

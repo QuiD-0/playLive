@@ -1,4 +1,4 @@
-package com.quid.playLive.config.api
+package com.quid.playLive.global.api
 
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException

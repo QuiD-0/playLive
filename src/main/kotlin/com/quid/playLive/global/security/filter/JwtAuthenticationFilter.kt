@@ -1,4 +1,4 @@
-package com.quid.playLive.config.security.filter
+package com.quid.playLive.global.security.filter
 
 import com.quid.playLive.member.usecase.UserAuthService
 import com.quid.playLive.token.usecase.TokenDecoder

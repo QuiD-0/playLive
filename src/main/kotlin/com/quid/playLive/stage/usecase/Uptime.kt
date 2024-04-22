@@ -12,6 +12,8 @@ interface Uptime {
 
     fun findBy(channel: String): UptimeDisplay
 
+    fun exists(channel: String): Boolean
+
     @Service
     class StageUptime(
         private val repository: UptimeRepository
@@ -26,6 +28,10 @@ interface Uptime {
 
         override fun findBy(channel: String): UptimeDisplay =
             repository.findByChannel(channel)
+
+        override fun exists(channel: String): Boolean {
+            return repository.existsById(channel)
+        }
     }
 
 }

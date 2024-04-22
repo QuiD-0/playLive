@@ -6,7 +6,7 @@ import com.quid.playLive.token.domain.RefreshToken
 import com.quid.playLive.token.domain.Token
 import com.quid.playLive.token.gateway.repository.RefreshTokenRepository
 import com.quid.playLive.token.gateway.repository.redis.UserTokenJti
-import com.quid.playLive.member.gateway.web.model.TokenResponse
+import com.quid.playLive.member.gateway.api.model.TokenResponse
 import org.springframework.stereotype.Service
 
 fun interface RefreshAccessToken {

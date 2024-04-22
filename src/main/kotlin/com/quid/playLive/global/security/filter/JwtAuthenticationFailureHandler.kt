@@ -1,4 +1,4 @@
-package com.quid.playLive.config.security.filter
+package com.quid.playLive.global.security.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest

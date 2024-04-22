@@ -6,7 +6,7 @@ import com.quid.playLive.token.domain.Payload
 import com.quid.playLive.token.domain.RefreshToken
 import com.quid.playLive.token.gateway.repository.RefreshTokenRepository
 import com.quid.playLive.token.gateway.repository.redis.UserTokenJti
-import com.quid.playLive.member.gateway.web.model.TokenResponse
+import com.quid.playLive.member.gateway.api.model.TokenResponse
 import com.quid.playLive.token.usecase.TokenEncoder
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder

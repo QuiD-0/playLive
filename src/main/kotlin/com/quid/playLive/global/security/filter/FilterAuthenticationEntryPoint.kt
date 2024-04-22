@@ -1,4 +1,4 @@
-package com.quid.playLive.config.security.filter
+package com.quid.playLive.global.security.filter
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

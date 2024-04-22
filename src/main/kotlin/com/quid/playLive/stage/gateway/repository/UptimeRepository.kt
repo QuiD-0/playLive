@@ -14,6 +14,8 @@ interface UptimeRepository {
 
     fun delete(channel: String)
 
+    fun existsById(channel: String): Boolean
+
     @Repository
     class UptimeRepositoryImpl(
         private val repository: UptimeRedisRepository
@@ -30,6 +32,9 @@ interface UptimeRepository {
         override fun delete(channel: String) {
             repository.deleteById(channel)
         }
+
+        override fun existsById(channel: String): Boolean =
+            repository.existsById(channel)
     }
 
 }
