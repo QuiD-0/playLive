@@ -20,8 +20,7 @@ class StageInfoApiController(
     }
 
     @GetMapping("/uptime/{channel}")
-    fun getUptime(@PathVariable channel: String) {
-        val start = uptime.findBy(channel)
-    }
+    fun getUptime(@PathVariable channel: String) =
+        uptime.findBy(channel).toUptime()
 
 }
