@@ -27,12 +27,15 @@ jobs:
         run: | 
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/private-key.pem
           chmod 600 ~/private-key.pem
+
       - name: Create SSH directory
         run: |
           mkdir -p ~/.ssh
+
       - name: Add known host
         run: |
           ssh-keyscan ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+
       - name: Copy files to remote server
         run: |
           cd ${{ github.workspace }}
