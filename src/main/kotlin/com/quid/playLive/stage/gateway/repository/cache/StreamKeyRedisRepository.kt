@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component
 @Component
 interface StreamKeyRedisRepository : CrudRepository<StreamKeyRedisHash, String> {
     fun findByChannel(channel: String): StreamKeyRedisHash?
+    fun findByStreamKey(streamKey: String) : StreamKeyRedisHash?
 }

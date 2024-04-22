@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 interface StreamKeyRepository {
     fun findByChannel(channel: String): String
+    fun findByStreamKey(streamKey: String): String
 
     @Repository
     class StreamKeyRepositoryImpl(
@@ -14,10 +15,13 @@ interface StreamKeyRepository {
         private val user: MemberRepository
     ) : StreamKeyRepository {
 
-        @Transactional
         override fun findByChannel(channel: String): String =
             cache.findByChannel(channel)
                 ?.streamKey
                 ?: user.findByChannel(channel).streamKey
+
+        override fun findByStreamKey(streamKey: String): String =
+            cache.findByStreamKey(streamKey)?.let { return it.channel }
+                ?: user.findByStreamKey(streamKey).username
     }
 }
