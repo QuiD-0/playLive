@@ -24,6 +24,9 @@ class MemberEntity(
     @Column(name = "nickname")
     val nickname: String,
 
+    @Column(name = "avatar")
+    val avatar: String,
+
     @Column(name = "stream_key")
     val streamKey: String,
 
@@ -36,6 +39,7 @@ class MemberEntity(
         username = member.username,
         password = member.password,
         nickname = member.nickname,
+        avatar = member.avatar,
         streamKey = member.streamKey,
         regDate = member.regDate
     )
@@ -46,6 +50,7 @@ class MemberEntity(
         username = username,
         password = password,
         nickname = nickname,
+        avatar = avatar,
         streamKey = streamKey,
         regDate = regDate,
     )

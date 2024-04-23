@@ -9,6 +9,7 @@ data class Member(
     val username: String,
     val password: String,
     val nickname: String,
+    val avatar: String = "/assets/images/avatar.jpg",
     val streamKey: String = UUID.randomUUID().toString().replace("-", ""),
     val regDate: LocalDateTime = LocalDateTime.now(),
 ) {
