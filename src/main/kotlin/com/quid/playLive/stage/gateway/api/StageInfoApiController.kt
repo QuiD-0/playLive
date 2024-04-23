@@ -25,13 +25,12 @@ class StageInfoApiController(
 ) {
 
     @GetMapping("/list")
-    fun list(pageable: Pageable): Page<MainStageResponse> = find.mainStageList(pageable)
-
+    fun list(pageable: Pageable): Page<MainStageResponse> =
+        find.mainStageList(pageable)
 
     @GetMapping("/{channel}")
-    fun getStageInfo(@PathVariable channel: String) {
+    fun getStageInfo(@PathVariable channel: String) =
         find.byChannel("channel")
-    }
 
     @PutMapping
     fun updateChannelStageInfo(@RequestBody request: StageInfoUpdateRequest,

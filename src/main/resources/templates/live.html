@@ -24,7 +24,7 @@
   let app = new Vue({
     el: '#app',
     data: {
-      channel : this.getChannelName(),
+      channel : "",
       viewerCount: 0
     },
     methods :{
@@ -34,20 +34,19 @@
           if (response.data === true) {
             app.playHls();
           } else {
-            app.playHls();
             alert("오프라인입니다.");
           }
         })
-        .catch(function (e) {
+        .catch(function () {
           alert("에러입니다.");
         });
       },
       playHls: function () {
         var video = document.getElementById('video-player');
-        var videoSrc = '/api/stage/live/' + this.channel;
+        var videoSrc = "/api/stage/live" + this.channel;
 
         if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          video.src = videoSrc;
+          video.src = "http://localhost:8000/hls/"+ this.channel +".m3u8";
 
         } else if (Hls.isSupported()) {
           var hls = new Hls();
@@ -59,8 +58,8 @@
         setInterval(app.heartbeat, 10_000);
         setInterval(app.getViewerCount, 10_000);
       },
-      getChannelName: function () {
-        return window.location.pathname.split('/').pop();
+      initChannel: function () {
+        this.channel = window.location.pathname.split('/').pop();
       },
       getViewerCount: function () {
         axios.get('/api/stage/viewer/' + this.channel)
@@ -75,6 +74,7 @@
       }
     },
     mounted: function () {
+      this.initChannel();
       this.check();
       this.heartbeat();
       this.getViewerCount();
