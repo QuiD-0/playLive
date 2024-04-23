@@ -24,7 +24,7 @@
   let app = new Vue({
     el: '#app',
     data: {
-      channel : window.location.pathname.split('/').pop(),
+      channel : this.getChannelName(),
       viewerCount: 0
     },
     methods :{
@@ -58,6 +58,9 @@
 
         setInterval(app.heartbeat, 10_000);
         setInterval(app.getViewerCount, 10_000);
+      },
+      getChannelName: function () {
+        return window.location.pathname.split('/').pop();
       },
       getViewerCount: function () {
         axios.get('/api/stage/viewer/' + this.channel)
