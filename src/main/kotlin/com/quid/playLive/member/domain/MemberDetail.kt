@@ -24,5 +24,7 @@ data class MemberDetail(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
+    
+    val id: Long = member.id!!
 
 }

@@ -13,6 +13,7 @@ interface StageInfoRepository {
     fun save(stageInfo: StageInfo)
     fun findById(stageInfoSeq: Long): StageInfo
     fun findAll(channels: List<String>): List<MainStageResponse>
+    fun findByMemberSeq(memberSeq: Long): StageInfoEntity
 
     @Repository
     class StageInfoRepositoryImpl(
@@ -34,5 +35,10 @@ interface StageInfoRepository {
         @Transactional(readOnly = true)
         override fun findAll(channels: List<String>): List<MainStageResponse> =
             jdbcClient.findAll(channels)
+
+        @Transactional(readOnly = true)
+        override fun findByMemberSeq(memberSeq: Long): StageInfoEntity =
+            jpa.findByMemberSeq(memberSeq)
+                ?: throw IllegalArgumentException("Stage not found")
     }
 }

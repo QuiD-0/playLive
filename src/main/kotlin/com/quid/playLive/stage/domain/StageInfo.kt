@@ -1,5 +1,7 @@
 package com.quid.playLive.stage.domain
 
+import com.quid.playLive.stage.gateway.api.model.StageInfoUpdateRequest
+
 data class StageInfo(
     val id: Long? = null,
     val memberSeq: Long,
@@ -10,6 +12,7 @@ data class StageInfo(
 ) {
     constructor(userId: Long) : this(null, userId)
 
-    fun updateTitle(title: String, description: String) = copy(title = title, description = description)
     fun updateWaitingCurtain(waitingCurtain: String) = copy(waitingCurtain = waitingCurtain)
+    fun updateTitleAndDescription(request: StageInfoUpdateRequest) =
+        copy(title = request.title, description = request.description)
 }

@@ -40,9 +40,11 @@ interface MemberRepository {
             jpaMemberRepository.findByUsername(username)?.toDomain()
                 ?: throw IllegalArgumentException("User not found")
 
+        @Transactional(readOnly = true)
         override fun existsByUsername(username: String): Boolean =
             jpaMemberRepository.existsByUsername(username)
 
+        @Transactional(readOnly = true)
         override fun findByStreamKey(streamKey: String): Member =
             jpaMemberRepository.findByStreamKey(streamKey)
                 ?.toDomain()
