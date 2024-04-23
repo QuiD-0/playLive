@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
 @RedisHash
-data class UptimeRedisHash(
+data class OnAirRedisHash(
     @Id
     val channel: String,
     val uptime: Long

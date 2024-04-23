@@ -6,21 +6,21 @@ import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito
 
-class UptimeTest {
+class OnAirTest {
 
-    private val uptime: Uptime = Mockito.mock(Uptime.StageUptime::class.java)
+    private val onAir: OnAir = Mockito.mock(OnAir.StageOnAir::class.java)
 
     @Test
     fun uptimeCalculate() {
-        given(uptime.findBy("test")).willReturn(UptimeDisplay("test", 0, 1000))
-        val findBy = uptime.findBy("test")
+        given(onAir.findBy("test")).willReturn(UptimeDisplay("test", 0, 1000))
+        val findBy = onAir.findBy("test")
         assertEquals("00:00:01", findBy.toUptime())
     }
 
     @Test
     fun uptimeCalculateWhenChannelNotFound() {
-        given(uptime.findBy("not")).willReturn(UptimeDisplay("not", 0, 0))
-        val findBy = uptime.findBy("not")
+        given(onAir.findBy("not")).willReturn(UptimeDisplay("not", 0, 0))
+        val findBy = onAir.findBy("not")
         assertEquals("00:00:00", findBy.toUptime())
     }
 }
