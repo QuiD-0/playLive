@@ -41,9 +41,15 @@ interface OnAirRepository {
         }
 
         override fun findAll(pageable: Pageable): List<String> {
-            return repository.findAll().toList()
-                .subList(pageable.offset.toInt(), pageable.offset.toInt() + pageable.pageSize)
-                .map { it.channel }
+            val list = repository.findAll().toList()
+            return try {
+                list.subList(
+                    pageable.offset.toInt(),
+                    pageable.offset.toInt() + pageable.pageSize
+                ).map { it.channel }
+            } catch (e: IndexOutOfBoundsException) {
+                list.map { it.channel }
+            }
         }
     }
 
