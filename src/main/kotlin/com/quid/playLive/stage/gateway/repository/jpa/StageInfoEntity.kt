@@ -20,13 +20,16 @@ class StageInfoEntity(
     val description: String,
     @Column(name = "waiting_curtain")
     val waitingCurtain: String,
+    @Column(name = "thumbnail")
+    val thumbnail: String
 ) {
     constructor(stageInfo: StageInfo) : this(
         stageInfo.id,
         stageInfo.memberSeq,
         stageInfo.title,
         stageInfo.description,
-        stageInfo.waitingCurtain
+        stageInfo.waitingCurtain,
+        stageInfo.thumbnail
     )
 
     fun toDomain() = StageInfo(
@@ -34,6 +37,7 @@ class StageInfoEntity(
         memberSeq,
         title,
         description,
-        waitingCurtain
+        waitingCurtain,
+        thumbnail
     )
 }

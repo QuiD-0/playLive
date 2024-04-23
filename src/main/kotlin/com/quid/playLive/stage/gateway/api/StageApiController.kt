@@ -3,14 +3,14 @@ package com.quid.playLive.stage.gateway.api
 import com.quid.playLive.global.ResourcePath
 import com.quid.playLive.stage.gateway.api.model.NginxNotifyRequest
 import com.quid.playLive.stage.usecase.ResourceConnector
-import com.quid.playLive.stage.usecase.Uptime
+import com.quid.playLive.stage.usecase.OnAir
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/stage")
 class StageApiController(
     private val path: ResourcePath,
-    private val uptime: Uptime,
+    private val onAir: OnAir,
     private val liveStream: ResourceConnector,
 ) {
     @GetMapping("/live/{channel}")
@@ -20,16 +20,16 @@ class StageApiController(
     fun getRadio(@PathVariable channel: String) = liveStream(channel, path.radio)
 
     @GetMapping("/check/{channel}")
-    fun checkLive(@PathVariable channel: String) = uptime.exists(channel)
+    fun checkLive(@PathVariable channel: String) = onAir.exists(channel)
 
     @PostMapping("/play", consumes = ["application/x-www-form-urlencoded"])
     fun play(request: NginxNotifyRequest) {
-        uptime.start(request.name!!)
+        onAir.start(request.name!!)
     }
 
     @PostMapping("/play_done", consumes = ["application/x-www-form-urlencoded"])
     fun playDone(request: NginxNotifyRequest) {
-        uptime.stop(request.name!!)
+        onAir.stop(request.name!!)
     }
 
 }
