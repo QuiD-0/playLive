@@ -1,9 +1,9 @@
 let videoComponent = {
     template: `
-        <video id="video-player"
+        <video id="video-player" class="m-5"
            poster="https://afreehp.kr/update/bnr/bnr_penalty_type_1.png"
            playsinline="" autoplay muted controls x-webkit-airplay="" webkit-playsinline=""
-           controlsList="noplaybackrate nodownload" width="1327px"></video>
+           controlsList="noplaybackrate nodownload" width="1200px"></video>
     `,
     data() {
         return {
@@ -17,8 +17,6 @@ let videoComponent = {
             .then(function (response) {
                 if (response.data === true) {
                     self.playHls();
-                } else {
-                    alert("오프라인입니다.");
                 }
             })
             .catch(function () {
