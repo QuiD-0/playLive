@@ -1,5 +1,4 @@
 let counterComponent = {
-  props: ['channel'],
   template: `
         <div>
           <span>{{ viewerCount }}</span><span>명 시청중</span>
@@ -7,6 +6,7 @@ let counterComponent = {
       `,
   data() {
     return {
+      channel: '',
       viewerCount: 0
     };
   },
@@ -24,10 +24,16 @@ let counterComponent = {
       axios.post('/api/stage/viewer/' + this.channel)
     }
   },
+  computed: {
+    updateChannel: function () {
+      return store.state.channel;
+    }
+  },
   watch : {
-    channel : function() {
+    updateChannel: function (val) {
+      this.channel = val;
       setInterval(this.getViewerCount, 10_000);
       setInterval(this.heartbeat, 10_000);
     }
-  }
+  },
 }

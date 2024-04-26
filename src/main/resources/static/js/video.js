@@ -1,9 +1,8 @@
 let videoComponent = {
-    props: {
-        channel: {
-            type: String,
-            required: true
-        }
+    data() {
+        return {
+            channel: '',
+        };
     },
     template: `
         <video id="video-player"
@@ -41,9 +40,15 @@ let videoComponent = {
             video.play();
         },
     },
-    watch : {
-        channel: function () {
+    computed: {
+      updateChannel: function () {
+        return store.state.channel;
+      }
+    },
+    watch: {
+        updateChannel: function (val) {
+            this.channel = val;
             this.check();
         }
-    }
+    },
 }
