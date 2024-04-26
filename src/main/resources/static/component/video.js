@@ -14,23 +14,24 @@ let videoComponent = {
         check: function () {
             const self = this;
             axios.get('/api/stage/check/' + this.channel)
-                .then(function (response) {
-                    if (response.data === true) {
-                        self.playHls();
-                    } else {
-                        alert("오프라인입니다.");
-                    }
-                })
-                .catch(function () {
-                    alert("에러입니다.");
-                });
+            .then(function (response) {
+                if (response.data === true) {
+                    self.playHls();
+                } else {
+                    alert("오프라인입니다.");
+                }
+            })
+            .catch(function () {
+                alert("잠시 후 다시 시도해주세요.");
+            });
         },
         playHls: function () {
             var video = document.getElementById('video-player');
             var videoSrc = "/api/stage/live" + this.channel;
 
             if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = "http://146.56.115.136:8000/hls/" + this.channel + ".m3u8";
+                video.src = "http://146.56.115.136:8000/hls/" + this.channel
+                    + ".m3u8";
 
             } else if (Hls.isSupported()) {
                 var hls = new Hls();
@@ -41,9 +42,9 @@ let videoComponent = {
         },
     },
     computed: {
-      updateChannel: function () {
-        return store.state.channel;
-      }
+        updateChannel: function () {
+            return channel.state.channel;
+        }
     },
     watch: {
         updateChannel: function (val) {
