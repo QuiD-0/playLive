@@ -1,4 +1,4 @@
-let channel = new Vuex.Store({
+let channelStore = new Vuex.Store({
     state: {
         channel: ''
     },

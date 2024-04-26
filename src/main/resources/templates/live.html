@@ -32,7 +32,7 @@
         methods: {
             initChannel: function () {
                 let channel = window.location.pathname.split('/').pop();
-                channel.commit("setChannel", channel);
+                channelStore.commit("setChannel", channel);
             },
         },
         mounted: function () {

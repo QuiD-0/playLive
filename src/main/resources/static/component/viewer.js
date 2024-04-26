@@ -24,7 +24,7 @@ let viewerComponent = {
     },
     computed: {
         updateChannel: function () {
-            return channel.state.channel;
+            return channelStore.state.channel;
         }
     },
     watch: {
