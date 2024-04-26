@@ -2,23 +2,21 @@ spring:
   application:
     name: playLive
   datasource:
-    url: jdbc:postgresql://localhost:5432/playlive
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3333/playlive?useSSL=false&allowPublicKeyRetrieval=true
+    username: admin
+    password: admin
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
   data:
     redis:
       host: localhost
       port: 6379
-
 server:
   port: 8888
 
