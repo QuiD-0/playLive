@@ -41,3 +41,8 @@ jobs:
           cd ${{ github.workspace }}
           scp -i ~/private-key.pem -r ./build/libs/playLive-0.0.1.jar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_TARGET }}
           echo "Copied files to remote server"
+
+      - name: Deploy to remote server
+        run: |
+          ssh -i ~/private-key.pem ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} './deploy.sh'
+          echo "Deployed to remote server"
