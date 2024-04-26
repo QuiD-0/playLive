@@ -1,15 +1,15 @@
 let videoComponent = {
-    data() {
-        return {
-            channel: '',
-        };
-    },
     template: `
         <video id="video-player"
            poster="https://afreehp.kr/update/bnr/bnr_penalty_type_1.png"
            playsinline="" autoplay muted controls x-webkit-airplay="" webkit-playsinline=""
            controlsList="noplaybackrate nodownload" width="1327px"></video>
     `,
+    data() {
+        return {
+            channel: '',
+        };
+    },
     methods: {
         check: function () {
             const self = this;
