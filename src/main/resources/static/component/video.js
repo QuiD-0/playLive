@@ -27,7 +27,7 @@ let videoComponent = {
         },
         playHls: function () {
             var video = document.getElementById('video-player');
-            var videoSrc = "/api/stage/live" + this.channel;
+            var videoSrc = "/api/stage/live/" + this.channel;
 
             if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = "http://146.56.115.136:8000/hls/" + this.channel
