@@ -9,9 +9,11 @@ class StageInfoJdbcClient(
     private val jdbc: JdbcClient
 ) {
     fun findAll(channels: List<String>): List<MainStageResponse> {
+        if(channels.isEmpty()) return emptyList()
+
         val sql = """
             SELECT
-                m.member_seq,
+                m.username,
                 m.nickname,
                 m.avatar,
                 s.title,

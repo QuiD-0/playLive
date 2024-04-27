@@ -3,7 +3,9 @@ let headerComponent = {
     `
         <div class="px-5 py-2 flex items-center justify-between shadow-lg">
             <div class="flex">
-                <img src="/asset/logo.png" style="width: 120px">
+                <a href="/" class="flex items-center">
+                    <img src="/asset/logo.png" style="width: 150px">
+                </a>
             </div>
             <div class="flex-1 items-center justify-between">
                 <div class="max-w-md mx-auto">
@@ -19,18 +21,21 @@ let headerComponent = {
                     </div>
                 </div>
             </div>
-            <div class="flex">
+            <div v-if="member == ''" class="flex">
                 <button type="button" class="py-2 px-5 m-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100">로그인</button>
                 <span class="relative flex h-3 w-3 end-3">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
                 </span>
             </div>
+            <div v-else class="flex">
+                <button type="button" class="py-2 px-5 m-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100">로그아웃</button>
+            </div>
         </div>
     `,
     data() {
         return {
-            name: 'QuiD!'
+            member: ''
         }
     },
     methods: {

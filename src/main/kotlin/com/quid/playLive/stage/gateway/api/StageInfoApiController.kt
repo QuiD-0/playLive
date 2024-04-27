@@ -30,7 +30,7 @@ class StageInfoApiController(
 
     @GetMapping("/{channel}")
     fun getStageInfo(@PathVariable channel: String) =
-        find.byChannel("channel")
+        find.byChannel(channel)
 
     @PutMapping
     fun updateChannelStageInfo(@RequestBody request: StageInfoUpdateRequest,
