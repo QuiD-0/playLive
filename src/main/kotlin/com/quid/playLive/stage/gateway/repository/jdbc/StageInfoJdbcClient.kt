@@ -26,7 +26,7 @@ class StageInfoJdbcClient(
 
         return jdbc
             .sql(sql)
-            .params("channels", channels)
+            .param("channels", channels)
             .query(MainStageResponse::class.java)
             .list()
     }

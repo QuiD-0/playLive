@@ -40,7 +40,10 @@ interface OnAirRepository {
             repository.findAll().map { it.channel }
 
         override fun findAll(pageable: Pageable): List<String> =
-            repository.findAll(pageable).map { it.channel }.toList()
+            repository.findAll(pageable)
+                .content
+                .map { it.channel }
+                .toList()
     }
 
 }
