@@ -1,5 +1,6 @@
 package com.quid.playLive.member.gateway.api
 
+import com.quid.playLive.global.api.Success
 import com.quid.playLive.member.domain.MemberDetail
 import com.quid.playLive.member.gateway.api.model.LogInRequest
 import com.quid.playLive.member.gateway.api.model.SignUpRequest
@@ -22,14 +23,14 @@ class MemberApiController(
 
     @PostMapping("/register")
     fun register(@RequestBody request: SignUpRequest) =
-        signUp(request.toMember())
+        Success { signUp(request.toMember()) }
 
     @PostMapping("/login")
     fun login(@RequestBody request: LogInRequest) =
-        logIn(request.username, request.password)
+        Success { logIn(request.username, request.password) }
 
     @PostMapping("/logout")
     fun logout(@AuthenticationPrincipal memberDetail: MemberDetail) {
-        logOut(memberDetail.username)
+        Success { logOut(memberDetail.username) }
     }
 }

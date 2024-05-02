@@ -1,6 +1,7 @@
 package com.quid.playLive.stage.gateway.api
 
 import com.quid.playLive.global.ResourcePath
+import com.quid.playLive.global.api.Success
 import com.quid.playLive.stage.gateway.api.model.NginxNotifyRequest
 import com.quid.playLive.stage.usecase.ResourceConnector
 import com.quid.playLive.stage.usecase.OnAir
@@ -20,7 +21,7 @@ class StageApiController(
     fun getRadio(@PathVariable channel: String) = liveStream(channel, path.radio)
 
     @GetMapping("/check/{channel}")
-    fun checkLive(@PathVariable channel: String) = onAir.exists(channel)
+    fun checkLive(@PathVariable channel: String) = Success { onAir.exists(channel) }
 
     @PostMapping("/play", consumes = ["application/x-www-form-urlencoded"])
     fun play(request: NginxNotifyRequest) {

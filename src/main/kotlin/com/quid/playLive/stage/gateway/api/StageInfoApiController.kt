@@ -1,5 +1,6 @@
 package com.quid.playLive.stage.gateway.api
 
+import com.quid.playLive.global.api.Success
 import com.quid.playLive.member.domain.MemberDetail
 import com.quid.playLive.stage.gateway.api.model.MainStageResponse
 import com.quid.playLive.stage.gateway.api.model.StageInfoUpdateRequest
@@ -25,12 +26,12 @@ class StageInfoApiController(
 ) {
 
     @GetMapping("/list")
-    fun list(pageable: Pageable): Page<MainStageResponse> =
-        find.mainStageList(pageable)
+    fun list(pageable: Pageable) =
+        Success { find.mainStageList(pageable) }
 
     @GetMapping("/{channel}")
     fun getStageInfo(@PathVariable channel: String) =
-        find.byChannel(channel)
+        Success { find.byChannel(channel) }
 
     @PutMapping
     fun updateChannelStageInfo(@RequestBody request: StageInfoUpdateRequest,
@@ -40,6 +41,6 @@ class StageInfoApiController(
 
     @GetMapping("/uptime/{channel}")
     fun getUptime(@PathVariable channel: String) =
-        onAir.findBy(channel).toUptime()
+        Success { onAir.findBy(channel).toUptime() }
 
 }
