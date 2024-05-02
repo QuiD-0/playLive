@@ -7,8 +7,8 @@ data class StageInfo(
     val memberSeq: Long,
     val title: String = "",
     val description: String = "",
-    val thumbnail: String = "/assets/images/thumbnail.jpg",
-    val waitingCurtain: String = "/assets/images/waiting-curtain.jpg",
+    val thumbnail: String = "",
+    val waitingCurtain: String = "",
 ) {
     constructor(userId: Long) : this(null, userId)
 
