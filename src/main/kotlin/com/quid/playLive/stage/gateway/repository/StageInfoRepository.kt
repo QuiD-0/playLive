@@ -34,7 +34,7 @@ interface StageInfoRepository {
 
         @Transactional(readOnly = true)
         override fun findAll(channels: List<String>): List<MainStageResponse> =
-            jdbcClient.findAll(listOf("quid"))
+            jdbcClient.findAll(channels)
 
         @Transactional(readOnly = true)
         override fun findByMemberSeq(memberSeq: Long): StageInfoEntity =

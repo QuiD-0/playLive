@@ -24,7 +24,8 @@
             <div class="grid grid-cols-4 gap-4">
                 <div v-for="channel in liveChannels" class="relative">
                     <a :href="'/live/' + channel.username">
-                        <img :src="'data:image/png;base64,' + channel.thumbnail" class="w-full h-48 object-cover rounded-lg">
+                        <img v-if="channel.thumbnail.length" :src="'data:image/png;base64,' + channel.thumbnail" class="w-full h-48 object-cover rounded-lg">
+                        <img v-else src="/asset/thumbnail.jpg" class="w-full h-48 object-cover rounded-lg">
                         <div class="absolute bottom-0 left-0 right-0 p-2 bg-gray-900 bg-opacity-50 text-white">
                             <p class="text-sm font-bold">{{ channel.title }}</p>
                             <p class="text-xs">{{ channel.nickName }}</p>
