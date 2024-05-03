@@ -14,8 +14,8 @@ let videoComponent = {
         check: function () {
             const self = this;
             axios.get('/api/stage/check/' + this.channel)
-            .then(function (response) {
-                if (response.data === true) {
+            .then(function (result) {
+                if (result.data.response === true) {
                     self.playHls();
                 }
             })
