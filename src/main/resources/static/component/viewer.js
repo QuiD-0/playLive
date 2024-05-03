@@ -14,8 +14,8 @@ let viewerComponent = {
         getViewerCount: function () {
             const self = this;
             axios.get('/api/stage/viewer/' + this.channel)
-            .then(function (response) {
-                self.viewerCount = response.data;
+            .then(function (result) {
+                self.viewerCount = result.data.response;
             });
         },
         heartbeat: function () {
