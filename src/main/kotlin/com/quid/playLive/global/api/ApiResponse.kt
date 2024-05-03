@@ -4,21 +4,22 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
 
 sealed interface ApiResponse<RESPONSE> {
-    val result: String
+    val response: RESPONSE
+    val status: String
     val timeStamp: String
         get() = LocalDateTime.now().format(ofPattern("yyyy-MM-dd HH:mm:ss"))
 }
 
 data class Success<RESPONSE>(
-    val data: RESPONSE
+    override val response: RESPONSE
 ) : ApiResponse<RESPONSE> {
-    override val result: String = "SUCCESS"
+    override val status: String = "SUCCESS"
 }
 
 data class Error(
-    val message: String,
+    override val response: String,
 ) : ApiResponse<String> {
-    override val result: String = "ERROR"
+    override val status: String = "ERROR"
 }
 
 fun <RESPONSE> Success(data: () -> RESPONSE): Success<RESPONSE> = Success(data())

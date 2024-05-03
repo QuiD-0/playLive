@@ -5,6 +5,7 @@ import java.io.File
 
 @FunctionalInterface
 sealed interface Image {
+    val user: String
     val path: String
     val type: ImageType
 
@@ -17,20 +18,23 @@ sealed interface Image {
 }
 
 data class Avatar(
-    override val path: String = "",
+    override val user: String = "",
 ) : Image {
+    override val path: String = if(user == "") "" else "/home/ubuntu/avatars/$user.jpg"
     override val type: ImageType = AVATAR
 }
 
 data class Thumbnail(
-    override val path: String = "",
+    override val user: String = "",
 ) : Image {
+    override val path: String = if(user == "") "" else "/home/ubuntu/thumbnails/$user.jpg"
     override val type: ImageType = THUMBNAIL
 }
 
 data class WaitingCurtain(
-    override val path: String = "",
+    override val user: String = "",
 ) : Image {
+    override val path: String = if(user == "") "" else "/home/ubuntu/waitingCurtain/$user.jpg"
     override val type: ImageType = WAITING_CURTAIN
 }
 

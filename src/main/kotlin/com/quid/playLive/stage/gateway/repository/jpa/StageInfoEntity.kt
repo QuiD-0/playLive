@@ -1,7 +1,5 @@
 package com.quid.playLive.stage.gateway.repository.jpa
 
-import com.quid.playLive.global.image.Thumbnail
-import com.quid.playLive.global.image.WaitingCurtain
 import com.quid.playLive.stage.domain.StageInfo
 import jakarta.persistence.*
 
@@ -20,18 +18,12 @@ class StageInfoEntity(
     val title: String,
     @Column(name = "description")
     val description: String,
-    @Column(name = "waiting_curtain")
-    val waitingCurtain: String,
-    @Column(name = "thumbnail")
-    val thumbnail: String
 ) {
     constructor(stageInfo: StageInfo) : this(
         stageInfo.id,
         stageInfo.memberSeq,
         stageInfo.title,
         stageInfo.description,
-        stageInfo.waitingCurtain.path,
-        stageInfo.thumbnail.path
     )
 
     fun toDomain() = StageInfo(
@@ -39,7 +31,5 @@ class StageInfoEntity(
         memberSeq,
         title,
         description,
-        WaitingCurtain(waitingCurtain),
-        Thumbnail(thumbnail)
     )
 }
