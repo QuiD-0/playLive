@@ -13,15 +13,12 @@ let videoComponent = {
     methods: {
         check: function () {
             const self = this;
-            axios.get('/api/stage/check/' + this.channel)
-            .then(function (result) {
+            let callback = function (result) {
                 if (result.data.response === true) {
                     self.playHls();
                 }
-            })
-            .catch(function () {
-                alert("잠시 후 다시 시도해주세요.");
-            });
+            }
+            getAxios('/api/stage/check/' + this.channel, {}, callback);
         },
         playHls: function () {
             var video = document.getElementById('video-player');
