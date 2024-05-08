@@ -13,13 +13,13 @@ let viewerComponent = {
     methods: {
         getViewerCount: function () {
             const self = this;
-            axios.get('/api/stage/viewer/' + this.channel)
-            .then(function (result) {
+            let callback = function (result) {
                 self.viewerCount = result.data.response;
-            });
+            }
+            getAxios('/api/stage/viewer/' + this.channel, {}, callback);
         },
         heartbeat: function () {
-            axios.post('/api/stage/viewer/' + this.channel)
+            postAxios('/api/stage/viewer/' + this.channel, {}, function () {});
         }
     },
     computed: {

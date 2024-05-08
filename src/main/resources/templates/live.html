@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PlayLive - {{ member.nickname }}</title>
+    <title>PlayLive</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -26,21 +26,24 @@
 <script>
     let app = new Vue({
         el: '#app',
-        data: {},
+        data: {
+            channel: ''
+        },
         components: {
             headerComponent,
             videoComponent,
             viewerComponent
         },
         methods: {
-            initChannel: function () {
-                let channel = window.location.pathname.split('/').pop();
-                channelStore.commit("setChannel", channel);
+            initPage: function () {
+                this.channel = window.location.pathname.split('/').pop();
+                document.title = this.channel + " - PlayLive";
+                channelStore.commit("setChannel", this.channel);
             },
         },
         mounted: function () {
-            this.initChannel();
-        }
+            this.initPage();
+        },
     });
 </script>
 </body>
