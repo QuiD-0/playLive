@@ -14,7 +14,7 @@ let videoComponent = {
         check: function () {
             const self = this;
             let callback = function (result) {
-                if (result.data.response === true) {
+                if (result === true) {
                     self.playHls();
                 }
             }

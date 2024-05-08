@@ -3,7 +3,7 @@ function getAxios(url, params, callback) {
         params: params
     })
         .then(function (result) {
-            callback(result);
+            doCallback(result, callback);
         })
         .catch(function (reason) {
             if (reason.response.status === 401) {
@@ -19,11 +19,19 @@ function getAxios(url, params, callback) {
 function postAxios(url, params, callback) {
     return axios.post(url, params)
         .then(function (result) {
-            callback(result);
+            doCallback(result, callback);
         })
         .catch(function (reason) {
             responseCheck(reason);
         });
+}
+
+function doCallback(result, callback) {
+    if (result.data.status === "SUCCESS") {
+        callback(result.data.message);
+    } else {
+        throw new Error(result.data.message);
+    }
 }
 
 function responseCheck(reason) {

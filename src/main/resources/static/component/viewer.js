@@ -14,7 +14,7 @@ let viewerComponent = {
         getViewerCount: function () {
             const self = this;
             let callback = function (result) {
-                self.viewerCount = result.data.response;
+                self.viewerCount = result;
             }
             getAxios('/api/stage/viewer/' + this.channel, {}, callback);
         },

@@ -4,21 +4,20 @@ import com.quid.playLive.global.api.Success
 import com.quid.playLive.member.domain.MemberDetail
 import com.quid.playLive.member.gateway.api.model.LogInRequest
 import com.quid.playLive.member.gateway.api.model.SignUpRequest
+import com.quid.playLive.member.usecase.FindMember
 import com.quid.playLive.member.usecase.LogIn
 import com.quid.playLive.member.usecase.LogOut
 import com.quid.playLive.member.usecase.SignUp
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/member")
 class MemberApiController(
     private val signUp: SignUp,
     private val logIn: LogIn,
-    private val logOut: LogOut
+    private val logOut: LogOut,
+    private val findMember: FindMember
 ) {
 
     @PostMapping("/register")
@@ -33,4 +32,8 @@ class MemberApiController(
     fun logout(@AuthenticationPrincipal memberDetail: MemberDetail) {
         Success { logOut(memberDetail.username) }
     }
+
+    @GetMapping("/check-available/{username}")
+    fun checkAvailable(@PathVariable username: String) =
+        Success { findMember.exists(username) }
 }
