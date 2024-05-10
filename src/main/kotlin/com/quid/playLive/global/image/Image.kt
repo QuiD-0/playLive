@@ -1,6 +1,5 @@
 package com.quid.playLive.global.image
 
-import org.springframework.core.io.DefaultResourceLoader
 import java.io.File
 
 

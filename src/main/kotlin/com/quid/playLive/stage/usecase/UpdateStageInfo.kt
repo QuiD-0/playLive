@@ -13,7 +13,7 @@ interface UpdateStageInfo {
         private val stageInfo: StageInfoRepository
     ) : UpdateStageInfo {
         override fun invoke(request: StageInfoUpdateRequest, member: MemberDetail) {
-            require(request.isSameChannel(member)) { "unauthorized" }
+            require(request.isSameChannel(member)) { "Unauthorized" }
             stageInfo.findByMemberSeq(member.id).toDomain()
                 .run { this.updateTitleAndDescription(request) }
                 .let { stageInfo.save(it) }
