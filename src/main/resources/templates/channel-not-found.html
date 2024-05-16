@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Something wrong...</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/component/header.js" type="text/javascript"></script>
+  <script src="/component/video.js" type="text/javascript"></script>
+  <script src="/component/viewer.js" type="text/javascript"></script>
+  <script src="/state/channelStore.js" type="text/javascript"></script>
+  <script src="/component/axiosFactory.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/css/live.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div id="app">
+  <header-component></header-component>
+  <div class="flex justify-center items-center h-screen">
+    <div class="text-4xl text-gray-500">Channel not found...</div>
+  </div>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+        },
+        components: {
+            headerComponent,
+        },
+        methods: {
+        },
+        mounted: function () {
+        },
+    });
+</script>
+</body>
+</html>
