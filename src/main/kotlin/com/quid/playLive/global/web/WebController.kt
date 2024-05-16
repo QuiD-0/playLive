@@ -22,4 +22,9 @@ class WebController(
         } else {
             "channel-not-found"
         }
+
+    @GetMapping("/login")
+    fun login(): String {
+        return "login"
+    }
 }

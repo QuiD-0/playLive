@@ -33,6 +33,10 @@ class MemberApiController(
         Success { logOut(memberDetail.username) }
     }
 
+    @GetMapping("/me")
+    fun getMember(@AuthenticationPrincipal memberDetail: MemberDetail) =
+        Success { memberDetail.member }
+
     @GetMapping("/check-available/{username}")
     fun checkAvailable(@PathVariable username: String) =
         Success { findMember.exists(username) }

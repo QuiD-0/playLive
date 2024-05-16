@@ -21,8 +21,8 @@ let headerComponent = {
                     </div>
                 </div>
             </div>
-            <div v-if="member == ''" class="flex">
-                <button type="button" class="py-2 px-5 m-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100">로그인</button>
+            <div v-if="isNotLogin" class="flex">
+                <button type="button" class="py-2 px-5 m-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100" @click="toLoginPage">로그인</button>
                 <span class="relative flex h-3 w-3 end-3">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
@@ -35,13 +35,32 @@ let headerComponent = {
     `,
     data() {
         return {
-            member: ''
+            accessToken: '',
         }
     },
     methods: {
         search: function() {
             console.log('search');
+        },
+        toLoginPage: function() {
+            location.href = '/login';
+        },
+    },
+    computed: {
+        isNotLogin: function() {
+            return this.accessToken === '';
+        },
+        updateAccessToken: function() {
+            return memberStore.state.accessToken;
         }
     },
+    watch: {
+        updateAccessToken: function(val) {
+            this.accessToken = val;
+        }
+    },
+    mounted: function() {
+        this.accessToken = memberStore.state.accessToken;
+    }
 }
 
