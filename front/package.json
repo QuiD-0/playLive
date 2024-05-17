@@ -13,7 +13,8 @@
     "vue": "^3.4.21",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2",
-    "axios": "1.6.0"
+    "axios": "1.6.0",
+    "pnpm": "^6.16.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
     id 'org.springframework.boot' version '3.2.4'
@@ -7,6 +8,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.23'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.9.23'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.23'
+    id 'com.github.node-gradle.node' version "3.4.0"
 }
 
 group = 'com.quid'
@@ -40,6 +42,20 @@ jar {
     enabled = false
 }
 
+apply plugin: 'com.github.node-gradle.node'
+
+node {
+    nodeProjectDir = file("${project.projectDir}/front")
+    version = '21.7.0'
+    npmVersion = '10.5.0'
+    download = true
+}
+
+tasks.register('buildFront', NpmTask) {
+    dependsOn 'npmInstall'
+    args = ['run', 'build']
+}
+
 tasks.withType(KotlinJvmCompile.class).configureEach {
     jvmTargetValidationMode = JvmTargetValidationMode.WARNING
 }
@@ -48,3 +64,4 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+processResources.dependsOn 'buildFront'
