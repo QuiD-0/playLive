@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue src",
-    "install": "pnpm install"
+    "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
     "vue": "^3.4.21",
