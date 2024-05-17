@@ -53,7 +53,7 @@ class SecurityConfig(
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     private fun requiredApi(): Array<RequestMatcher> = arrayOf(
-        AntPathRequestMatcher("/api/member/info", "GET"),
+        AntPathRequestMatcher("/api/member/me", "GET"),
     )
 
 }

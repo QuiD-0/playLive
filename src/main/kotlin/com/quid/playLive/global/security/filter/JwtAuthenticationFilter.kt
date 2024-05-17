@@ -1,5 +1,6 @@
 package com.quid.playLive.global.security.filter
 
+import com.quid.playLive.global.api.UnauthorizedException
 import com.quid.playLive.member.usecase.UserAuthService
 import com.quid.playLive.token.usecase.TokenDecoder
 import jakarta.servlet.FilterChain
@@ -21,7 +22,7 @@ class JwtAuthenticationFilter(
         try {
             val accessToken = getToken(request)
                 .run { tokenDecoder(this) }
-            require(accessToken.isNotExpired()) { "access token is expired" }
+            require(accessToken.isNotExpired()) { throw UnauthorizedException("access token is expired") }
 
             val user = userAuthService.loadUserByUsername(accessToken.username)
 
@@ -36,8 +37,9 @@ class JwtAuthenticationFilter(
     }
 
     private fun getToken(request: HttpServletRequest): String {
+        requireNotNull(request.getHeader("Authorization")) { throw UnauthorizedException("Authorization header is missing") }
         val header = request.getHeader("Authorization")
-        require(header.startsWith("Bearer ")) { "Authorization header must start with Bearer" }
+        require(header.startsWith("Bearer ")) { throw UnauthorizedException("Authorization header must start with Bearer") }
         return header.substring(7)
     }
 

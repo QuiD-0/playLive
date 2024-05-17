@@ -6,10 +6,10 @@ import io.jsonwebtoken.security.SignatureException
 import org.springframework.http.HttpStatus
 
 interface HttpStatusSelector {
-    operator fun invoke(ex: () -> Exception): HttpStatus
+    operator fun invoke(ex:Exception): HttpStatus
 
     class HttpStatusSelectorImpl : HttpStatusSelector {
-        override fun invoke(ex: () -> Exception): HttpStatus =
+        override fun invoke(ex: Exception): HttpStatus =
             when (ex) {
                 is IllegalArgumentException -> HttpStatus.BAD_REQUEST
                 is NoSuchElementException -> HttpStatus.NOT_FOUND
@@ -17,10 +17,13 @@ interface HttpStatusSelector {
                 is SignatureException -> HttpStatus.UNAUTHORIZED
                 is ExpiredJwtException -> HttpStatus.UNAUTHORIZED
                 is MalformedJwtException -> HttpStatus.UNAUTHORIZED
+                is UnauthorizedException -> HttpStatus.UNAUTHORIZED
                 else -> HttpStatus.INTERNAL_SERVER_ERROR
             }
     }
 
-    companion object: HttpStatusSelector by HttpStatusSelectorImpl()
+    companion object : HttpStatusSelector by HttpStatusSelectorImpl()
 
 }
+
+class UnauthorizedException(message: String) : Exception(message)
