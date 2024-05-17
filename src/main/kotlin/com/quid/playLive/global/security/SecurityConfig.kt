@@ -54,6 +54,7 @@ class SecurityConfig(
 
     private fun requiredApi(): Array<RequestMatcher> = arrayOf(
         AntPathRequestMatcher("/api/member/me", "GET"),
+        AntPathRequestMatcher("/api/member/logout", "POST")
     )
 
 }
