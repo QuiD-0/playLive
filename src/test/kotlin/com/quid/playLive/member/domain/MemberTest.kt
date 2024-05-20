@@ -1,11 +1,14 @@
 package com.quid.playLive.member.domain
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+@DisplayName("Member 도메인 테스트")
 class MemberTest{
 
     @Test
+    @DisplayName("회원 생성")
     fun makeUser(){
         val member = Member(
             email = "test@email.com",
@@ -16,5 +19,33 @@ class MemberTest{
 
         assertEquals("test", member.username)
         assertNotNull(member.streamKey)
+    }
+
+    @Test
+    @DisplayName("회원 생성 실패")
+    fun makeUserFail(){
+        assertThrows(IllegalArgumentException::class.java){
+            Member(
+                email = "",
+                username = "",
+                password = "",
+                nickname = ""
+            )
+        }
+    }
+
+    @Test
+    @DisplayName("비밀번호 암호화")
+    fun encodePassword() {
+        val member = Member(
+            email = "test",
+            username = "test",
+            password = "test",
+            nickname = "test",
+        )
+
+        val encodedPassword = "encodedPassword"
+        val encodedMember = member.encodePassword(encodedPassword)
+        assertEquals(encodedPassword, encodedMember.password)
     }
 }

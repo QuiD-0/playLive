@@ -13,6 +13,13 @@ data class Member(
     val streamKey: String = UUID.randomUUID().toString().replace("-", ""),
     val regDate: LocalDateTime = LocalDateTime.now(),
 ) {
+    init {
+        require(email.isNotBlank()) { "Email is empty" }
+        require(username.isNotBlank()) { "Username is empty" }
+        require(password.isNotBlank()) { "Password is empty" }
+        require(nickname.isNotBlank()) { "Nickname is empty" }
+    }
+
     fun encodePassword(encodedPassword : String): Member {
         return this.copy(password = encodedPassword)
     }
