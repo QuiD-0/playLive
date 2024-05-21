@@ -24,14 +24,10 @@ class MemberTest{
     @Test
     @DisplayName("회원 생성 실패")
     fun makeUserFail(){
-        assertThrows(IllegalArgumentException::class.java){
-            Member(
-                email = "",
-                username = "",
-                password = "",
-                nickname = ""
-            )
-        }
+        assertThrows(IllegalArgumentException::class.java){ Member(email = "", username = "test", password = "test", nickname = "test") }
+        assertThrows(IllegalArgumentException::class.java){ Member(email = "test", username = "", password = "test", nickname = "test") }
+        assertThrows(IllegalArgumentException::class.java){ Member(email = "test", username = "test", password = "", nickname = "test") }
+        assertThrows(IllegalArgumentException::class.java){ Member(email = "test", username = "test", password = "test", nickname = "") }
     }
 
     @Test

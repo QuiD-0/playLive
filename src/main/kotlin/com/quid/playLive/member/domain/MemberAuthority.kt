@@ -9,16 +9,11 @@ data class MemberAuthority(
     val regDate: LocalDateTime = LocalDateTime.now(),
     val deleted: Boolean = false,
 ) {
-    constructor(memberSeq: Long, authorityName: String) : this(
+    constructor(memberSeq: Long, authType: AuthType = AuthType.ROLE_USER) : this(
         null,
         memberSeq,
-        AuthType.valueOf(authorityName),
+        authType
     )
 
     fun delete() = copy(deleted = true)
 }
-
-fun default(memberSeq: Long) = MemberAuthority(
-    memberSeq = memberSeq,
-    authority = AuthType.ROLE_USER,
-)

@@ -1,6 +1,6 @@
 package com.quid.playLive.member.usecase
 
-import com.quid.playLive.member.domain.default
+import com.quid.playLive.member.domain.MemberAuthority
 import com.quid.playLive.member.gateway.repository.MemberAuthorityRepository
 import com.quid.playLive.stage.domain.StageInfo
 import com.quid.playLive.stage.gateway.repository.StageInfoRepository
@@ -21,7 +21,7 @@ class SignUpInitEventListener(
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun onSignUpInitEvent(event: SignUpInitEvent) {
         val memberSeq = event.memberSeq
-        authorityRepository.save(default(memberSeq))
+        authorityRepository.save(MemberAuthority(memberSeq))
         stageInfo.save(StageInfo(memberSeq))
     }
 }
