@@ -2,7 +2,6 @@ package com.quid.playLive.member.gateway.api.model
 
 import com.quid.playLive.member.domain.Member
 
-
 data class SignUpRequest(
     val username: String,
     val password: String,
