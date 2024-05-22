@@ -1,17 +1,17 @@
 package com.quid.playLive.member.gateway.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.quid.playLive.fixture.Fixture
-import com.quid.playLive.member.domain.Member
+import com.quid.playLive.fixture.Fixture.Companion.any
+import com.quid.playLive.global.api.UnauthorizedException
 import com.quid.playLive.member.gateway.api.model.LogInRequest
 import com.quid.playLive.member.gateway.api.model.SignUpRequest
 import com.quid.playLive.member.usecase.FindMember
 import com.quid.playLive.member.usecase.LogIn
 import com.quid.playLive.member.usecase.LogOut
 import com.quid.playLive.member.usecase.SignUp
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito.any
 import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -64,7 +64,7 @@ class MemberApiControllerTest {
     fun duplicatedUsername() {
         val request = SignUpRequest("username", "password", "user@mail.com", "channel")
 
-        given(signUp(Fixture.any())).willThrow(IllegalArgumentException("User already exists"))
+        given(signUp(any())).willThrow(IllegalArgumentException("User already exists"))
 
         mockMvc.perform(
             post("/api/member/register")
@@ -109,13 +109,18 @@ class MemberApiControllerTest {
     }
 
     @Test
-    @DisplayName("로그아웃")
-    fun logout() {
+    @DisplayName("로그인 실패")
+    fun loginFail() {
+        val request = LogInRequest("notExist", "password")
+
+        given(logIn(any(), any())).willThrow(UnauthorizedException("Invalid username or password"))
+
         mockMvc.perform(
-            post("/api/member/logout")
+            post("/api/member/login")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
-            status().isOk
+            status().isUnauthorized
         ).andDo(
             print()
         )
@@ -132,6 +137,42 @@ class MemberApiControllerTest {
         ).andDo(
             print()
         )
+    }
+
+    @Test
+    @DisplayName("사용자 이름 중복 확인 - 사용자 이름 중복")
+    fun checkAvailableDuplicated() {
+        given(findMember.exists(any())).willReturn(true)
+
+        val result = mockMvc.perform(
+            get("/api/member/check-available/username")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+            status().isOk
+        ).andDo(
+            print()
+        ).andReturn()
+
+        val response = ObjectMapper().readTree(result.response.contentAsString)["message"].asBoolean()
+        assertEquals(response, true)
+    }
+
+    @Test
+    @DisplayName("사용자 이름 중복 확인 - 사용자 이름 중복 아님")
+    fun checkAvailableNotDuplicated() {
+        given(findMember.exists(any())).willReturn(false)
+
+        val result = mockMvc.perform(
+            get("/api/member/check-available/username")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+            status().isOk
+        ).andDo(
+            print()
+        ).andReturn()
+
+        val response = ObjectMapper().readTree(result.response.contentAsString)["message"].asBoolean()
+        assertEquals(response, false)
     }
 
 }

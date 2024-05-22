@@ -26,4 +26,4 @@ interface HttpStatusSelector {
 
 }
 
-class UnauthorizedException(message: String) : Exception(message)
+class UnauthorizedException(message: String) : RuntimeException(message)
