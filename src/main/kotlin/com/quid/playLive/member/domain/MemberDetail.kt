@@ -3,7 +3,6 @@ package com.quid.playLive.member.domain
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-
 data class MemberDetail(
     val member: Member,
     val authority: List<MemberAuthority>,
@@ -24,7 +23,7 @@ data class MemberDetail(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
-    
+
     val id: Long = member.id!!
 
 }

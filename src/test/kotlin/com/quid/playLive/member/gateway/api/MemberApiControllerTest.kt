@@ -1,6 +1,7 @@
 package com.quid.playLive.member.gateway.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.quid.playLive.fixture.Fixture
 import com.quid.playLive.fixture.Fixture.Companion.any
 import com.quid.playLive.global.api.UnauthorizedException
 import com.quid.playLive.member.gateway.api.model.LogInRequest
@@ -13,8 +14,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
@@ -25,11 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(MemberApiController::class)
-@AutoConfigureMockMvc(addFilters = false)
 class MemberApiControllerTest {
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
 
     @MockBean
     private lateinit var signUp: SignUp
@@ -43,14 +38,17 @@ class MemberApiControllerTest {
     @MockBean
     private lateinit var findMember: FindMember
 
+    private val mockMvc: MockMvc by lazy {
+        Fixture.mvc(MemberApiController(signUp, logIn, logOut, findMember))
+    }
+
     @Test
     @DisplayName("회원가입")
     fun register() {
         val request = SignUpRequest("username", "password", "user@mail.com", "channel")
 
         mockMvc.perform(
-            post("/api/member/register")
-                .contentType(MediaType.APPLICATION_JSON)
+            post("/api/member/register").contentType(MediaType.APPLICATION_JSON)
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isOk
@@ -67,8 +65,7 @@ class MemberApiControllerTest {
         given(signUp(any())).willThrow(IllegalArgumentException("User already exists"))
 
         mockMvc.perform(
-            post("/api/member/register")
-                .contentType(MediaType.APPLICATION_JSON)
+            post("/api/member/register").contentType(MediaType.APPLICATION_JSON)
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().is4xxClientError
@@ -77,13 +74,11 @@ class MemberApiControllerTest {
         )
     }
 
-
     @Test
     @DisplayName("이메일 형식이 잘못된 경우")
     fun emailNotValid() {
         mockMvc.perform(
-            post("/api/member/register")
-                .contentType(MediaType.APPLICATION_JSON)
+            post("/api/member/register").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\":\"username\",\"password\":\"password\",\"email\":\"test\",\"nickname\":\"channel\"}")
         ).andExpect(
             status().is5xxServerError
@@ -98,8 +93,7 @@ class MemberApiControllerTest {
         val request = LogInRequest("username", "password")
 
         mockMvc.perform(
-            post("/api/member/login")
-                .contentType(MediaType.APPLICATION_JSON)
+            post("/api/member/login").contentType(MediaType.APPLICATION_JSON)
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isOk
@@ -116,8 +110,7 @@ class MemberApiControllerTest {
         given(logIn(any(), any())).willThrow(UnauthorizedException("Invalid username or password"))
 
         mockMvc.perform(
-            post("/api/member/login")
-                .contentType(MediaType.APPLICATION_JSON)
+            post("/api/member/login").contentType(MediaType.APPLICATION_JSON)
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isUnauthorized
@@ -130,8 +123,7 @@ class MemberApiControllerTest {
     @DisplayName("사용자 이름 중복 확인")
     fun checkAvailable() {
         mockMvc.perform(
-            get("/api/member/check-available/username")
-                .contentType(MediaType.APPLICATION_JSON)
+            get("/api/member/check-available/username").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
         ).andDo(
@@ -145,8 +137,7 @@ class MemberApiControllerTest {
         given(findMember.exists(any())).willReturn(true)
 
         val result = mockMvc.perform(
-            get("/api/member/check-available/username")
-                .contentType(MediaType.APPLICATION_JSON)
+            get("/api/member/check-available/username").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
         ).andDo(
@@ -163,8 +154,7 @@ class MemberApiControllerTest {
         given(findMember.exists(any())).willReturn(false)
 
         val result = mockMvc.perform(
-            get("/api/member/check-available/username")
-                .contentType(MediaType.APPLICATION_JSON)
+            get("/api/member/check-available/username").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
         ).andDo(
