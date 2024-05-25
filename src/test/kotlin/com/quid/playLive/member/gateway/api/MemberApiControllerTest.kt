@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.web.context.WebApplicationContext
 
 @WebMvcTest(MemberApiController::class)
 class MemberApiControllerTest {
@@ -38,8 +40,15 @@ class MemberApiControllerTest {
     @MockBean
     private lateinit var findMember: FindMember
 
+    @Autowired
+    private lateinit var webContext: WebApplicationContext
+
     private val mockMvc: MockMvc by lazy {
         Fixture.mvc(MemberApiController(signUp, logIn, logOut, findMember))
+    }
+
+    private val securityMvc: MockMvc by lazy {
+        Fixture.securityMvc(webContext)
     }
 
     @Test
@@ -114,6 +123,18 @@ class MemberApiControllerTest {
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isUnauthorized
+        ).andDo(
+            print()
+        )
+    }
+
+    @Test
+    @DisplayName("로그아웃")
+    fun logout() {
+        securityMvc.perform(
+            post("/api/member/logout").contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+            status().isOk
         ).andDo(
             print()
         )
