@@ -1,6 +1,7 @@
 package com.quid.playLive.member.usecase
 
 import com.quid.playLive.fixture.MemberFixture
+import com.quid.playLive.fixture.any
 import com.quid.playLive.member.gateway.repository.MemberRepository
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -21,8 +22,9 @@ class SignUpTest {
     @Test
     fun signUpSuccess() {
         val member = MemberFixture.member
-        given(memberRepository.existsByUsername(member.username)).willReturn(false)
-        given(passwordEncoder.encode(member.password)).willReturn("encoded")
+        given(memberRepository.existsByUsername(any())).willReturn(false)
+        given(passwordEncoder.encode(any())).willReturn("encoded")
+        given(memberRepository.save(any())).willReturn(member)
 
         assertDoesNotThrow { signUp(member) }
     }
