@@ -2,6 +2,7 @@ package com.quid.playLive.member.usecase
 
 import com.quid.playLive.fixture.MemberFixture
 import com.quid.playLive.member.gateway.repository.MemberRepository
+import com.quid.playLive.stage.gateway.repository.StageInfoRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +18,7 @@ class SignUpInitEventListenerTest(
     @Autowired
     private val signUp: SignUp,
     @Autowired
-    private val memberRepository: MemberRepository,
+    private val stageInfoRepository: StageInfoRepository
 ) {
 
     private val member = MemberFixture.member
@@ -31,11 +32,8 @@ class SignUpInitEventListenerTest(
 
     @AfterTransaction
     fun afterTransaction() {
-        val savedMember = memberRepository.findByUsername(member.username)
-        assertNotNull(savedMember)
-        assertEquals(member.username, savedMember.username)
-        assertNotNull(savedMember.id)
-        println("savedMember.id = ${savedMember.id}")
+        val stage = stageInfoRepository.findByMemberSeq(member.id!!)
+        assertNotNull(stage)
     }
 
 
