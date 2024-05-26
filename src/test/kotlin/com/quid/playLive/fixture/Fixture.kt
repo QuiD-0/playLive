@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.filter.CharacterEncodingFilter
 
 
 fun <T> any() = Mockito.any() ?: null as T
@@ -20,16 +21,22 @@ fun <T> any() = Mockito.any() ?: null as T
 fun <T> mvc(controller: T): MockMvc = MockMvcBuilders.standaloneSetup(controller)
     .setMessageConverters(MappingJackson2HttpMessageConverter())
     .setControllerAdvice(ErrorHandling())
+    .addFilter<StandaloneMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
     .alwaysDo<StandaloneMockMvcBuilder>(print())
     .build()
 
 fun securityMvc(context: WebApplicationContext): MockMvc = MockMvcBuilders
     .webAppContextSetup(context)
+    .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
     .alwaysDo<DefaultMockMvcBuilder>(print())
     .build()
     .also {
         SecurityContextHolder.getContext().authentication =
-            UsernamePasswordAuthenticationToken(MemberFixture.memberDetail, null)
+            UsernamePasswordAuthenticationToken(
+                MemberFixture.memberDetail,
+                null,
+                MemberFixture.memberDetail.authorities
+            )
     }
 
 fun mapper(): ObjectMapper = ObjectMapper().registerModule(JavaTimeModule())
