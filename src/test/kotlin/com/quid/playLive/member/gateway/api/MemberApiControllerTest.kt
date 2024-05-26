@@ -1,8 +1,9 @@
 package com.quid.playLive.member.gateway.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.quid.playLive.fixture.Fixture
-import com.quid.playLive.fixture.Fixture.Companion.any
+import com.quid.playLive.fixture.any
+import com.quid.playLive.fixture.mvc
+import com.quid.playLive.fixture.securityMvc
 import com.quid.playLive.global.api.UnauthorizedException
 import com.quid.playLive.member.gateway.api.model.LogInRequest
 import com.quid.playLive.member.gateway.api.model.SignUpRequest
@@ -21,7 +22,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.web.context.WebApplicationContext
 
@@ -44,11 +44,11 @@ class MemberApiControllerTest {
     private lateinit var webContext: WebApplicationContext
 
     private val mockMvc: MockMvc by lazy {
-        Fixture.mvc(MemberApiController(signUp, logIn, logOut, findMember))
+        mvc(MemberApiController(signUp, logIn, logOut, findMember))
     }
 
     private val securityMvc: MockMvc by lazy {
-        Fixture.securityMvc(webContext)
+        securityMvc(webContext)
     }
 
     @Test
@@ -61,8 +61,6 @@ class MemberApiControllerTest {
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isOk
-        ).andDo(
-            print()
         )
     }
 
@@ -78,8 +76,6 @@ class MemberApiControllerTest {
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().is4xxClientError
-        ).andDo(
-            print()
         )
     }
 
@@ -91,8 +87,6 @@ class MemberApiControllerTest {
                 .content("{\"username\":\"username\",\"password\":\"password\",\"email\":\"test\",\"nickname\":\"channel\"}")
         ).andExpect(
             status().is5xxServerError
-        ).andDo(
-            print()
         )
     }
 
@@ -106,8 +100,6 @@ class MemberApiControllerTest {
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isOk
-        ).andDo(
-            print()
         )
     }
 
@@ -123,8 +115,6 @@ class MemberApiControllerTest {
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isUnauthorized
-        ).andDo(
-            print()
         )
     }
 
@@ -135,8 +125,6 @@ class MemberApiControllerTest {
             post("/api/member/logout").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
-        ).andDo(
-            print()
         )
     }
 
@@ -147,8 +135,6 @@ class MemberApiControllerTest {
             get("/api/member/check-available/username").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
-        ).andDo(
-            print()
         )
     }
 
@@ -161,8 +147,6 @@ class MemberApiControllerTest {
             get("/api/member/check-available/username").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
-        ).andDo(
-            print()
         ).andReturn()
 
         val response = ObjectMapper().readTree(result.response.contentAsString)["message"].asBoolean()
@@ -178,8 +162,6 @@ class MemberApiControllerTest {
             get("/api/member/check-available/username").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
             status().isOk
-        ).andDo(
-            print()
         ).andReturn()
 
         val response = ObjectMapper().readTree(result.response.contentAsString)["message"].asBoolean()

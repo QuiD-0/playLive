@@ -8,26 +8,28 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder
 import org.springframework.web.context.WebApplicationContext
 
-class Fixture {
-    companion object {
-        fun <T> any() = Mockito.any() ?: null as T
 
-        fun <T> mvc(controller: T): MockMvc = MockMvcBuilders.standaloneSetup(controller)
-            .setMessageConverters(MappingJackson2HttpMessageConverter())
-            .setControllerAdvice(ErrorHandling())
-            .build()
+fun <T> any() = Mockito.any() ?: null as T
 
-        fun securityMvc(context: WebApplicationContext): MockMvc = MockMvcBuilders
-            .webAppContextSetup(context)
-            .build()
-            .also {
-                SecurityContextHolder.getContext().authentication =
-                    UsernamePasswordAuthenticationToken(MemberFixture.memberDetail, "password")
-            }
+fun <T> mvc(controller: T): MockMvc = MockMvcBuilders.standaloneSetup(controller)
+    .setMessageConverters(MappingJackson2HttpMessageConverter())
+    .setControllerAdvice(ErrorHandling())
+    .alwaysDo<StandaloneMockMvcBuilder>(print())
+    .build()
 
-        fun mapper(): ObjectMapper = ObjectMapper().registerModule(JavaTimeModule())
+fun securityMvc(context: WebApplicationContext): MockMvc = MockMvcBuilders
+    .webAppContextSetup(context)
+    .alwaysDo<DefaultMockMvcBuilder>(print())
+    .build()
+    .also {
+        SecurityContextHolder.getContext().authentication =
+            UsernamePasswordAuthenticationToken(MemberFixture.memberDetail, null)
     }
-}
+
+fun mapper(): ObjectMapper = ObjectMapper().registerModule(JavaTimeModule())
