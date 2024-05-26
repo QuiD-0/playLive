@@ -15,7 +15,8 @@ class StageInfoJdbcClient(
             SELECT
                 m.username,
                 m.nickname,
-                s.title
+                s.title,
+                m.avatar
             FROM
                 member m left join stage_info s on m.member_seq = s.member_seq
             WHERE

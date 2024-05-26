@@ -3,7 +3,6 @@ package com.quid.playLive.member.usecase
 import com.quid.playLive.fixture.MemberFixture
 import com.quid.playLive.fixture.any
 import com.quid.playLive.member.gateway.repository.MemberRepository
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.mockito.BDDMockito.given

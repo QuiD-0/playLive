@@ -3,7 +3,7 @@ package com.quid.playLive.fixture
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.quid.playLive.global.api.ErrorHandling
-import org.mockito.Mockito
+import org.mockito.ArgumentMatchers.any
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.filter.CharacterEncodingFilter
 
 
-fun <T> any() = Mockito.any() ?: null as T
+fun <T> any() : T = any()
 
 fun <T> mvc(controller: T): MockMvc = MockMvcBuilders.standaloneSetup(controller)
     .setMessageConverters(MappingJackson2HttpMessageConverter())
