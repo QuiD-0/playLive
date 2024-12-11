@@ -42,3 +42,5 @@ out/
 /infra/postgres-data/
 /infra/redis-data/
 /infra/mysql-data/
+
+/src/main/resources/application-live.yaml
