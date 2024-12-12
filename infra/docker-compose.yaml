@@ -1,25 +1,14 @@
-version: "3.8"
-name: playlive-dev
+version: "3.7"
 
 services:
-  mysql:
-    image: mysql:8.0
+  nginx-rtmp:
+    image: nginx-rtmp:latest
+    container_name: nginx-rtmp
     ports:
-      - "3333:3306"
-    environment:
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: playlive
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
+      - "3935:1935"
+      - "8000:8000"
     volumes:
-      - ./mysql-data:/var/lib/mysql
-  redis:
-    image: redis:6
+      - ../hls:/usr/local/nginx/html/hls
+      - ../savefile:/usr/local/nginx/html/savefile
+      - ../thumbnail:/usr/local/nginx/html/thumbnail
     restart: always
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./redis-data:/data
