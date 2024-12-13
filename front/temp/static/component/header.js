@@ -3,7 +3,7 @@ let headerComponent = {
     `
         <div class="px-5 py-2 flex items-center justify-between shadow-lg">
             <div class="flex">
-                <a href="/" class="flex items-center">
+                <a href="/temp/static" class="flex items-center">
                     <img src="/asset/logo.png" style="width: 150px">
                 </a>
             </div>
