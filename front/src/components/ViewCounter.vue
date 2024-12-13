@@ -1,7 +1,7 @@
 <script setup>
 import {onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
-import {getAxios, postAxios} from "@/module/AxiosFactory.js";
+import instance from "@/module/AxiosFactory.js";
 
 const route = useRoute();
 const channel = route.params.channel;
@@ -24,19 +24,19 @@ onMounted(() => {
   });
 });
 
-function addViewer() {
-  postAxios('/api/stage/viewer/' + channel);
+const addViewer = () => {
+  instance.post('/api/stage/viewer/' + channel);
 }
 
-function getViewerCount() {
-  let callback = function (result) {
-    viewerCount.value = result.message;
-  };
-  getAxios('/api/stage/viewer/' + channel, {}, callback);
+const getViewerCount = () => {
+  instance.get('/api/stage/viewer/' + channel).then(response => {
+    viewerCount.value = response.data.message;
+  });
 }
 
-function heartbeat() {
-  postAxios('/api/stage/viewer/' + channel, {}, function () {
+const heartbeat = () => {
+  instance.post('/api/stage/viewer/' + channel).catch(error => {
+    console.error(error);
   });
 }
 </script>

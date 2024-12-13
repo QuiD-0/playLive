@@ -1,48 +1,27 @@
 import axios from "axios";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const SERVER_URL = import.meta.env.VITE_API_URL;
+
 const instance = axios.create({
     baseURL: SERVER_URL,
-    timeout: 3000,
-    // headers: {'Authorization': 'Bearer ' + }
+    withCredentials: true,
+    headers: {'Content-Type': 'application/json'}
 });
 
-export function getAxios(url, data, callback) {
-    instance.get(url, data)
-        .then(function (response) {
-            callback(response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+instance.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        if (error.response && error.response.status === 401) {
+            instance.get("/logout")
+                .then(_ => {
+                    window.location.href = '/login';
+                })
+        }
 
-export function postAxios(url, data, callback) {
-    instance.post(url, data)
-        .then(function (response) {
-            callback(response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+        return Promise.reject(error);
+    }
+);
 
-export function putAxios(url, data, callback) {
-    instance.put(url, data)
-        .then(function (response) {
-            callback(response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-export function deleteAxios(url, data, callback) {
-    instance.delete(url, data)
-        .then(function (response) {
-            callback(response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+export default instance;
