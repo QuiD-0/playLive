@@ -13,7 +13,7 @@ onMounted(() => {
 
 function playHls(channel) {
   let video = document.getElementById('video-player');
-  let videoSrc = MEDIA_URL+"/hls/" + channel + ".m3u8";
+  let videoSrc = MEDIA_URL + "/hls/" + channel + ".m3u8";
 
   if (video.canPlayType('application/vnd.apple.mpegurl')) {
     video.src = videoSrc;

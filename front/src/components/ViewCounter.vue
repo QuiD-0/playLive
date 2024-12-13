@@ -22,17 +22,14 @@ onMounted(() => {
 });
 
 function addViewer() {
-  postAxios('/api/stage/viewer/' + channel, {}, function (){
-    console.log('Viewer added');
-  });
+  postAxios('/api/stage/viewer/' + channel);
 }
 
 function getViewerCount() {
-  console.log('Getting viewer count');
-  getAxios('/api/stage/viewer/' + channel, {}, function (result) {
+  let callback = function (result) {
     viewerCount.value = result.message;
-    console.log('Viewer count: ' + viewerCount.value);
-  });
+  };
+  getAxios('/api/stage/viewer/' + channel, {}, callback);
 }
 
 function heartbeat() {
