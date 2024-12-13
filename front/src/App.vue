@@ -1,9 +1,11 @@
 <script setup>
+import Header from "@/components/header/Header.vue";
 </script>
 
 <template>
   <main>
-    <RouterView />
+    <Header/>
+    <RouterView/>
   </main>
 </template>
 

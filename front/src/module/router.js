@@ -1,15 +1,20 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Home from "@/components/Home.vue";
-import Live from "@/components/Live.vue";
+import Live from "@/components/live/Live.vue";
+import LiveList from "@/components/home/LiveList.vue";
+import MyPage from "@/components/mypage/MyPage.vue";
 
 const routes = [
     {
         path: '/',
-        component: Home
+        component: LiveList
     },
     {
         path: '/live/:channel',
         component: Live
+    },
+    {
+        path: '/me',
+        component: MyPage
     }
 ]
 
