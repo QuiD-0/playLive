@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, onUnmounted, ref} from 'vue';
+import {onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
 import {getAxios, postAxios} from "@/module/AxiosFactory.js";
 
@@ -7,8 +7,11 @@ const route = useRoute();
 const channel = route.params.channel;
 const viewerCount = ref(0);
 
-onMounted(() => {
+onBeforeMount(() => {
   addViewer();
+});
+
+onMounted(() => {
   getViewerCount();
   heartbeat();
 
