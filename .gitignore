@@ -43,4 +43,5 @@ out/
 /infra/redis-data/
 /infra/mysql-data/
 
-/src/main/resources/application-live.yaml
+/src/main/resources/application-mac.yaml
+/src/main/resources/application-win.yaml
