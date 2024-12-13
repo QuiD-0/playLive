@@ -4,6 +4,7 @@ import {onMounted} from "vue";
 import Hls from 'hls.js';
 
 const route = useRoute();
+const MEDIA_URL = import.meta.env.VITE_MEDIA_URL;
 
 onMounted(() => {
   const channel = route.params.channel;
@@ -11,9 +12,8 @@ onMounted(() => {
 });
 
 function playHls(channel) {
-  console.log(channel);
   let video = document.getElementById('video-player');
-  let videoSrc = "http://119.194.51.71:8000/hls/" + channel + ".m3u8";
+  let videoSrc = MEDIA_URL+"/hls/" + channel + ".m3u8";
 
   if (video.canPlayType('application/vnd.apple.mpegurl')) {
     video.src = videoSrc;

@@ -1,6 +1,6 @@
+import com.github.gradle.node.npm.task.NpmTask
 import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
     id 'org.springframework.boot' version '3.2.4'
@@ -53,6 +53,9 @@ node {
 }
 
 tasks.register('buildFront', NpmTask) {
+    doFirst {
+        delete fileTree("${project.projectDir}/src/main/resources/static")
+    }
     dependsOn 'npmInstall'
     args = ['run', 'build']
 }

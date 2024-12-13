@@ -1,6 +1,6 @@
-import VideoBox from "@/components/VideoBox.vue";
-import Home from "@/components/Home.vue";
 import {createRouter, createWebHistory} from "vue-router";
+import Home from "@/components/Home.vue";
+import Live from "@/components/Live.vue";
 
 const routes = [
     {
@@ -9,7 +9,7 @@ const routes = [
     },
     {
         path: '/live/:channel',
-        component: VideoBox
+        component: Live
     }
 ]
 
