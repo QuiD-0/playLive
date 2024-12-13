@@ -7,9 +7,4 @@ services:
     ports:
       - "3935:1935"
       - "8000:8000"
-      - "8800:8800"
-    volumes:
-      - ../hls:/usr/local/nginx/html/hls
-      - ../savefile:/usr/local/nginx/html/savefile
-      - ../thumbnail:/usr/local/nginx/html/thumbnail
     restart: always
