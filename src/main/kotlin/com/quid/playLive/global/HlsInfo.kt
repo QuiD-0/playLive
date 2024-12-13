@@ -1,19 +1,11 @@
 package com.quid.playLive.global
 
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import org.springframework.boot.context.properties.ConfigurationProperties
 
-@Configuration
-class HlsInfo {
-
-    @Bean
-    fun livePath() = ResourcePath(
-        video = "/home/ubuntu/hls",
-        radio = "/home/ubuntu/radio"
-    )
-}
-
+@ConfigurationProperties(prefix = "hls")
 data class ResourcePath(
     val video: String,
-    val radio: String
+    val radio: String,
+    val thumbnail: String,
+    val basePath: String,
 )

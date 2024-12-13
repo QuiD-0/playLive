@@ -11,3 +11,8 @@ server:
 
 jwt:
   secret: thisIsSecretKeyForTokenPleaseChangeItWhenYouDeploy
+hls:
+  base-path: /home/ubuntu
+  video: /home/ubuntu/video
+  radio: /home/ubuntu/radio
+  thumbnail: /home/ubuntu/thumbnail
