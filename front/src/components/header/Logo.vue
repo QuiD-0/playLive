@@ -1,7 +1,6 @@
 <template>
   <a href="/">
-    <img src=""
-         alt="jaezzck Logo"/>
+    <img src="@/assets/jaezzck.png" alt="jaezzck Logo"/>
   </a>
 </template>
 
