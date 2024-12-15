@@ -1,7 +1,17 @@
+<script setup>
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+
+const home = () => {
+  router.push("/");
+};
+</script>
+
 <template>
-    <a href="/">
+    <div @click="home">
       <img src="@/assets/jaezzck.png" alt="jaezzck Logo"/>
-    </a>
+    </div>
 </template>
 
 <style scoped>
@@ -11,5 +21,3 @@ img {
   width: 90px;
 }
 </style>
-<script setup lang="ts">
-</script>

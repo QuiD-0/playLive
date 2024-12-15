@@ -4,13 +4,13 @@ import Logo from "@/components/header/Logo.vue";
 
 
 <template>
-  <div class="logoContainer">
+  <div class="logo__container">
     <Logo/>
   </div>
 </template>
 
 <style scoped>
-.logoContainer {
+.logo__container {
   display: flex;
   justify-content: center;
   align-items: center;
