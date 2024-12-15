@@ -1,5 +1,6 @@
 package com.quid.playLive.global.security
 
+import com.quid.playLive.global.CorsConfig
 import com.quid.playLive.global.security.filter.FilterAuthenticationEntryPoint
 import com.quid.playLive.global.security.filter.JwtAuthenticationFailureHandler
 import com.quid.playLive.global.security.filter.JwtAuthenticationFilter
@@ -30,6 +31,7 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf { it.disable() }
             .formLogin { it.disable() }
+            .cors { CorsConfig() }
             .httpBasic { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(

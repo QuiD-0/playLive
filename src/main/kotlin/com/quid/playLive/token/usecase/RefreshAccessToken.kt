@@ -3,6 +3,7 @@ package com.quid.playLive.token.usecase
 import com.quid.playLive.token.domain.AccessToken
 import com.quid.playLive.token.domain.Payload
 import com.quid.playLive.token.domain.Token
+import com.quid.playLive.token.gateway.api.model.AccessTokenResponse
 import com.quid.playLive.token.gateway.repository.RefreshTokenRepository
 import org.springframework.stereotype.Service
 
@@ -34,6 +35,3 @@ fun interface RefreshAccessToken {
     }
 }
 
-data class AccessTokenResponse(
-    val accessToken: String
-)
