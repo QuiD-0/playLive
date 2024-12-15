@@ -25,13 +25,14 @@ class SecurityConfig(
     private val jwtAuthenticationFailureHandler: JwtAuthenticationFailureHandler,
     private val userAuthService: UserAuthService,
     private val jwtTokenDecoder: TokenDecoder,
+    private val corsConfig: CorsConfig
 ) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf { it.disable() }
             .formLogin { it.disable() }
-            .cors { CorsConfig() }
+            .cors { it.configurationSource(corsConfig) }
             .httpBasic { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(
