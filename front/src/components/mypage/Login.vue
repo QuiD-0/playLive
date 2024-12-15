@@ -1,29 +1,48 @@
 <script setup>
-import {useRouter} from "vue-router";
-import {ref} from "vue";
 import instance from "@/module/axiosFactory.js"
 import userStore from "@/state/userStore.js";
+import {useRouter} from "vue-router";
+import {ref} from "vue";
+import {errorToast} from "@/module/toast.js";
+import User from "@/model/User.js";
 
 const router = useRouter();
 const id = ref('');
 const password = ref('');
 
 const login = () => {
-  instance.post('/api/member/login', {
-    username: id,
-    password: password
-  }).then(response => {
-    userStore.commit('setAccessToken', response.data.accessToken);
-    userStore.commit('setRefreshToken', response.data.refreshToken);
-    router.back();
-  }).catch(error => {
-    console.error(error);
-  });
+      let request = new User(id.value, password.value);
+      if (request.validate()) {
+        instance.post('/api/member/login', request)
+            .then(response => {
+              userStore.commit('setAccessToken', response.data.message.accessToken);
+              userStore.commit('setRefreshToken', response.data.message.refreshToken);
+              getUserInfo();
+            })
+            .catch(error => {
+              errorToast(error.response.data.message);
+            });
+      } else {
+        errorToast(request.message);
+      }
+    }
+;
+
+const getUserInfo = () => {
+  instance.get('/api/member/me')
+      .then(response => {
+        userStore.commit('setUser', response.data.message);
+        router.push('/');
+      })
+      .catch(error => {
+        errorToast(error.response.data.message);
+      });
 };
 
-const signup = () => {
+const signUpPage = () => {
   router.push('/signup');
 };
+
 </script>
 
 <template>
@@ -33,15 +52,15 @@ const signup = () => {
         로그인
       </div>
       <div class="login__container__input">
-        <input type="text" placeholder="아이디"/>
-        <input type="password" placeholder="비밀번호"/>
+        <input type="text" placeholder="아이디" v-model="id"/>
+        <input type="password" placeholder="비밀번호" v-model="password"/>
       </div>
       <div class="login__container__button">
         <button @click="login">로그인</button>
       </div>
       <div class="divider"/>
       <div class="signup__button">
-        <button @click="signup">회원가입</button>
+        <button @click="signUpPage">회원가입</button>
       </div>
     </div>
   </div>

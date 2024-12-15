@@ -17,10 +17,8 @@ const loginPage = () => {
 <style scoped>
 .login__button {
   color: gainsboro;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
-  border: gainsboro 2px solid;
-  border-radius: 7px;
   padding: 5px 10px;
 }
 .login__button:hover {
