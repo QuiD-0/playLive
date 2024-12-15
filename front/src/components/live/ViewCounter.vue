@@ -1,7 +1,7 @@
 <script setup>
 import {onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
-import instance from "@/module/AxiosFactory.js";
+import instance from "@/module/axiosFactory.js";
 
 const route = useRoute();
 const channel = route.params.channel;

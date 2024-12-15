@@ -29,7 +29,7 @@ data class Payload(
     companion object {
         fun accessType(username: String) = Payload(
             sub = TokenType.ACCESS,
-            exp = LocalDateTime.now().plusMinutes(30),
+            exp = LocalDateTime.now().plusMinutes(60),
             username = username
         )
 

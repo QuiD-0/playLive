@@ -1,12 +1,12 @@
 <script setup>
-import Logo from "@/components/header/Logo.vue";
+import LogoContainer from "@/components/header/LogoContainer.vue";
+import ProfileContainer from "@/components/header/ProfileContainer.vue";
 </script>
 
 <template>
   <div class="header">
-    <Logo/>
-<!--    <SearchBox/>-->
-<!--    <Profile/>-->
+    <LogoContainer/>
+    <ProfileContainer/>
   </div>
 </template>
 
@@ -24,6 +24,6 @@ import Logo from "@/components/header/Logo.vue";
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 100px;
+  margin: 0 auto;
 }
 </style>
