@@ -23,7 +23,6 @@ const loginPage = () => {
 }
 .login__button:hover {
   color: white;
-  background-color: gainsboro;
   cursor: pointer;
   transition: color 0.2s, background-color 0.2s;
 }

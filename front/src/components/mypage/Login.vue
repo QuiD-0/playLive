@@ -1,42 +1,14 @@
 <script setup>
-import instance from "@/module/axiosFactory.js"
-import userStore from "@/state/userStore.js";
 import {useRouter} from "vue-router";
 import {ref} from "vue";
-import {errorToast} from "@/module/toast.js";
-import User from "@/model/User.js";
+import {login} from "@/module/loginModule.js";
 
 const router = useRouter();
 const id = ref('');
 const password = ref('');
 
-const login = () => {
-      let request = new User(id.value, password.value);
-      if (request.validate()) {
-        instance.post('/api/member/login', request)
-            .then(response => {
-              userStore.commit('setAccessToken', response.data.message.accessToken);
-              userStore.commit('setRefreshToken', response.data.message.refreshToken);
-              getUserInfo();
-            })
-            .catch(error => {
-              errorToast(error.response.data.message);
-            });
-      } else {
-        errorToast(request.message);
-      }
-    }
-;
-
-const getUserInfo = () => {
-  instance.get('/api/member/me')
-      .then(response => {
-        userStore.commit('setUser', response.data.message);
-        router.push('/');
-      })
-      .catch(error => {
-        errorToast(error.response.data.message);
-      });
+const loginProcess = async () => {
+  login(id.value, password.value);
 };
 
 const signUpPage = () => {
@@ -56,7 +28,7 @@ const signUpPage = () => {
         <input type="password" placeholder="비밀번호" v-model="password"/>
       </div>
       <div class="login__container__button">
-        <button @click="login">로그인</button>
+        <button @click="loginProcess">로그인</button>
       </div>
       <div class="divider"/>
       <div class="signup__button">

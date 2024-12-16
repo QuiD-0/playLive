@@ -3,6 +3,7 @@ import Live from "@/components/live/Live.vue";
 import LiveList from "@/components/home/LiveList.vue";
 import MyPage from "@/components/mypage/MyPage.vue";
 import Login from "@/components/mypage/Login.vue";
+import SignUp from "@/components/mypage/SignUp.vue";
 
 const routes = [
     {
@@ -12,6 +13,10 @@ const routes = [
     {
         path: '/login',
         component: Login
+    },
+    {
+        path: '/signup',
+        component: SignUp
     },
     {
         path: '/live/:channel',
