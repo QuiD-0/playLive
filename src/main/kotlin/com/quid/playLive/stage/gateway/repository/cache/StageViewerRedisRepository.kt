@@ -1,9 +1,27 @@
 package com.quid.playLive.stage.gateway.repository.cache
 
-import org.springframework.data.repository.CrudRepository
-import org.springframework.stereotype.Component
+import com.quid.playLive.stage.domain.StageViewer
+import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.stereotype.Repository
+import java.time.Duration
 
-@Component
-interface StageViewerRedisRepository : CrudRepository<StageViewerRedisHash, String>{
-    fun findByChannel(channel: String): StageViewerRedisHash?
+@Repository
+class StageViewerRedisRepository(
+    private val redisTemplate: RedisTemplate<String, String>
+) {
+    fun save(stageViewerRedisHash: StageViewerRedisHash) {
+        redisTemplate.opsForValue().set(
+            stageViewerRedisHash.keyString,
+            "",
+            Duration.ofSeconds(30)
+        )
+    }
+
+    fun findCountByChannel(channel: String): List<StageViewer> {
+        val keys = redisTemplate.keys("$channel:*")
+        return keys.map {
+            val split = it.split(":")
+            StageViewer(split[0], split[1])
+        }
+    }
 }
