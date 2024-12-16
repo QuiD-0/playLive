@@ -17,7 +17,6 @@ import ProfileContainer from "@/components/header/ProfileContainer.vue";
   height: 60px;
   left: 0;
   min-width: 800px;
-  position: fixed;
   top: 0;
   width: 100%;
   z-index: 11000;

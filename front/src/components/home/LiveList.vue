@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    <h2><strong>Now</strong> Live</h2>
+    Now Live
   </div>
 </template>
 
