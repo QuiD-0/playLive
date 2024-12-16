@@ -7,8 +7,9 @@ const router = useRouter();
 const id = ref('');
 const password = ref('');
 
-const loginProcess = async () => {
+const loginProcess = () => {
   login(id.value, password.value);
+  router.back();
 };
 
 const signUpPage = () => {

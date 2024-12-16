@@ -148,6 +148,7 @@ import instance from "@/module/axiosFactory.js"
 import {ref} from "vue";
 import {errorToast} from "@/module/toast.js";
 import {login} from "@/module/loginModule.js";
+import router from "@/module/router.js";
 
 const id = ref('');
 const password = ref('');
@@ -163,6 +164,7 @@ const signUp = () => {
   instance.post('/api/member/register', request)
       .then(response => {
         login(id.value, password.value);
+        router.push('/');
       })
       .catch(error => {
         errorToast(error.response.data.message);

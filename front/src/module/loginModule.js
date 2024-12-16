@@ -24,7 +24,6 @@ function getUserInfo() {
     instance.get('/api/member/me')
         .then(response => {
             userStore.commit('setUser', response.data.message);
-            window.location.href = '/';
         })
         .catch(error => {
             console.log(error);
