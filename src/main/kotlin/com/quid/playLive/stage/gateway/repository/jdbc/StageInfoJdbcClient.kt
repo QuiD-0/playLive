@@ -37,7 +37,7 @@ class StageInfoJdbcClient(
             FROM
                 member m left join stage_info s on m.id = s.member_id
             WHERE
-                m.is_live_on = 1
+                s.is_live_on = 1
         """.trimIndent()
 
         val count = jdbc

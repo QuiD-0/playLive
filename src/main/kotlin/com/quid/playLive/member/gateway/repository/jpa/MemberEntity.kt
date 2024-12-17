@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 @Table(name = "member", indexes = [Index(name = "IDX_MEMBER_USERNAME", columnList = "username")])
 class MemberEntity(
     @Id
-    @Column(name = "member_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
