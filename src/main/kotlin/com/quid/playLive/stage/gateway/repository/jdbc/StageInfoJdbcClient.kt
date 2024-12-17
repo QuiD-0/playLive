@@ -22,9 +22,9 @@ class StageInfoJdbcClient(
             FROM
                 member m left join stage_info s on m.id = s.member_id
             WHERE
-                m.is_live_on = 1
+                s.is_live_on = 1
             ORDER BY
-                s.created_at DESC
+                s.live_start_date_time DESC
             LIMIT
                 ${pageable.pageSize}
             OFFSET
