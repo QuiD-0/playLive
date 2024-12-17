@@ -1,37 +1,35 @@
 package com.quid.playLive.stage.usecase
 
-import com.quid.playLive.stage.domain.UptimeDisplay
-import com.quid.playLive.stage.gateway.repository.OnAirRepository
+import com.quid.playLive.stage.gateway.repository.StageInfoRepository
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 interface OnAir {
 
     fun start(channel: String)
     fun stop(channel: String)
-    fun findBy(channel: String): UptimeDisplay
-    fun exists(channel: String): Boolean
-    fun list(): List<String>
+    fun findStartDateTimeBy(channel: String): LocalDateTime
+    fun isOnAir(channel: String): Boolean
 
     @Service
     class StageOnAir(
-        private val repository: OnAirRepository
+        private val repository: StageInfoRepository
     ) : OnAir {
         override fun start(channel: String) {
-            repository.save(channel, System.currentTimeMillis())
+            val stageInfo = repository.findByChannel(channel)
+            repository.save(stageInfo.onAir())
         }
 
         override fun stop(channel: String) {
-            repository.delete(channel)
+            val stageInfo = repository.findByChannel(channel)
+            repository.save(stageInfo.offAir())
         }
 
-        override fun findBy(channel: String): UptimeDisplay =
-            repository.findByChannel(channel)
+        override fun findStartDateTimeBy(channel: String): LocalDateTime =
+            repository.findByChannel(channel).onAirInfo.liveStartDateTime
+                ?: throw IllegalArgumentException("Channel $channel is not on air")
 
-        override fun exists(channel: String): Boolean =
-            repository.existsById(channel)
-
-        override fun list(): List<String> =
-            repository.findAll()
+        override fun isOnAir(channel: String): Boolean =
+            repository.findByChannel(channel).onAirInfo.isLiveOn
     }
-
 }

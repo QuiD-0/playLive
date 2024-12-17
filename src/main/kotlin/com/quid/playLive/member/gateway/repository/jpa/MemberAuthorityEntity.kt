@@ -14,11 +14,11 @@ import java.time.LocalDateTime
 @Table(name = "member_authority")
 class MemberAuthorityEntity(
     @Id
-    @Column(name = "member_authority_seq")
+    @Column(name = "id")
     @GeneratedValue(strategy = IDENTITY)
     val id: Long?,
-    @Column(name = "member_seq")
-    val memberSeq: Long,
+    @Column(name = "member_id")
+    val memberId: Long,
     @Column(name = "authority")
     val authority: String,
     @Column(name = "reg_date")
@@ -28,7 +28,7 @@ class MemberAuthorityEntity(
 ) {
     constructor(authority: MemberAuthority) : this(
         authority.id,
-        authority.memberSeq,
+        authority.memberId,
         authority.authority.name,
         authority.regDate,
         authority.deleted,
@@ -36,7 +36,7 @@ class MemberAuthorityEntity(
 
     fun toDomain() = MemberAuthority(
         id,
-        memberSeq,
+        memberId,
         AuthType.valueOf(authority),
         regDate,
         deleted,

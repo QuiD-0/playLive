@@ -4,14 +4,14 @@ import java.time.LocalDateTime
 
 data class MemberAuthority(
     val id: Long? = null,
-    val memberSeq: Long,
+    val memberId: Long,
     val authority: AuthType,
     val regDate: LocalDateTime = LocalDateTime.now(),
     val deleted: Boolean = false,
 ) {
-    constructor(memberSeq: Long, authType: AuthType = AuthType.ROLE_USER) : this(
+    constructor(memberId: Long, authType: AuthType = AuthType.ROLE_USER) : this(
         null,
-        memberSeq,
+        memberId,
         authType
     )
 

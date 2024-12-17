@@ -22,15 +22,16 @@ class SignUpInitEventListener(
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun onSignUpInitEvent(event: SignUpInitEvent) {
-        log.info("SignUpInitEvent: {}", event.memberSeq)
-        val memberSeq = event.memberSeq
-        authorityRepository.save(MemberAuthority(memberSeq))
-        stageInfo.save(StageInfo(memberSeq))
+        log.info("SignUpInitEvent: {}", event.memberId)
+
+        val memberId = event.memberId
+        authorityRepository.save(MemberAuthority(memberId))
+        stageInfo.save(StageInfo(memberId))
     }
 }
 
 data class SignUpInitEvent(
-    val memberSeq: Long,
-) : ApplicationEvent(memberSeq) {
-    override fun getSource(): Long = memberSeq
+    val memberId: Long,
+) : ApplicationEvent(memberId) {
+    override fun getSource(): Long = memberId
 }

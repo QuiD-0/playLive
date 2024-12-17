@@ -14,7 +14,7 @@ interface UpdateStageInfo {
     ) : UpdateStageInfo {
         override fun invoke(request: StageInfoUpdateRequest, member: MemberDetail) {
             require(request.isSameChannel(member)) { "Unauthorized" }
-            stageInfo.findByMemberSeq(member.id).toDomain()
+            stageInfo.findByMemberId(member.id)
                 .run { this.updateTitleAndDescription(request) }
                 .let { stageInfo.save(it) }
         }

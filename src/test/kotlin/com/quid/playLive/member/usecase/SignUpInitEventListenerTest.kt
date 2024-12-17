@@ -32,7 +32,7 @@ class SignUpInitEventListenerTest(
 
     @AfterTransaction
     fun afterTransaction() {
-        val stage = stageInfoRepository.findByMemberSeq(member.id!!)
+        val stage = stageInfoRepository.findByMemberId(member.id!!)
         assertNotNull(stage)
     }
 

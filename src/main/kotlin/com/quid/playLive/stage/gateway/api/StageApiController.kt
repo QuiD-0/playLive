@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/stage")
 class StageApiController(
-    private val onAir: OnAir,
-) {
+    private val onAir: OnAir
+    ) {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping("/check/{channel}")
-    fun checkLive(@PathVariable channel: String) = Success { onAir.exists(channel) }
+    fun checkLive(@PathVariable channel: String) = Success { onAir.isOnAir(channel) }
 
     @PostMapping("/play", consumes = ["application/x-www-form-urlencoded"])
     fun play(request: NginxNotifyRequest) {

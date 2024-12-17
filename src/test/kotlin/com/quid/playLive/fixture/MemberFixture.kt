@@ -18,7 +18,7 @@ class MemberFixture {
 
         val authority = MemberAuthority(
             id = 1L,
-            memberSeq = 1L,
+            memberId = 1L,
             authority = AuthType.ROLE_USER
         )
 

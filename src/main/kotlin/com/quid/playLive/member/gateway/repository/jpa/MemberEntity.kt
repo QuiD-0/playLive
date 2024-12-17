@@ -1,14 +1,20 @@
 package com.quid.playLive.member.gateway.repository.jpa
 
 import com.quid.playLive.member.domain.Member
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Index
+import jakarta.persistence.Table
 import java.time.LocalDateTime
 
 @Entity
 @Table(name = "member", indexes = [Index(name = "IDX_MEMBER_USERNAME", columnList = "username")])
 class MemberEntity(
     @Id
-    @Column(name = "member_seq")
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
