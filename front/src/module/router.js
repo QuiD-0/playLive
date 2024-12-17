@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Live from "@/components/live/Live.vue";
-import LiveList from "@/components/home/LiveList.vue";
+import LiveList from "@/components/live/LiveList.vue";
 import MyPage from "@/components/mypage/MyPage.vue";
 import Login from "@/components/mypage/Login.vue";
 import SignUp from "@/components/mypage/SignUp.vue";

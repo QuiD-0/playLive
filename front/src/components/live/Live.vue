@@ -12,14 +12,14 @@ const isLoading = ref(true); // 로딩 상태
 
 onBeforeMount(async () => {
   await findChannel();
-  isLoading.value = false; // API 호출이 끝난 후 로딩 상태 종료
+  isLoading.value = false;
 });
 
 const findChannel = async () => {
   try {
     const channel = route.params.channel;
     const response = await instance.get(`/api/member/check-available/${channel}`);
-    isAvailable.value = response.data.message; // 결과 설정
+    isAvailable.value = response.data.message;
   } catch (error) {
     console.error("Error fetching channel:", error);
     isAvailable.value = false;
