@@ -36,7 +36,10 @@ const heartbeat = () => {
 </script>
 
 <template>
-  <div>
+  <div class="view-counter">
     <span>{{ viewerCount }}</span><span>명 시청중</span>
   </div>
 </template>
+
+<style scoped>
+</style>
