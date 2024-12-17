@@ -1,8 +1,8 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import instance from "@/module/axiosFactory.js";
+import Thumbnail from "@/components/live/Thumbnail.vue";
 
-const THUMBNAIL = import.meta.env.VITE_MEDIA_URL;
 const lives = ref([]);
 
 onMounted(async () => {
@@ -21,13 +21,12 @@ const fetchLives = async () => {
       Now Live!
     </div>
     <div class="live__box">
-      <div v-for="live in lives" :key="live.id" class="live__card">
-        <img
-            class="thumbnail"
-            :src="THUMBNAIL+'/thumbnail/' +live.username+'.jpg'"
-            alt="thumbnail"
-            onerror="this.src='https://afreehp.kr/update/bnr/bnr_penalty_type_1.png'"
-        >
+      <div
+          v-for="live in lives"
+          :key="live.id"
+          class="live__card"
+          @click="$router.push(`/live/${live.username}`)">
+        <Thumbnail :channel="live.username"/>
         <div class="title">{{ live.title }}</div>
         <div class="nickname">{{ live.nickname }}</div>
       </div>
@@ -71,10 +70,5 @@ const fetchLives = async () => {
 .nickname {
   font-size: 1rem;
   color: gray;
-}
-
-.thumbnail {
-  width: 300px;
-  border-radius: 10px;
 }
 </style>
