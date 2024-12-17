@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import instance from "@/module/axiosFactory.js";
-import Thumbnail from "@/components/live/Thumbnail.vue";
+import LiveCard from "@/components/live/LiveCard.vue";
 
 const lives = ref([]);
 
@@ -17,19 +17,9 @@ const fetchLives = async () => {
 
 <template>
   <div class="main__container">
-    <div class="heading">
-      Now Live!
-    </div>
+    <div class="heading">Now Live!</div>
     <div class="live__box">
-      <div
-          v-for="live in lives"
-          :key="live.id"
-          class="live__card"
-          @click="$router.push(`/live/${live.username}`)">
-        <Thumbnail :channel="live.username"/>
-        <div class="title">{{ live.title }}</div>
-        <div class="nickname">{{ live.nickname }}</div>
-      </div>
+      <LiveCard v-for="live in lives" :key="live.id" :live="live"/>
     </div>
   </div>
 </template>
@@ -53,22 +43,5 @@ const fetchLives = async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-}
-
-.live__card {
-  display: inline-block;
-  width: 300px;
-  height: 230px;
-  margin: 10px;
-}
-
-.title {
-  height: 23px;
-  font-size: 1.2rem;
-}
-
-.nickname {
-  font-size: 1rem;
-  color: gray;
 }
 </style>
