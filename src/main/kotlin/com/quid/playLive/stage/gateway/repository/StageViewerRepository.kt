@@ -11,15 +11,15 @@ interface StageViewerRepository {
 
     @Repository
     class StageViewerRepositoryImpl(
-        private val cache: StageViewerRedisRepository
+        private val redis: StageViewerRedisRepository
     ) : StageViewerRepository {
 
         override fun save(it: StageViewer) {
-            cache.save(StageViewerRedisHash(it))
+            redis.save(StageViewerRedisHash(it))
         }
 
         override fun findCountByChannel(channel: String): List<StageViewer> {
-            return cache.findCountByChannel(channel)
+            return redis.findCountByChannel(channel)
         }
     }
 }

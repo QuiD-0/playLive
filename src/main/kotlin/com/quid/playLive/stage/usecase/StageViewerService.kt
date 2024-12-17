@@ -1,15 +1,20 @@
 package com.quid.playLive.stage.usecase
 
+import com.quid.playLive.stage.domain.StageViewer
 import com.quid.playLive.stage.gateway.repository.StageViewerRepository
 import org.springframework.stereotype.Service
 
-interface FindStageViewer {
+interface StageViewerService {
+    fun add(channel: String, uuid: String)
     fun byChannel(channel: String): List<String>
 
     @Service
-    class FindStageViewerImpl(
+    class StageViewerServiceImpl(
         private val repository: StageViewerRepository
-    ) : FindStageViewer {
+    ): StageViewerService {
+        override fun add(channel: String, uuid: String): Unit =
+              repository.save(StageViewer(channel, uuid))
+
         override fun byChannel(channel: String): List<String> =
             repository.findCountByChannel(channel)
                 .map { it.clientUuid }

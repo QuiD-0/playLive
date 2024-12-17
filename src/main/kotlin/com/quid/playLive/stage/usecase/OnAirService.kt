@@ -4,7 +4,7 @@ import com.quid.playLive.stage.gateway.repository.StageInfoRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
-interface OnAir {
+interface OnAirService {
 
     fun start(channel: String)
     fun stop(channel: String)
@@ -12,9 +12,9 @@ interface OnAir {
     fun isOnAir(channel: String): Boolean
 
     @Service
-    class StageOnAir(
+    class StageOnAirService(
         private val repository: StageInfoRepository
-    ) : OnAir {
+    ) : OnAirService {
         override fun start(channel: String) {
             val stageInfo = repository.findByChannel(channel)
             repository.save(stageInfo.onAir())
