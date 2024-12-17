@@ -23,6 +23,11 @@ const store = new Vuex.Store({
             if(state.clientUUID == null) {
                 state.clientUUID = uuidv4();
             }
+        },
+        logout(state) {
+            state.user = null;
+            state.accessToken = null;
+            state.refreshToken = null;
         }
     },
     plugins: [createPersistedState()]

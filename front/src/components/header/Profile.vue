@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue';
 import userStore from "@/state/userStore.js";
+import instance from "@/module/axiosFactory.js";
 
 const isModalVisible = ref(false);
 const profileRef = ref(null);
@@ -16,6 +17,13 @@ function toggleModal() {
     };
   }
 }
+
+const logout = () => {
+  instance.post("/api/member/logout");
+  userStore.commit("logout");
+  isModalVisible.value = false;
+};
+
 </script>
 
 <template>
@@ -36,7 +44,7 @@ function toggleModal() {
       <div class="modal__content__body">
         <div>스튜디오</div>
         <div>내 정보</div>
-        <div>로그아웃</div>
+        <div @click="logout">로그아웃</div>
       </div>
     </div>
   </div>
