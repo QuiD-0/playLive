@@ -49,13 +49,14 @@ video::-webkit-media-controls-timeline {
 .video__container {
   display: inline-block;
   width: calc(100% - 400px);
+  min-width: 800px;
   padding: 0;
   margin: 0;
 }
 
 video {
-  width: 100%; /* 작은 화면에서 꽉 차게 */
-  margin: 0 auto; /* 가운데 정렬 */
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2); /* 그림자 효과 */
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
 }
 </style>
