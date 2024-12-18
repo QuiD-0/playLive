@@ -1,45 +1,45 @@
 <script setup>
 import ViewCounter from "@/components/live/ViewCounter.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, reactive} from "vue";
 import clientStore from "@/state/clientStore.js";
 import {instance} from "@/module/axiosFactory.js";
+import ProfileImg from "@/components/header/ProfileImg.vue";
 
 const channel = computed(() => clientStore.state.watchingChannel);
-const stage = ref({
+const stage = reactive({
   title: "",
   avatar: "",
   nickname: "",
   startDateTime: ""
 });
 
-const stageInfo = async () => {
+const getStageInfo = async () => {
   const response = await instance.get(`/api/stage/info/${channel.value}`);
   stage.value = response.data.message;
   await updateTitle()
 }
 
 const updateTitle = async () => {
-  document.title = stage.value.nickname + "-" + stage.value.title;
+  document.title = stage.nickname + "-" + stage.title;
 }
 
 onMounted(() => {
-  stageInfo()
+  getStageInfo()
 });
 </script>
 
 <template>
   <div class="stage__info">
-    <div class="stage__title">타이틀 입니당</div>
+    <div class="stage__title">{{ stage.title }}</div>
     <div>
       <div>
-        채널아바타
+        <ProfileImg :imgPath="stage.avatar"/>
       </div>
       <div>
-        <div>채널명</div>
-        <div>닉네임</div>
+        <div>{{ stage.nickname }}</div>
+        <ViewCounter/>
+        <div>uptime</div>
       </div>
-      <ViewCounter/>
-      <div>uptime</div>
     </div>
   </div>
 </template>
