@@ -62,16 +62,27 @@ const findChannel = async () => {
   display: flex;
   width: 90%;
   margin: 0 auto;
+  max-height: calc(100vh - 60px);
+  overflow: hidden;
 }
 
 .live__container__left {
   flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .live__container__right {
   max-width: 450px;
   width: 25%;
+  min-height: calc(100vh - 60px);
   background-color: gainsboro;
+  position: sticky;
+  top: 0;
 }
 
 </style>

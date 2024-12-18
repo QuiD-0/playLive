@@ -15,12 +15,16 @@ const stage = ref({
 const stageInfo = async () => {
   const response = await instance.get(`/api/stage/info/${channel.value}`);
   stage.value = response.data.message;
+  await updateTitle()
+}
+
+const updateTitle = async () => {
+  document.title = stage.value.nickname + "-" + stage.value.title;
 }
 
 onMounted(() => {
-  stageInfo();
+  stageInfo()
 });
-
 </script>
 
 <template>
