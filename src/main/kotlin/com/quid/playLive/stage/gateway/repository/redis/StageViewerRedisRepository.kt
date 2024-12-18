@@ -1,4 +1,4 @@
-package com.quid.playLive.stage.gateway.repository.cache
+package com.quid.playLive.stage.gateway.repository.redis
 
 import com.quid.playLive.stage.domain.StageViewer
 import org.springframework.data.redis.core.RedisTemplate

@@ -12,46 +12,33 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
-interface StageInfoRepository {
-    fun save(stageInfo: StageInfo)
-    fun findByChannel(channel: String): StageInfo
-    fun findById(stageInfoId: Long): StageInfo
-    fun findByMemberId(memberId: Long): StageInfo
-    fun findAllLiveChannel(pageable: Pageable): Page<MainStageResponse>
+@Repository
+class StageInfoRepository(
+    private val jpa: StageInfoJpaRepository,
+    private val jdbcClient: StageInfoJdbcClient
+) {
 
-    @Repository
-    class StageInfoRepositoryImpl(
-        private val jpa: StageInfoJpaRepository,
-        private val jdbcClient: StageInfoJdbcClient
-    ) : StageInfoRepository {
+    @Transactional
+    fun save(stageInfo: StageInfo) {
+        jpa.save(toEntity(stageInfo))
+    }
 
-        @Transactional
-        override fun save(stageInfo: StageInfo) {
-            jpa.save(toEntity(stageInfo))
-        }
+    @Transactional(readOnly = true)
+    fun findByChannel(channel: String): StageInfo {
+        return jdbcClient.findByChannel(channel)?.let { toDomain(it) }
+            ?: throw IllegalArgumentException("Stage not found")
+    }
 
-        @Transactional(readOnly = true)
-        override fun findByChannel(channel: String): StageInfo {
-            return jdbcClient.findByChannel(channel)
-                ?.let { toDomain(it) }
-                ?: throw IllegalArgumentException("Stage not found")
-        }
+    @Transactional(readOnly = true)
+    fun findById(stageInfoId: Long): StageInfo =
+        jpa.findByIdOrNull(stageInfoId)?.let { toDomain(it) } ?: throw IllegalArgumentException("Stage not found")
 
-        @Transactional(readOnly = true)
-        override fun findById(stageInfoId: Long): StageInfo =
-            jpa.findByIdOrNull(stageInfoId)
-                ?.let { toDomain(it) }
-                ?: throw IllegalArgumentException("Stage not found")
+    @Transactional(readOnly = true)
+    fun findByMemberId(memberId: Long): StageInfo =
+        jpa.findByMemberId(memberId)?.let { toDomain(it) } ?: throw IllegalArgumentException("Stage not found")
 
-        @Transactional(readOnly = true)
-        override fun findByMemberId(memberId: Long): StageInfo =
-            jpa.findByMemberId(memberId)
-                ?.let { toDomain(it) }
-                ?: throw IllegalArgumentException("Stage not found")
-
-        @Transactional(readOnly = true)
-        override fun findAllLiveChannel(pageable: Pageable): Page<MainStageResponse> {
-            return jdbcClient.findAllLiveChannel(pageable)
-        }
+    @Transactional(readOnly = true)
+    fun findAllLiveChannel(pageable: Pageable): Page<MainStageResponse> {
+        return jdbcClient.findAllLiveChannel(pageable)
     }
 }

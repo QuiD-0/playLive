@@ -3,6 +3,7 @@ package com.quid.playLive.stage.gateway.repository.jpa
 import com.quid.playLive.stage.domain.OnAirInfo
 import com.quid.playLive.stage.domain.StageInfo
 import com.quid.playLive.stage.domain.StreamKey
+import java.time.LocalDateTime
 
 fun toEntity(stageInfo: StageInfo): StageInfoEntity {
     return StageInfoEntity(
@@ -24,5 +25,14 @@ fun toDomain(stageInfoEntity: StageInfoEntity): StageInfo {
         description = stageInfoEntity.description,
         streamKey = StreamKey(stageInfoEntity.streamKey),
         onAirInfo = OnAirInfo(stageInfoEntity.isLiveOn, stageInfoEntity.liveStartDateTime)
+    )
+}
+
+fun toHistoryEntity(stageInfo: StageInfo): OnAirHistoryEntity {
+    return OnAirHistoryEntity(
+        memberId = stageInfo.memberId,
+        title = stageInfo.title,
+        startDateTime = stageInfo.onAirInfo.liveStartDateTime!!,
+        endDateTime = LocalDateTime.now()
     )
 }
