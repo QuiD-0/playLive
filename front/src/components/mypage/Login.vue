@@ -3,7 +3,7 @@ import {useRouter} from "vue-router";
 import {ref} from "vue";
 import User from "@/model/User.js";
 import {errorToast} from "@/module/toast.js";
-import instance from "@/module/axiosFactory.js";
+import {authInstance, instance} from "@/module/axiosFactory.js";
 import userStore from "@/state/userStore.js";
 
 const router = useRouter();
@@ -32,7 +32,7 @@ const login = () => {
 }
 
 const getUserInfo = () => {
-  instance.get('/api/member/me')
+  authInstance.get('/api/member/me')
       .then(response => {
         userStore.commit('setUser', response.data.message);
         router.back();

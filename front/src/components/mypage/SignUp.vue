@@ -1,5 +1,5 @@
 <script setup>
-import instance from "@/module/axiosFactory.js"
+import {authInstance, instance} from "@/module/axiosFactory.js"
 import {ref} from "vue";
 import {errorToast} from "@/module/toast.js";
 import router from "@/module/router.js";
@@ -44,7 +44,7 @@ const login = () => {
 }
 
 const getUserInfo = () => {
-  instance.get('/api/member/me')
+  authInstance.get('/api/member/me')
       .then(response => {
         userStore.commit('setUser', response.data.message);
         router.push('/');

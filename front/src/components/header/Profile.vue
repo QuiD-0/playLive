@@ -1,7 +1,7 @@
 <script setup>
 import {computed, ref} from 'vue';
 import userStore from "@/state/userStore.js";
-import instance from "@/module/axiosFactory.js";
+import {authInstance} from "@/module/axiosFactory.js";
 
 const AWS_CDN_PATH = import.meta.env.VITE_AWS_CDN_PATH;
 const isModalVisible = ref(false);
@@ -20,7 +20,7 @@ function toggleModal() {
 }
 
 const logout = () => {
-  instance.post("/api/member/logout");
+  authInstance.post("/api/member/logout");
   userStore.commit("logout");
   isModalVisible.value = false;
 };

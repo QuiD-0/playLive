@@ -1,6 +1,6 @@
 <script setup>
 import {computed, onMounted, onUnmounted, ref} from 'vue';
-import instance from "@/module/axiosFactory.js";
+import {instance} from "@/module/axiosFactory.js";
 import clientStore from "@/state/clientStore.js";
 
 const channel = computed(() => clientStore.state.watchingChannel);

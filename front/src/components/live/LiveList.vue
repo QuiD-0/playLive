@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import instance from "@/module/axiosFactory.js";
+import {instance} from "@/module/axiosFactory.js";
 import LiveCard from "@/components/live/LiveCard.vue";
 
 const lives = ref([]);

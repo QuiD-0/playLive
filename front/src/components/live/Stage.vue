@@ -2,7 +2,7 @@
 import ViewCounter from "@/components/live/ViewCounter.vue";
 import {computed, onMounted, ref} from "vue";
 import clientStore from "@/state/clientStore.js";
-import instance from "@/module/axiosFactory.js";
+import {instance} from "@/module/axiosFactory.js";
 
 const channel = computed(() => clientStore.state.watchingChannel);
 const stage = ref({

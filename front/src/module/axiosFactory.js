@@ -7,12 +7,20 @@ const instance = axios.create({
     baseURL: SERVER_URL,
     withCredentials: true,
     headers: {
-        'Content-Type': 'application/json',
-        ...(userStore.state.accessToken && { 'Authorization': 'Bearer ' + userStore.state.accessToken })
+        'Content-Type': 'application/json'
     }
 });
 
-instance.interceptors.request.use((config) => {
+const authInstance = axios.create({
+    baseURL: SERVER_URL,
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userStore.state.accessToken
+    }
+});
+
+authInstance.interceptors.request.use((config) => {
     const token = userStore.state.accessToken;
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
@@ -22,13 +30,13 @@ instance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-instance.interceptors.response.use(
+authInstance.interceptors.response.use(
     response => {
         return response;
     },
     error => {
         if (error.response && error.response.status === 401) {
-            instance.get("/logout")
+            authInstance.get("/logout")
                 .then(_ => {
                     window.location.href = '/login';
                 })
@@ -38,4 +46,4 @@ instance.interceptors.response.use(
     }
 );
 
-export default instance;
+export { instance, authInstance };

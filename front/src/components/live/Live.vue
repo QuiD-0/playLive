@@ -3,9 +3,9 @@ import VideoBox from "@/components/live/VideoBox.vue";
 import NotFound from "@/components/live/NotFound.vue";
 import {onBeforeMount, ref} from "vue";
 import {useRoute} from 'vue-router';
-import instance from "@/module/axiosFactory.js";
 import Stage from "@/components/live/Stage.vue";
 import clientStore from "@/state/clientStore.js";
+import {instance} from "@/module/axiosFactory.js";
 
 const route = useRoute();
 const isAvailable = ref(false); // 채널 상태
