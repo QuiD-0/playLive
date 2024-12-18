@@ -1,14 +1,20 @@
 <script setup>
 import ViewCounter from "@/components/live/ViewCounter.vue";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import clientStore from "@/state/clientStore.js";
 import instance from "@/module/axiosFactory.js";
 
 const channel = computed(() => clientStore.state.watchingChannel);
+const stage = ref({
+  title: "",
+  avatar: "",
+  nickname: "",
+  startDateTime: ""
+});
 
 const stageInfo = async () => {
   const response = await instance.get(`/api/stage/info/${channel.value}`);
-  console.log(response.data);
+  stage.value = response.data.message;
 }
 
 onMounted(() => {
