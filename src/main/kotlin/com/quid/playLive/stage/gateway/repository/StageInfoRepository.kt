@@ -8,7 +8,6 @@ import com.quid.playLive.stage.gateway.repository.jpa.toDomain
 import com.quid.playLive.stage.gateway.repository.jpa.toEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
@@ -28,10 +27,6 @@ class StageInfoRepository(
         return jdbcClient.findByChannel(channel)?.let { toDomain(it) }
             ?: throw IllegalArgumentException("Stage not found")
     }
-
-    @Transactional(readOnly = true)
-    fun findById(stageInfoId: Long): StageInfo =
-        jpa.findByIdOrNull(stageInfoId)?.let { toDomain(it) } ?: throw IllegalArgumentException("Stage not found")
 
     @Transactional(readOnly = true)
     fun findByMemberId(memberId: Long): StageInfo =
