@@ -33,9 +33,6 @@ class MemberEntity(
     @Column(name = "avatar")
     val avatar: String,
 
-    @Column(name = "stream_key")
-    val streamKey: String,
-
     @Column(name = "reg_date")
     val regDate: LocalDateTime,
 ) {
@@ -46,7 +43,6 @@ class MemberEntity(
         password = member.password,
         nickname = member.nickname,
         avatar = member.avatar,
-        streamKey = member.streamKey,
         regDate = member.regDate
     )
 
@@ -57,7 +53,6 @@ class MemberEntity(
         password = password,
         nickname = nickname,
         avatar = avatar,
-        streamKey = streamKey,
         regDate = regDate,
     )
 }

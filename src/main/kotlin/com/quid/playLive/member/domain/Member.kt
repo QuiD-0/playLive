@@ -1,7 +1,6 @@
 package com.quid.playLive.member.domain
 
 import java.time.LocalDateTime
-import java.util.UUID
 
 data class Member(
     val id: Long? = null,
@@ -10,7 +9,6 @@ data class Member(
     val password: String,
     val nickname: String,
     val avatar: String = "",
-    val streamKey: String = UUID.randomUUID().toString().replace("-", ""),
     val regDate: LocalDateTime = LocalDateTime.now(),
 ) {
     init {

@@ -1,11 +1,10 @@
 <script setup>
-import {useRoute} from 'vue-router';
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 import Hls from 'hls.js';
+import clientStore from "@/state/clientStore.js";
 
 const MEDIA_URL = import.meta.env.VITE_MEDIA_URL;
-const route = useRoute();
-const channel = route.params.channel;
+const channel = computed(() => clientStore.state.watchingChannel);
 
 onMounted(() => {
   playHls(channel);
@@ -13,7 +12,7 @@ onMounted(() => {
 
 function playHls(channel) {
   let video = document.getElementById('video-player');
-  let videoSrc = MEDIA_URL + `/hls/${channel}.m3u8`;
+  let videoSrc = MEDIA_URL + `/hls/${channel.value}.m3u8`;
 
   if (video.canPlayType('application/vnd.apple.mpegurl')) {
     video.src = videoSrc;
@@ -39,9 +38,11 @@ function playHls(channel) {
 video::-webkit-media-controls-current-time-display {
   display: none !important;
 }
+
 video::-webkit-media-controls-time-remaining-display {
   display: none !important;
 }
+
 video::-webkit-media-controls-timeline {
   display: none !important;
 }

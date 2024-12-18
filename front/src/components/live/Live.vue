@@ -1,23 +1,25 @@
 <script setup>
 import VideoBox from "@/components/live/VideoBox.vue";
-import ViewCounter from "@/components/live/ViewCounter.vue";
 import NotFound from "@/components/live/NotFound.vue";
 import {onBeforeMount, ref} from "vue";
 import {useRoute} from 'vue-router';
 import instance from "@/module/axiosFactory.js";
+import Stage from "@/components/live/Stage.vue";
+import clientStore from "@/state/clientStore.js";
 
 const route = useRoute();
 const isAvailable = ref(false); // 채널 상태
 const isLoading = ref(true); // 로딩 상태
+const channel = route.params.channel;
 
 onBeforeMount(async () => {
   await findChannel();
+  clientStore.commit('setWatchingChannel', channel);
   isLoading.value = false;
 });
 
 const findChannel = async () => {
   try {
-    const channel = route.params.channel;
     const response = await instance.get(`/api/member/check-available/${channel}`);
     isAvailable.value = response.data.message;
   } catch (error) {
@@ -34,7 +36,7 @@ const findChannel = async () => {
   <div v-else>
     <div v-if="isAvailable">
       <VideoBox/>
-      <ViewCounter/>
+      <Stage/>
     </div>
     <div v-else>
       <NotFound/>

@@ -1,7 +1,11 @@
 <script setup>
+import {computed} from "vue";
+import clientStore from "@/state/clientStore.js";
+
 const THUMBNAIL = import.meta.env.VITE_MEDIA_URL;
 
-defineProps(['channel']);
+const channel = computed(() => clientStore.state.watchingChannel);
+
 </script>
 
 <template>
@@ -9,7 +13,7 @@ defineProps(['channel']);
     <div class="live__mark">LIVE</div>
     <img
         class="thumbnail"
-        :src="THUMBNAIL+'/thumbnail/'+channel+'.jpg'"
+        :src="THUMBNAIL+'/thumbnail/'+channel.value+'.jpg'"
         alt="thumbnail"
         onerror="this.src='https://afreehp.kr/update/bnr/bnr_penalty_type_1.png'">
   </div>

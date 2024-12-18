@@ -1,13 +1,11 @@
 import Vuex from "vuex";
 import createPersistedState from 'vuex-persistedstate';
-import {v4 as uuidv4} from 'uuid';
 
 const store = new Vuex.Store({
     state: {
         user: null,
         accessToken: null,
         refreshToken: null,
-        clientUUID: null
     },
     mutations: {
         setUser(state, user) {
@@ -18,11 +16,6 @@ const store = new Vuex.Store({
         },
         setRefreshToken(state, refreshToken) {
             state.refreshToken = refreshToken;
-        },
-        setClientUuid(state) {
-            if(state.clientUUID == null) {
-                state.clientUUID = uuidv4();
-            }
         },
         logout(state) {
             state.user = null;
