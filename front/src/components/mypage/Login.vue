@@ -55,8 +55,8 @@ const signUpPage = () => {
         로그인
       </div>
       <div class="login__container__input">
-        <input type="text" placeholder="아이디" v-model="id"/>
-        <input type="password" placeholder="비밀번호" v-model="password"/>
+        <input type="text" placeholder="아이디" v-model="id" @keyup.enter="login"/>
+        <input type="password" placeholder="비밀번호" v-model="password" @keyup.enter="login"/>
       </div>
       <div class="login__container__button">
         <button @click="login">로그인</button>

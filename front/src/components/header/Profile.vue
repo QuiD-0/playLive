@@ -1,8 +1,9 @@
 <script setup>
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import userStore from "@/state/userStore.js";
 import instance from "@/module/axiosFactory.js";
 
+const AWS_CDN_PATH = import.meta.env.VITE_AWS_CDN_PATH;
 const isModalVisible = ref(false);
 const profileRef = ref(null);
 const modalStyle = ref({ top: '0px', left: '0px' });
@@ -24,12 +25,16 @@ const logout = () => {
   isModalVisible.value = false;
 };
 
+const profile = computed(() => {
+  return userStore.state.user["avatar"] === "" ? "/src/assets/avatar.png" : AWS_CDN_PATH+"/"+userStore.state.user["avatar"];
+});
+
 </script>
 
 <template>
   <div>
     <div class="profile" ref="profileRef" @click="toggleModal">
-      <img src="@/assets/avatar.png" alt="프로필" class="profile__img">
+      <img :src="profile" alt="프로필" class="profile__img">
     </div>
 
     <div

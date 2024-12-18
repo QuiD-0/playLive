@@ -49,10 +49,9 @@ video::-webkit-media-controls-timeline {
 
 .video__container {
   display: inline-block;
-  width: calc(100% - 400px);
+  width: 100%;
   min-width: 800px;
   padding: 0;
-  margin: 0;
 }
 
 video {

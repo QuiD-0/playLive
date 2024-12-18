@@ -29,7 +29,6 @@ const channel = computed(() => clientStore.state.watchingChannel);
 .thumbnail__wrapper {
   position: relative;
   width: 100%;
-  height: 180px;
 }
 
 .live__mark {

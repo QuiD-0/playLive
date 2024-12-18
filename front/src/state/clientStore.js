@@ -17,7 +17,9 @@ const store = new Vuex.Store({
             state.watchingChannel = channel;
         },
     },
-    plugins: [createPersistedState()]
+    plugins: [createPersistedState({
+        key: 'clientStore',
+    })]
 })
 
 export default store;

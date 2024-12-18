@@ -11,4 +11,5 @@ clientStore.commit('setClientUuid');
 </template>
 
 <style scoped>
+
 </style>

@@ -8,10 +8,12 @@ import ProfileContainer from "@/components/header/ProfileContainer.vue";
     <LogoContainer/>
     <ProfileContainer/>
   </div>
+  <div class="empty__box__header"></div>
 </template>
 
 <style scoped>
 .header {
+  position: fixed;
   background-color: #141516;
   color: #dfe2ea;
   height: 60px;
@@ -24,5 +26,10 @@ import ProfileContainer from "@/components/header/ProfileContainer.vue";
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
+}
+
+.empty__box__header {
+  height: 60px;
+  width: 100%;
 }
 </style>

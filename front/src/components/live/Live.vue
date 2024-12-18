@@ -34,9 +34,14 @@ const findChannel = async () => {
     <div>Loading...</div>
   </div>
   <div v-else>
-    <div v-if="isAvailable">
-      <VideoBox/>
-      <Stage/>
+    <div v-if="isAvailable" class="live__container">
+      <div class="live__container__left">
+        <VideoBox/>
+        <Stage/>
+      </div>
+      <div class="live__container__right">
+        <div>채팅</div>
+      </div>
     </div>
     <div v-else>
       <NotFound/>
@@ -51,6 +56,22 @@ const findChannel = async () => {
   align-items: center;
   height: 90vh;
   font-size: 2rem;
+}
+
+.live__container {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.live__container__left {
+  flex: 1;
+}
+
+.live__container__right {
+  max-width: 450px;
+  width: 25%;
+  background-color: gainsboro;
 }
 
 </style>

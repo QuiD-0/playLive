@@ -3,7 +3,13 @@ import createPersistedState from 'vuex-persistedstate';
 
 const store = new Vuex.Store({
     state: {
-        user: null,
+        user: {
+            type: Object,
+            id: Number,
+            email: String,
+            nickname: String,
+            avatar: String,
+        },
         accessToken: null,
         refreshToken: null,
     },
@@ -23,7 +29,9 @@ const store = new Vuex.Store({
             state.refreshToken = null;
         }
     },
-    plugins: [createPersistedState()]
+    plugins: [createPersistedState({
+        key: 'userStore',
+    })]
 })
 
 export default store;
