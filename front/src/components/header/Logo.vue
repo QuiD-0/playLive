@@ -10,7 +10,7 @@ const home = () => {
 
 <template>
     <div @click="home">
-      <img src="@/assets/jaezzck.png" alt="jaezzck Logo"/>
+      <img src="/jaezzck.png" alt="jaezzck Logo"/>
     </div>
 </template>
 

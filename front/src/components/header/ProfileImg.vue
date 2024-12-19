@@ -10,7 +10,7 @@ const AWS_CDN_PATH = import.meta.env.VITE_AWS_CDN_PATH;
 const imgPath = ref(props.imgPath);
 
 const profile = computed(() => {
-  return imgPath.value === "" ? "/src/assets/avatar.png" : AWS_CDN_PATH + "/" + imgPath;
+  return imgPath.value === "" ? "/avatar.png" : AWS_CDN_PATH + "/" + imgPath;
 });
 
 </script>
