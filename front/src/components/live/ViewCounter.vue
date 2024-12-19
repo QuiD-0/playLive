@@ -42,4 +42,7 @@ const heartbeat = () => {
 </template>
 
 <style scoped>
+.view-counter {
+  color: #7e7e7e;
+}
 </style>

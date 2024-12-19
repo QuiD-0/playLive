@@ -1,12 +1,12 @@
 <script setup>
-import {reactive, ref} from 'vue';
+import {ref} from 'vue';
 import userStore from "@/state/userStore.js";
 import {authInstance} from "@/module/axiosFactory.js";
 import ProfileImg from "@/components/header/ProfileImg.vue";
 
 const isModalVisible = ref(false);
 const profileRef = ref(null);
-const modalStyle = reactive({ top: '0px', left: '0px' });
+const modalStyle = ref({ top: '0px', left: '0px' });
 
 function toggleModal() {
   isModalVisible.value = !isModalVisible.value;
