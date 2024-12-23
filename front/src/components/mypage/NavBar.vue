@@ -8,10 +8,10 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 
 const tab1 = () => {
-  router.push("/me");
+  router.push("me");
 };
 
 const tab2 = () => {
-  router.push("/profile");
+  router.push("profile");
 };
 </script>

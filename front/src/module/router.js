@@ -28,8 +28,8 @@ const routes = [
         path: '/studio',
         component: Studio,
         children: [
-            { path: '/me', component: StageManage },
-            { path: '/profile', component: ProfileManage },
+            { path: 'me', component: StageManage },
+            { path: 'profile', component: ProfileManage },
         ]
     }
 ]
