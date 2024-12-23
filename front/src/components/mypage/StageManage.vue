@@ -18,6 +18,17 @@
       </div>
     </div>
     <div class="box">
+      <div class="studio-header">내 스트림키</div>
+      <div class="studio-box">
+        <div class="stream__key__container">
+          <input type="text" disabled value="test" class="stream__key">
+          <div class="hide">숨기기</div>
+          <div class="copy">복사</div>
+          <div class="regenerate">스트림키 재생성</div>
+        </div>
+      </div>
+    </div>
+    <div class="box">
       <div class="studio-header">방송 히스토리</div>
       <div class="studio-box">
         <div>검색 기간</div>
@@ -70,7 +81,7 @@ input::placeholder {
   padding: 20px;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex; /* flexbox 추가 */
+  display: flex;
   flex-direction: column;
 }
 
@@ -79,7 +90,7 @@ input::placeholder {
 }
 
 .button {
-  align-self: flex-end; /* 버튼을 오른쪽으로 이동 */
+  align-self: flex-end;
   width: 100px;
   height: 40px;
   background-color: #141516;
@@ -89,5 +100,41 @@ input::placeholder {
   text-align: center;
   line-height: 40px;
   cursor: pointer;
+}
+
+.stream__key__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hide {
+  background-color: #cfffc3;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.copy {
+  background-color: #b5d8ff;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.regenerate {
+  background-color: #ffbbbb;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.stream__key {
+  width: 450px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f5f5f5;
 }
 </style>

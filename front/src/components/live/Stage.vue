@@ -3,14 +3,18 @@ import ViewCounter from "@/components/live/ViewCounter.vue";
 import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import clientStore from "@/state/clientStore.js";
 import {instance} from "@/module/axiosFactory.js";
-import ProfileImg from "@/components/header/ProfileImg.vue";
 
+const AWS_CDN_PATH = import.meta.env.VITE_AWS_CDN_PATH;
 const channel = computed(() => clientStore.state.watchingChannel);
 const stage = ref({
   title: "",
   avatar: "",
   nickname: "",
   startDateTime: ""
+});
+
+const profile = computed(() => {
+  return stage.value.avatar === "" ? "/avatar.png" : AWS_CDN_PATH + "/" + stage.value.avatar;
 });
 
 const getStageInfo = async () => {
@@ -45,8 +49,8 @@ const calculateUptime = () => {
 
 let intervalId;
 
-onMounted(() => {
-  getStageInfo()
+onMounted(async () => {
+  await getStageInfo();
   uptimeText.value = calculateUptime();
   intervalId = setInterval(() => {
     uptimeText.value = calculateUptime();
@@ -63,7 +67,7 @@ onBeforeUnmount(() => {
     <div class="stage__title">{{ stage.title }}</div>
     <div class="channel__box">
       <div class="profile">
-        <ProfileImg :imgPath="stage.avatar"/>
+        <img :src="profile" alt="프로필" class="profile__img">
       </div>
       <div>
         <div class="channel__user">{{ stage.nickname }}</div>
@@ -97,7 +101,11 @@ onBeforeUnmount(() => {
   position: relative;
   margin-right: 10px;
 }
-
+.profile__img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
 .uptime {
   color: #7e7e7e;
 }
