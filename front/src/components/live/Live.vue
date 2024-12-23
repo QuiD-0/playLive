@@ -8,8 +8,8 @@ import clientStore from "@/state/clientStore.js";
 import {instance} from "@/module/axiosFactory.js";
 
 const route = useRoute();
-const isAvailable = ref(false); // 채널 상태
-const isLoading = ref(true); // 로딩 상태
+const isAvailable = ref(false);
+const isLoading = ref(true);
 const channel = route.params.channel;
 
 onBeforeMount(async () => {

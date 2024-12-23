@@ -3,7 +3,9 @@ import {ref} from 'vue';
 import userStore from "@/state/userStore.js";
 import {authInstance} from "@/module/axiosFactory.js";
 import ProfileImg from "@/components/header/ProfileImg.vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const isModalVisible = ref(false);
 const profileRef = ref(null);
 const modalStyle = ref({ top: '0px', left: '0px' });
@@ -25,6 +27,11 @@ const logout = () => {
   isModalVisible.value = false;
 };
 
+const myStdio = () => {
+  isModalVisible.value = false;
+  router.push("/studio/me");
+};
+
 </script>
 
 <template>
@@ -43,8 +50,7 @@ const logout = () => {
       </div>
       <div class="divider"></div>
       <div class="modal__content__body">
-        <div>스튜디오</div>
-        <div>내 정보</div>
+        <div @click="myStdio">스튜디오</div>
         <div @click="logout">로그아웃</div>
       </div>
     </div>
