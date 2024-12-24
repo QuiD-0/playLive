@@ -39,4 +39,8 @@ class StageInfoApiController(
     fun getUptime(@PathVariable channel: String) =
         Success { onAir.findStartDateTimeBy(channel) }
 
+    @GetMapping("/me")
+    fun getMyStageInfo(@AuthenticationPrincipal member: MemberDetail) =
+        Success { stageInfo.byChannel(member.member.username) }
+
 }

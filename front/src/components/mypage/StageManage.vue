@@ -1,4 +1,21 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import {authInstance} from "@/module/axiosFactory.js";
+
+const title = ref('');
+const description = ref('');
+const streamKey = ref('');
+
+onMounted(() => {
+  getMyStageInfo();
+});
+
+const getMyStageInfo = async () => {
+  let response = await authInstance.get('/api/stage/my')
+  title.value = response.data.message.title;
+  description.value = response.data.message.description;
+};
+
 </script>
 
 <template>
@@ -8,7 +25,7 @@
       <div class="studio-box">
         <div class="form-group">
           <label for="title">방송 제목</label>
-          <input id="title" type="text" placeholder="방송 제목을 입력해주세요"/>
+          <input id="title" type="text" placeholder="방송 제목을 입력해주세요" :value=title />
         </div>
         <div class="form-group">
           <label for="description">방송 설명</label>
@@ -21,7 +38,7 @@
       <div class="studio-header">내 스트림키</div>
       <div class="studio-box">
         <div class="stream__key__container">
-          <input type="text" disabled value="test" class="stream__key">
+          <input type="text" disabled :value=streamKey class="stream__key">
           <div class="hide">숨기기</div>
           <div class="copy">복사</div>
           <div class="regenerate">스트림키 재생성</div>
