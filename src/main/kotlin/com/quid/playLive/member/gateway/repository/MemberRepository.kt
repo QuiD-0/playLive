@@ -15,31 +15,28 @@ interface MemberRepository {
     fun existsByUsername(username: String): Boolean
 
     @Repository
+    @Transactional(readOnly = true)
     class MemberRepositoryImpl(
         private val jpaMemberRepository: JpaMemberRepository
     ) : MemberRepository {
 
-        @Transactional(readOnly = true)
+        @Transactional
+        override fun save(member: Member) = jpaMemberRepository.save(MemberEntity(member)).toDomain()
+
         override fun findById(id: Long): Member =
             jpaMemberRepository.findByIdOrNull(id)
                 ?.toDomain()
                 ?: throw IllegalArgumentException("User not found")
 
-        @Transactional(readOnly = true)
         override fun findByChannel(channel: String): Member =
             jpaMemberRepository.findByUsername(channel)
                 ?.toDomain()
                 ?: throw IllegalArgumentException("User not found")
 
-        @Transactional
-        override fun save(member: Member) = jpaMemberRepository.save(MemberEntity(member)).toDomain()
-
-        @Transactional(readOnly = true)
         override fun findByUsername(username: String): Member =
             jpaMemberRepository.findByUsername(username)?.toDomain()
                 ?: throw IllegalArgumentException("User not found")
 
-        @Transactional(readOnly = true)
         override fun existsByUsername(username: String): Boolean =
             jpaMemberRepository.existsByUsername(username)
     }

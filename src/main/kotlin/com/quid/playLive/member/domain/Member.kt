@@ -21,4 +21,8 @@ data class Member(
     fun encodePassword(encodedPassword : String): Member {
         return this.copy(password = encodedPassword)
     }
+
+    fun updateProfile(nickname: String): Member {
+        return this.copy(nickname = nickname)
+    }
 }

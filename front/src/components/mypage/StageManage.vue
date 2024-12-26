@@ -24,7 +24,6 @@ const updateStageInfo = async () => {
     "title": title.value,
     "description": description.value
   };
-  console.log(request);
 
   authInstance.put('/api/stage/info',request).then(_ => {
     successToast("업데이트 성공");

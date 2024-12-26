@@ -1,5 +1,43 @@
 <script setup>
-import ProfileImg from "@/components/header/ProfileImg.vue";
+import {computed, onMounted, ref} from "vue";
+import {errorToast, successToast} from "@/module/toast.js";
+import {authInstance} from "@/module/axiosFactory.js";
+
+const AWS_CDN_PATH = import.meta.env.VITE_AWS_CDN_PATH;
+const avatar = ref("");
+const nickName = ref("");
+const email = ref("");
+
+const profile = computed(() => {
+  return avatar.value === "" ? "/avatar.png" : AWS_CDN_PATH + "/" + avatar.value;
+});
+
+onMounted(() => {
+  getProfile();
+});
+
+const getProfile = () => {
+  authInstance.get('/api/member/me').then(response => {
+    avatar.value = response.data.message.avatar;
+    nickName.value = response.data.message.nickname;
+    email.value = response.data.message.email;
+  }).catch(_ => {
+    errorToast("프로필 정보를 가져오는데 실패했습니다.");
+  });
+};
+
+const updateProfile = () => {
+  let request = {
+    "nickName": nickName.value,
+  };
+
+  authInstance.put('/api/user/info', request).then(_ => {
+    successToast("업데이트 성공");
+  }).catch(_ => {
+    errorToast("업데이트 실패");
+  });
+};
+
 </script>
 
 <template>
@@ -8,18 +46,18 @@ import ProfileImg from "@/components/header/ProfileImg.vue";
       <div class="studio-header">내 프로필</div>
       <div class="studio-box">
         <div class="form-group">
-          <label for="title">닉네임</label>
-          <input id="title" type="text" placeholder="닉네임" />
+          <label for="nickname">닉네임</label>
+          <input id="nickname" type="text" placeholder="닉네임" v-model="nickName"/>
         </div>
         <div class="form-group">
-          <label for="description">이메일</label>
-          <input id="description" type="text" placeholder="내 이메일" />
+          <label for="email">이메일</label>
+          <input id="email" type="text" placeholder="내 이메일" disabled :value="email"/>
         </div>
         <div class="avatar">
           <div>내 프로필</div>
-          <ProfileImg :img-path="''"/>
+          <img :src="profile" alt="프로필" class="profile__img">
         </div>
-        <div class="button">업데이트</div>
+        <div class="button" @click="updateProfile">업데이트</div>
       </div>
     </div>
   </div>
@@ -92,5 +130,11 @@ input::placeholder {
 
 .avatar {
   width: 60px;
+}
+
+.profile__img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 </style>
