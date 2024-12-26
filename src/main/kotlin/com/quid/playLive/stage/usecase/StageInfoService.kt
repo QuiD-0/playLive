@@ -32,7 +32,7 @@ interface StageInfoService {
 
         override fun update(request: StageInfoUpdateRequest, member: MemberDetail) {
             stageInfo.findByMemberId(member.id)
-                .run { this.updateTitleAndDescription(request) }
+                .updateTitleAndDescription(request)
                 .let { stageInfo.save(it) }
         }
     }
