@@ -21,11 +21,12 @@ const getMyStageInfo = async () => {
 
 const updateStageInfo = async () => {
   let request = {
-    title: title.value,
-    description: description.value
+    "title": title.value,
+    "description": description.value
   };
+  console.log(request);
 
-  authInstance.put('/api/stage/info', request).then(_ => {
+  authInstance.put('/api/stage/info',request).then(_ => {
     successToast("업데이트 성공");
   }).catch(_ => {
     errorToast("업데이트 실패");
@@ -57,11 +58,11 @@ const copyStreamKey = () => {
       <div class="studio-box">
         <div class="form-group">
           <label for="title">방송 제목</label>
-          <input id="title" type="text" placeholder="방송 제목을 입력해주세요" :value="title" />
+          <input id="title" type="text" placeholder="방송 제목을 입력해주세요" v-model="title" />
         </div>
         <div class="form-group">
           <label for="description">방송 설명</label>
-          <input id="description" type="text" placeholder="방송 설명을 입력해주세요" :value="description"/>
+          <input id="description" type="text" placeholder="방송 설명을 입력해주세요" v-model="description"/>
         </div>
         <div class="button" @click="updateStageInfo">업데이트</div>
       </div>
