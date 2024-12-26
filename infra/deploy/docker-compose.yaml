@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  app:
+    image: playlive:latest
+    container_name: playLive
+    ports:
+      - "8888:8888"
+    environment:
+      OPTIONS: |
+        -Dspring.profiles.active=live

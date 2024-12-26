@@ -58,19 +58,6 @@ class MemberRepositoryTest(
     }
 
     @Test
-    fun findByStreamKey() {
-        repository.save(MemberFixture.member.copy(streamKey = "streamKey"))
-
-        val found = repository.findByStreamKey("streamKey")
-        assertEquals("streamKey", found.streamKey)
-    }
-
-    @Test
-    fun findByStreamKey_notFound() {
-        assertThrows<IllegalArgumentException> { repository.findByStreamKey("notFound") }
-    }
-
-    @Test
     fun findByChannel_notFound() {
         assertThrows<IllegalArgumentException> { repository.findByChannel("notFound") }
     }
