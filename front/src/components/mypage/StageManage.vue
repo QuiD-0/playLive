@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {authInstance} from "@/module/axiosFactory.js";
+import {errorToast, successToast} from "@/module/toast.js";
 
 const title = ref('');
 const description = ref('');
@@ -11,11 +12,22 @@ onMounted(() => {
 });
 
 const getMyStageInfo = async () => {
-  let response = await authInstance.get('/api/stage/my')
+  let response = await authInstance.get('/api/stage/info/me')
   title.value = response.data.message.title;
   description.value = response.data.message.description;
+  streamKey.value = response.data.message.streamKey;
 };
 
+
+const updateStageInfo = async () => {
+  let response = await authInstance.put('/api/stage/info', {
+    title: title.value,
+    description: description.value
+  });
+
+  response.status === 200 ? successToast('방송 정보가 업데이트 되었습니다.') : errorToast('방송 정보 업데이트에 실패했습니다.');
+
+};
 </script>
 
 <template>
@@ -25,20 +37,20 @@ const getMyStageInfo = async () => {
       <div class="studio-box">
         <div class="form-group">
           <label for="title">방송 제목</label>
-          <input id="title" type="text" placeholder="방송 제목을 입력해주세요" :value=title />
+          <input id="title" type="text" placeholder="방송 제목을 입력해주세요" :value="title" />
         </div>
         <div class="form-group">
           <label for="description">방송 설명</label>
-          <input id="description" type="text" placeholder="방송 설명을 입력해주세요"/>
+          <input id="description" type="text" placeholder="방송 설명을 입력해주세요" :value="description"/>
         </div>
-        <div class="button">업데이트</div>
+        <div class="button" @click="updateStageInfo">업데이트</div>
       </div>
     </div>
     <div class="box">
       <div class="studio-header">내 스트림키</div>
       <div class="studio-box">
         <div class="stream__key__container">
-          <input type="text" disabled :value=streamKey class="stream__key">
+          <input type="text" disabled :value="streamKey" class="stream__key">
           <div class="hide">숨기기</div>
           <div class="copy">복사</div>
           <div class="regenerate">스트림키 재생성</div>

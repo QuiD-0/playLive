@@ -31,7 +31,6 @@ interface StageInfoService {
             stageInfo.findAllLiveChannel(pageable)
 
         override fun update(request: StageInfoUpdateRequest, member: MemberDetail) {
-            require(request.isSameChannel(member)) { "Unauthorized" }
             stageInfo.findByMemberId(member.id)
                 .run { this.updateTitleAndDescription(request) }
                 .let { stageInfo.save(it) }
