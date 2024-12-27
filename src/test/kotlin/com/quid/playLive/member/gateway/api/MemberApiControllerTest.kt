@@ -9,7 +9,6 @@ import com.quid.playLive.member.gateway.api.model.LogInRequest
 import com.quid.playLive.member.gateway.api.model.SignUpRequest
 import com.quid.playLive.member.usecase.FindMember
 import com.quid.playLive.member.usecase.LogIn
-import com.quid.playLive.member.usecase.LogOut
 import com.quid.playLive.member.usecase.SignUp
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
@@ -35,16 +34,13 @@ class MemberApiControllerTest {
     private lateinit var logIn: LogIn
 
     @MockBean
-    private lateinit var logOut: LogOut
-
-    @MockBean
     private lateinit var findMember: FindMember
 
     @Autowired
     private lateinit var webContext: WebApplicationContext
 
     private val mockMvc: MockMvc by lazy {
-        mvc(MemberApiController(signUp, logIn, logOut, findMember))
+        mvc(MemberApiController(signUp, logIn, findMember))
     }
 
     private val securityMvc: MockMvc by lazy {
@@ -115,16 +111,6 @@ class MemberApiControllerTest {
                 .content(ObjectMapper().writeValueAsString(request))
         ).andExpect(
             status().isUnauthorized
-        )
-    }
-
-    @Test
-    @DisplayName("로그아웃")
-    fun logout() {
-        securityMvc.perform(
-            post("/api/member/logout").contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(
-            status().isOk
         )
     }
 

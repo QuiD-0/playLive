@@ -15,7 +15,6 @@ class StageInfoApiController(
     private val stageInfo: StageInfoService,
     private val onAir: OnAirService
 ) {
-
     @GetMapping("/list")
     fun list(pageable: Pageable) =
         Success { stageInfo.mainStageList(pageable) }
