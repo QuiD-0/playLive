@@ -17,7 +17,7 @@ onMounted(() => {
 });
 
 const getProfile = () => {
-  authInstance.get('/api/member/me').then(response => {
+  authInstance.get('/api/auth/member/me').then(response => {
     avatar.value = response.data.message.avatar;
     nickName.value = response.data.message.nickname;
     email.value = response.data.message.email;
@@ -31,7 +31,7 @@ const updateProfile = () => {
     "nickName": nickName.value,
   };
 
-  authInstance.put('/api/user/info', request).then(_ => {
+  authInstance.put('/api/auth/member', request).then(_ => {
     successToast("업데이트 성공");
   }).catch(_ => {
     errorToast("업데이트 실패");

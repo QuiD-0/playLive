@@ -13,7 +13,7 @@ onMounted(() => {
 });
 
 const getMyStageInfo = async () => {
-  let response = await authInstance.get('/api/stage/info/me')
+  let response = await authInstance.get('/api/auth/stage/info/me')
   title.value = response.data.message.title;
   description.value = response.data.message.description;
   streamKey.value = response.data.message.streamKey;
@@ -25,7 +25,7 @@ const updateStageInfo = async () => {
     "description": description.value
   };
 
-  authInstance.put('/api/stage/info',request).then(_ => {
+  authInstance.put('/api/auth/stage/info',request).then(_ => {
     successToast("업데이트 성공");
   }).catch(_ => {
     errorToast("업데이트 실패");

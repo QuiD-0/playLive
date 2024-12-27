@@ -32,7 +32,7 @@ const login = () => {
 }
 
 const getUserInfo = () => {
-  authInstance.get('/api/member/me')
+  authInstance.get('/api/auth/member/me')
       .then(response => {
         userStore.commit('setUser', response.data.message);
         router.back();

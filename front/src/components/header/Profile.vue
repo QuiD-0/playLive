@@ -22,7 +22,7 @@ function toggleModal() {
 }
 
 const logout = () => {
-  authInstance.post("/api/member/logout");
+  authInstance.post("/api/auth/member/logout");
   userStore.commit("logout");
   isModalVisible.value = false;
 };
