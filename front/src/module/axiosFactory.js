@@ -36,10 +36,8 @@ authInstance.interceptors.response.use(
     },
     error => {
         if (error.response && error.response.status === 401) {
-            authInstance.get("/logout")
-                .then(_ => {
-                    window.location.href = '/login';
-                })
+            userStore.commit('logout');
+            window.location.href = '/';
         }
 
         return Promise.reject(error);
