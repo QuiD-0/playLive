@@ -2,7 +2,7 @@ package com.quid.playLive.stage.gateway.api
 
 import com.quid.playLive.global.api.Success
 import com.quid.playLive.stage.gateway.api.model.NginxNotifyRequest
-import com.quid.playLive.stage.usecase.OnAirService
+import com.quid.playLive.stage.service.OnAirService
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

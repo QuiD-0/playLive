@@ -1,4 +1,4 @@
-package com.quid.playLive.stage.usecase
+package com.quid.playLive.stage.service
 
 import com.quid.playLive.stage.domain.StageViewer
 import com.quid.playLive.stage.gateway.repository.StageViewerRepository

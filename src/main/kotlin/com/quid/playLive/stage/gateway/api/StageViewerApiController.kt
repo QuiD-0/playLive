@@ -2,7 +2,7 @@ package com.quid.playLive.stage.gateway.api
 
 import com.quid.playLive.global.api.Success
 import com.quid.playLive.stage.gateway.api.model.ClientUuid
-import com.quid.playLive.stage.usecase.StageViewerService
+import com.quid.playLive.stage.service.StageViewerService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping

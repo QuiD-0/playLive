@@ -1,4 +1,4 @@
-package com.quid.playLive.stage.usecase
+package com.quid.playLive.stage.service
 
 import com.quid.playLive.member.domain.MemberDetail
 import com.quid.playLive.member.gateway.repository.MemberRepository
