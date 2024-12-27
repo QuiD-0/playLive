@@ -1,4 +1,4 @@
-package com.quid.playLive.global.security.filter
+package com.quid.playLive.security.filter
 
 import com.quid.playLive.global.api.UnauthorizedException
 import com.quid.playLive.member.usecase.UserAuthService

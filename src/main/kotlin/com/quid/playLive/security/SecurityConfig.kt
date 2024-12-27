@@ -1,10 +1,10 @@
-package com.quid.playLive.global.security
+package com.quid.playLive.security
 
 import com.quid.playLive.global.CorsConfig
-import com.quid.playLive.global.security.filter.FilterAuthenticationEntryPoint
-import com.quid.playLive.global.security.filter.JwtAuthenticationFailureHandler
-import com.quid.playLive.global.security.filter.JwtAuthenticationFilter
 import com.quid.playLive.member.usecase.UserAuthService
+import com.quid.playLive.security.filter.FilterAuthenticationEntryPoint
+import com.quid.playLive.security.filter.JwtAuthenticationFailureHandler
+import com.quid.playLive.security.filter.JwtAuthenticationFilter
 import com.quid.playLive.token.usecase.TokenDecoder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
