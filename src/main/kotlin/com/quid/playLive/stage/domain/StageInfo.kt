@@ -1,5 +1,6 @@
 package com.quid.playLive.stage.domain
 
+import com.quid.playLive.global.UUID
 import com.quid.playLive.stage.gateway.api.model.StageInfoUpdateRequest
 
 data class StageInfo(
@@ -7,7 +8,7 @@ data class StageInfo(
     val memberId: Long,
     val title: String = "",
     val description: String = "",
-    val streamKey: StreamKey = StreamKey(),
+    val streamKey: UUID = UUID(),
     val onAirInfo: OnAirInfo = OnAirInfo(),
 ) {
     constructor(userId: Long) : this(null, userId)
