@@ -7,11 +7,11 @@ import org.springframework.web.socket.WebSocketSession
 class ChatSessionRepository {
     private val chatRooms = mutableMapOf<String, MutableSet<WebSocketSession>>()
 
-    fun addRoom(chatroomId: String, sessions: WebSocketSession) {
+    fun addSession(chatroomId: String, sessions: WebSocketSession) {
         chatRooms.computeIfAbsent(chatroomId) { mutableSetOf() }.add(sessions)
     }
 
-    fun removeRoom(chatroomId: String, sessions: WebSocketSession) {
+    fun removeSession(chatroomId: String, sessions: WebSocketSession) {
         chatRooms[chatroomId]?.remove(sessions)
     }
 
