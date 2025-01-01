@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class Chat(
     val id: UUID = UUID(),
-    val chatroomId: String,
+    val chatroomId: UUID,
     val senderId: Long,
     val chatType: ChatType,
     val nickname: String,
@@ -15,6 +15,8 @@ data class Chat(
     fun toJson(): String {
         return """
             {
+                "id": "$id",
+                "chatroomId": "$chatroomId",
                 "nickname": "$nickname",
                 "message": "$message",
                 "regDate": "$regDate"

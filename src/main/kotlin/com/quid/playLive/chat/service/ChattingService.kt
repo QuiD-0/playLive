@@ -27,14 +27,14 @@ class ChattingService(
         log.info("Exit chat room: $roomId")
     }
 
-    fun publish(chat: Chat, session: WebSocketSession) {
+    fun publishAndSave(chat: Chat, session: WebSocketSession) {
         redis.publish(chat)
         history.save(chat)
     }
 
     fun sendMessage(chat: Chat) {
         val message = TextMessage(chat.toJson())
-        sessions.getRoom(chat.chatroomId)
+        sessions.getRoom(chat.chatroomId.id)
             .parallelStream()
             .forEach { it.sendMessage(message) }
     }

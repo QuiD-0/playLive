@@ -9,6 +9,7 @@ data class StageInfo(
     val title: String = "",
     val description: String = "",
     val streamKey: UUID = UUID(),
+    val chatroomId: UUID = UUID(),
     val onAirInfo: OnAirInfo = OnAirInfo(),
 ) {
     constructor(userId: Long) : this(null, userId)

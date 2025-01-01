@@ -1,7 +1,6 @@
 package com.quid.playLive.chat.gateway.ws
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.quid.playLive.chat.domain.Chat
 import com.quid.playLive.chat.domain.ChatType.CHAT
 import com.quid.playLive.chat.domain.ChatType.JOIN
 import com.quid.playLive.chat.domain.ChatType.LEAVE
@@ -18,11 +17,11 @@ class ChatWebSocketHandler(
 ) : TextWebSocketHandler() {
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val chat = objectMapper.readValue(message.payload, Chat::class.java)
+        val chat = objectMapper.readValue(message.payload, ChatRequest::class.java).toDomain()
         when (chat.chatType) {
-            CHAT -> chatting.publish(chat, session)
-            JOIN -> chatting.enter(chat.chatroomId, session)
-            LEAVE -> chatting.exit(chat.chatroomId, session)
+            CHAT -> chatting.publishAndSave(chat, session)
+            JOIN -> chatting.enter(chat.chatroomId.id, session)
+            LEAVE -> chatting.exit(chat.chatroomId.id, session)
         }
     }
 }

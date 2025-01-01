@@ -28,6 +28,8 @@ class StageInfoEntity(
     val description: String,
     @Column(name = "stream_key")
     val streamKey: String,
+    @Column(name = "chatroom_id")
+    val chatroomId: String,
     @Column(name = "is_live_on")
     val isLiveOn: Boolean,
     @Column(name = "live_start_date_time")

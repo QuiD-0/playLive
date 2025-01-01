@@ -1,8 +1,8 @@
-package com.quid.playLive.global
+package com.quid.playLive.global.redis
 
-import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
@@ -15,7 +15,7 @@ class RedisConfig(
 ) {
 
     @Bean
-    fun redisConnectionFactory(): LettuceConnectionFactory {
+    fun redisConnectionFactory(): RedisConnectionFactory {
         return LettuceConnectionFactory(redisConfigData.host, redisConfigData.port)
     }
 
@@ -28,9 +28,3 @@ class RedisConfig(
         return redisTemplate
     }
 }
-
-@ConfigurationProperties(prefix = "spring.data.redis")
-data class RedisConfigData(
-    val host: String,
-    val port: Int
-)

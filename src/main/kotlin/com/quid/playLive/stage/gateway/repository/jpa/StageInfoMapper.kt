@@ -12,6 +12,7 @@ fun toEntity(stageInfo: StageInfo): StageInfoEntity {
         title = stageInfo.title,
         description = stageInfo.description,
         streamKey = stageInfo.streamKey.id,
+        chatroomId = stageInfo.chatroomId.id,
         isLiveOn = stageInfo.onAirInfo.isLiveOn,
         liveStartDateTime = stageInfo.onAirInfo.liveStartDateTime
     )
@@ -24,6 +25,7 @@ fun toDomain(stageInfoEntity: StageInfoEntity): StageInfo {
         title = stageInfoEntity.title,
         description = stageInfoEntity.description,
         streamKey = UUID(stageInfoEntity.streamKey),
+        chatroomId = UUID(stageInfoEntity.chatroomId),
         onAirInfo = OnAirInfo(stageInfoEntity.isLiveOn, stageInfoEntity.liveStartDateTime)
     )
 }
