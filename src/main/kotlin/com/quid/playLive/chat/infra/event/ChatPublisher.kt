@@ -1,4 +1,4 @@
-package com.quid.playLive.chat.gateway.event
+package com.quid.playLive.chat.infra.event
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.quid.playLive.chat.domain.Chat

@@ -1,6 +1,6 @@
 package com.quid.playLive.global.redis
 
-import com.quid.playLive.chat.gateway.event.ChatSubscriber
+import com.quid.playLive.chat.infra.event.ChatSubscriber
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory

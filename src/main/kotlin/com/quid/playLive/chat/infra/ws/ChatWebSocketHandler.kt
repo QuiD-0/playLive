@@ -1,9 +1,10 @@
-package com.quid.playLive.chat.gateway.ws
+package com.quid.playLive.chat.infra.ws
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.quid.playLive.chat.domain.ChatType.CHAT
 import com.quid.playLive.chat.domain.ChatType.JOIN
 import com.quid.playLive.chat.domain.ChatType.LEAVE
+import com.quid.playLive.chat.infra.ChatMapper
 import com.quid.playLive.chat.service.ChattingService
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage
@@ -17,7 +18,8 @@ class ChatWebSocketHandler(
 ) : TextWebSocketHandler() {
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val chat = objectMapper.readValue(message.payload, ChatRequest::class.java).toDomain()
+        val chat = objectMapper.readValue(message.payload, ChatRequest::class.java)
+            .let { ChatMapper.toDomain(it) }
         when (chat.chatType) {
             CHAT -> chatting.publishAndSave(chat, session)
             JOIN -> chatting.enter(chat.chatroomId.id, session)

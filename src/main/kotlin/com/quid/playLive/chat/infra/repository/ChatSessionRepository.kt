@@ -1,4 +1,4 @@
-package com.quid.playLive.chat.gateway.repository
+package com.quid.playLive.chat.infra.repository
 
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.WebSocketSession

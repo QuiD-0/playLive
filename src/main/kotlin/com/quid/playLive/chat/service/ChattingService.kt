@@ -1,12 +1,12 @@
 package com.quid.playLive.chat.service
 
 import com.quid.playLive.chat.domain.Chat
-import com.quid.playLive.chat.gateway.event.ChatPublisher
-import com.quid.playLive.chat.gateway.repository.ChatRepository
-import com.quid.playLive.chat.gateway.repository.ChatSessionRepository
+import com.quid.playLive.chat.infra.ChatMapper
+import com.quid.playLive.chat.infra.event.ChatPublisher
+import com.quid.playLive.chat.infra.repository.ChatRepository
+import com.quid.playLive.chat.infra.repository.ChatSessionRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 
 @Service
@@ -33,7 +33,7 @@ class ChattingService(
     }
 
     fun sendMessage(chat: Chat) {
-        val message = TextMessage(chat.toJson())
+        val message = ChatMapper.toTextMessage(chat)
         sessions.getRoom(chat.chatroomId.id)
             .parallelStream()
             .forEach { it.sendMessage(message) }
