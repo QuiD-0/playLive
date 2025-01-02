@@ -1,8 +1,8 @@
 <template>
   <div class="chatting">
-    <div class="chatting__box">
+    <div class="chatting__box" ref="chatBox" @scroll="handleScroll">
       <div v-for="chat in chatList" :key="chat.id">
-        {{ chat }}
+        {{ chat.nickname }} : {{ chat.message }}
       </div>
     </div>
     <div class="chatting__container">
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, onUnmounted, ref} from "vue";
+import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 import userStore from "@/state/userStore.js";
 import Chat from "@/model/Chat.js";
 import {instance} from "@/module/axiosFactory.js";
@@ -35,67 +35,67 @@ const nickname = computed(() => {
 });
 const chatList = ref([]);
 const ws = new WebSocket(`${SERVER_URL}/chat`);
+const chatBox = ref(null);
+const isAutoScroll = ref(true);
 
 onMounted(() => {
-  fetchChatroomId();
-  openWebSocket();
+  init();
 });
 
-const fetchChatroomId = () => {
+const init = () => {
   let channel = clientStore.state.watchingChannel;
   instance.get(`/api/chat/roomId/${channel}`).then((response) => {
     chatroomId.value = response.data;
+    openWebSocket();
   });
 };
 
 const openWebSocket = () => {
-  ws.onopen = () => {
-    let data = new Chat(
-        chatroomId.value,
-        userId.value,
-        "",
-        "join",
-        nickname.value,
-    );
-    console.log(data);
-    ws.send(JSON.stringify(data));
-  };
+  let data = new Chat(chatroomId.value, userId.value, "", "join", nickname.value);
+  ws.send(JSON.stringify(data));
 };
 
 onUnmounted(() => {
-  let data = new Chat(
-      chatroomId.value,
-      userId.value,
-      "",
-      "leave",
-      nickname.value,
-  );
+  let data = new Chat(chatroomId.value, userId.value, "", "leave", nickname.value);
   ws.send(JSON.stringify(data));
   ws.close();
 });
 
+const handleScroll = () => {
+  if (!chatBox.value) return;
+
+  const {scrollTop, scrollHeight, clientHeight} = chatBox.value;
+  isAutoScroll.value = scrollTop + clientHeight >= scrollHeight - 50;
+};
+
 const sendMessage = () => {
   let message = document.querySelector("textarea").value;
-  let data = new Chat(
-      chatroomId.value,
-      userId.value,
-      message,
-      "chat",
-      nickname.value,
-  );
+  let data = new Chat(chatroomId.value, userId.value, message.trim(), "chat", nickname.value);
+  if (data.message.trim() === "") {
+    document.querySelector("textarea").value = "";
+    return;
+  }
   ws.send(JSON.stringify(data));
   document.querySelector("textarea").value = "";
 };
 
-ws.onmessage = (event) => {
-  console.log(event.data);
-  chatList.value.push(event.data);
+ws.onmessage = async (event) => {
+  let message = JSON.parse(event.data);
+  chatList.value.push(message);
+
+  await nextTick();
+  if (chatBox.value && isAutoScroll.value) {
+    chatBox.value.scrollTo({
+      top: chatBox.value.scrollHeight,
+      behavior: "smooth",
+    });
+  }
 };
 </script>
 
 <style scoped>
 .chatting {
-  width: 100%;
+  width: 95%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -103,7 +103,9 @@ ws.onmessage = (event) => {
 
 .chatting__box {
   width: 100%;
+  font-size: 17px;
   height: calc(100% - 200px);
+  overflow-y: scroll;
 }
 
 .chatting__container {
@@ -172,5 +174,4 @@ ws.onmessage = (event) => {
   background-color: #4e4e4e;
   box-shadow: 0 2px 5px rgba(122, 122, 122, 0.2);
 }
-
 </style>

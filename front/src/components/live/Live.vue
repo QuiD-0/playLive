@@ -63,7 +63,7 @@ const findChannel = async () => {
   display: flex;
   width: 90%;
   margin: 0 auto;
-  max-height: calc(100vh - 60px);
+  max-height: calc(100vh - 80px);
   overflow: hidden;
 }
 
@@ -80,9 +80,10 @@ const findChannel = async () => {
 .live__container__right {
   max-width: 450px;
   width: 25%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 80px);
   position: sticky;
   top: 0;
+  margin-left: 10px;
 }
 
 </style>
