@@ -29,7 +29,7 @@ import ProfileContainer from "@/components/header/ProfileContainer.vue";
 }
 
 .empty__box__header {
-  height: 60px;
+  height: 80px;
   width: 100%;
 }
 </style>

@@ -58,5 +58,6 @@ video {
   width: 100%;
   margin: 0 auto;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+  border-radius: 10px;
 }
 </style>
