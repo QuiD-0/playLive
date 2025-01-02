@@ -1,6 +1,7 @@
 <script setup>
 import VideoBox from "@/components/live/VideoBox.vue";
 import NotFound from "@/components/live/NotFound.vue";
+import Chatting from "@/components/live/Chatting.vue";
 import {onBeforeMount, ref} from "vue";
 import {useRoute} from 'vue-router';
 import Stage from "@/components/live/Stage.vue";
@@ -40,7 +41,7 @@ const findChannel = async () => {
         <Stage/>
       </div>
       <div class="live__container__right">
-        <div>채팅</div>
+        <Chatting/>
       </div>
     </div>
     <div v-else>
@@ -80,7 +81,6 @@ const findChannel = async () => {
   max-width: 450px;
   width: 25%;
   min-height: calc(100vh - 60px);
-  background-color: gainsboro;
   position: sticky;
   top: 0;
 }

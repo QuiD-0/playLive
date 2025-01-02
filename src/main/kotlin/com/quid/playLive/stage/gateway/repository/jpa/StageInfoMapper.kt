@@ -18,15 +18,15 @@ fun toEntity(stageInfo: StageInfo): StageInfoEntity {
     )
 }
 
-fun toDomain(stageInfoEntity: StageInfoEntity): StageInfo {
+fun toDomain(entity: StageInfoEntity): StageInfo {
     return StageInfo(
-        id = stageInfoEntity.id,
-        memberId = stageInfoEntity.memberId,
-        title = stageInfoEntity.title,
-        description = stageInfoEntity.description,
-        streamKey = UUID(stageInfoEntity.streamKey),
-        chatroomId = UUID(stageInfoEntity.chatroomId),
-        onAirInfo = OnAirInfo(stageInfoEntity.isLiveOn, stageInfoEntity.liveStartDateTime)
+        id = entity.id,
+        memberId = entity.memberId,
+        title = entity.title,
+        description = entity.description,
+        streamKey = UUID(entity.streamKey),
+        chatroomId = UUID(entity.chatroomId),
+        onAirInfo = OnAirInfo(entity.isLiveOn, entity.liveStartDateTime)
     )
 }
 
