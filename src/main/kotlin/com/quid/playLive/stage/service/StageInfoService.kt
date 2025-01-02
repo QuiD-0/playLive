@@ -16,6 +16,7 @@ interface StageInfoService {
     fun byChannel(channel: String): StageInfoResponse
     fun mainStageList(pageable: Pageable): Page<MainStageResponse>
     fun update(request: StageInfoUpdateRequest, member: MemberDetail)
+    fun findChattingRoomId(channel: String): String
 
     @Service
     class StageInfoServiceImpl(
@@ -39,6 +40,12 @@ interface StageInfoService {
             stageInfo.findByMemberId(member.id)
                 .updateTitleAndDescription(request)
                 .let { stageInfo.save(it) }
+        }
+
+        override fun findChattingRoomId(channel: String): String {
+            val member = member.findByChannel(channel)
+            val stageInfo = stageInfo.findByMemberId(member.id!!)
+            return stageInfo.chatroomId.id
         }
     }
 }

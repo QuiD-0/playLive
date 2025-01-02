@@ -20,9 +20,11 @@
 import {computed, onMounted, onUnmounted, ref} from "vue";
 import userStore from "@/state/userStore.js";
 import Chat from "@/model/Chat.js";
+import {instance} from "@/module/axiosFactory.js";
+import clientStore from "@/state/clientStore.js";
 
 const SERVER_URL = import.meta.env.VITE_SOCKET_URL;
-const chatroomId = ref("testId");
+const chatroomId = ref("");
 const userId = computed(() => {
   if (userStore.state.user == null) return 0;
   return userStore.state.user.id;
@@ -35,6 +37,18 @@ const chatList = ref([]);
 const ws = new WebSocket(`${SERVER_URL}/chat`);
 
 onMounted(() => {
+  fetchChatroomId();
+  openWebSocket();
+});
+
+const fetchChatroomId = () => {
+  let channel = clientStore.state.watchingChannel;
+  instance.get(`/api/chat/roomId/${channel}`).then((response) => {
+    chatroomId.value = response.data;
+  });
+};
+
+const openWebSocket = () => {
   ws.onopen = () => {
     let data = new Chat(
         chatroomId.value,
@@ -43,9 +57,10 @@ onMounted(() => {
         "join",
         nickname.value,
     );
+    console.log(data);
     ws.send(JSON.stringify(data));
   };
-});
+};
 
 onUnmounted(() => {
   let data = new Chat(
