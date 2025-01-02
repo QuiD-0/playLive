@@ -24,31 +24,31 @@ import Chat from "@/model/Chat.js";
 
 const SERVER_URL = import.meta.env.VITE_SOCKET_URL;
 const chatroomId = ref("testId");
-const userId = computed(() => {if(userStore.state.user == null) return clientStore.state.clientUUID; return userStore.state.user.id;});
-const nickname = computed(() => {if(userStore.state.user == null) return "익명"; return userStore.state.user.nickname;});
+const userId = computed(() => {
+  if (userStore.state.user == null) return clientStore.state.clientUUID;
+  return userStore.state.user.id;
+});
+const nickname = computed(() => {
+  if (userStore.state.user == null) return "익명";
+  return userStore.state.user.nickname;
+});
 const chatList = ref([]);
-const ws = ref(new WebSocket(`${SERVER_URL}/chat`));
+const ws = new WebSocket(`${SERVER_URL}/chat`);
 
 onMounted(() => {
-  openChat();
+  ws.onopen = () => {
+    let data = new Chat(
+        chatroomId.value,
+        userId.value,
+        "",
+        "join",
+        nickname.value,
+    );
+    ws.send(JSON.stringify(data));
+  };
 });
-
-const openChat = () => {
-  let data = new Chat(
-      chatroomId.value,
-      userId.value,
-      "",
-      "join",
-      nickname.value,
-  );
-  ws.value.send(JSON.stringify(data));
-};
 
 onUnmounted(() => {
-  closeChat();
-});
-
-const closeChat = () => {
   let data = new Chat(
       chatroomId.value,
       userId.value,
@@ -56,9 +56,9 @@ const closeChat = () => {
       "leave",
       nickname.value,
   );
-  ws.value.send(JSON.stringify(data));
-  ws.value.close();
-};
+  ws.send(JSON.stringify(data));
+  ws.close();
+});
 
 const sendMessage = () => {
   let message = document.querySelector("textarea").value;
@@ -69,11 +69,12 @@ const sendMessage = () => {
       "chat",
       nickname.value,
   );
-  ws.value.send(JSON.stringify(data));
+  ws.send(JSON.stringify(data));
   document.querySelector("textarea").value = "";
 };
 
 ws.onmessage = (event) => {
+  console.log(event.data);
   chatList.value.push(event.data);
 };
 </script>
@@ -98,6 +99,7 @@ ws.onmessage = (event) => {
   justify-content: space-between;
   align-items: center;
 }
+
 .chatting__container__input {
   margin-left: 25px;
   width: 80%;
@@ -134,8 +136,8 @@ ws.onmessage = (event) => {
 }
 
 .chatting__container__button button {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 50%;
   font-size: 16px;

@@ -28,6 +28,7 @@ class ChattingService(
     }
 
     fun publishAndSave(chat: Chat, session: WebSocketSession) {
+        log.info("Publish chat: $chat")
         redis.publish(chat)
         history.save(chat)
     }
@@ -36,6 +37,7 @@ class ChattingService(
         val message = ChatMapper.toTextMessage(chat)
         sessions.getRoom(chat.chatroomId.id)
             .parallelStream()
+            .filter(WebSocketSession::isOpen)
             .forEach { it.sendMessage(message) }
     }
 }
