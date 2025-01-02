@@ -19,13 +19,12 @@
 <script setup>
 import {computed, onMounted, onUnmounted, ref} from "vue";
 import userStore from "@/state/userStore.js";
-import clientStore from "@/state/clientStore.js";
 import Chat from "@/model/Chat.js";
 
 const SERVER_URL = import.meta.env.VITE_SOCKET_URL;
 const chatroomId = ref("testId");
 const userId = computed(() => {
-  if (userStore.state.user == null) return clientStore.state.clientUUID;
+  if (userStore.state.user == null) return 0;
   return userStore.state.user.id;
 });
 const nickname = computed(() => {
