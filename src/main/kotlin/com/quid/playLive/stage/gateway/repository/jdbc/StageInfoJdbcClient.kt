@@ -55,13 +55,7 @@ class StageInfoJdbcClient(
     fun findByChannel(channel: String): StageInfoEntity? {
         val sql = """
             SELECT 
-                s.id,
-                s.member_id,
-                s.title,
-                s.description,
-                s.stream_key,
-                s.is_live_on,
-                s.live_start_date_time
+                s.*
             FROM
                 stage_info s
             JOIN 
