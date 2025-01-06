@@ -36,12 +36,13 @@ const nickname = computed(() => {
 const chatList = ref([]);
 const chatBox = ref(null);
 const isAutoScroll = ref(true);
-let ws = new WebSocket(`${SERVER_URL}/chat`);
+const ws = new WebSocket(`${SERVER_URL}/chat`);
+let ping = null;
 
 onMounted(() => {
   init();
-  setInterval(() => {
-    ping();
+  ping = setInterval(() => {
+    pong();
   }, 10_000);
 });
 
@@ -58,8 +59,7 @@ const openWebSocket = () => {
   ws.send(JSON.stringify(data));
 };
 
-const ping = () => {
-  console.log("ping");
+const pong = () => {
   let data = new Chat(chatroomId.value, userId.value, "", "ping", nickname.value);
   ws.send(JSON.stringify(data));
 };
@@ -68,6 +68,7 @@ onUnmounted(() => {
   let data = new Chat(chatroomId.value, userId.value, "", "leave", nickname.value);
   ws.send(JSON.stringify(data));
   ws.close();
+  clearInterval(ping);
 });
 
 const handleScroll = () => {
