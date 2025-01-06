@@ -1,7 +1,7 @@
 <template>
   <div class="chatting">
     <div class="chatting__box" ref="chatBox" @scroll="handleScroll">
-      <div v-for="chat in chatList" :key="chat.id">
+      <div v-for="chat in chatList" :key="chat.id" class="chatting__text">
         {{ chat.nickname }} : {{ chat.message }}
       </div>
     </div>
@@ -173,5 +173,14 @@ ws.onmessage = async (event) => {
 .chatting__container__button button:active {
   background-color: #4e4e4e;
   box-shadow: 0 2px 5px rgba(122, 122, 122, 0.2);
+}
+
+.chatting__text {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 </style>
