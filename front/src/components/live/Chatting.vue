@@ -34,12 +34,15 @@ const nickname = computed(() => {
   return userStore.state.user.nickname;
 });
 const chatList = ref([]);
-const ws = new WebSocket(`${SERVER_URL}/chat`);
 const chatBox = ref(null);
 const isAutoScroll = ref(true);
+let ws = new WebSocket(`${SERVER_URL}/chat`);
 
 onMounted(() => {
   init();
+  setInterval(() => {
+    ping();
+  }, 10_000);
 });
 
 const init = () => {
@@ -52,6 +55,12 @@ const init = () => {
 
 const openWebSocket = () => {
   let data = new Chat(chatroomId.value, userId.value, "", "join", nickname.value);
+  ws.send(JSON.stringify(data));
+};
+
+const ping = () => {
+  console.log("ping");
+  let data = new Chat(chatroomId.value, userId.value, "", "ping", nickname.value);
   ws.send(JSON.stringify(data));
 };
 

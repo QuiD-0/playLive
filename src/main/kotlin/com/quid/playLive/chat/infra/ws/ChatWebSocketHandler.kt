@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.quid.playLive.chat.domain.ChatType.CHAT
 import com.quid.playLive.chat.domain.ChatType.JOIN
 import com.quid.playLive.chat.domain.ChatType.LEAVE
+import com.quid.playLive.chat.domain.ChatType.PING
 import com.quid.playLive.chat.infra.ChatMapper
 import com.quid.playLive.chat.service.ChattingService
 import org.springframework.stereotype.Component
@@ -24,6 +25,7 @@ class ChatWebSocketHandler(
             CHAT -> chatting.publishAndSave(chat, session)
             JOIN -> chatting.enter(chat.chatroomId.id, session)
             LEAVE -> chatting.exit(chat.chatroomId.id, session)
+            PING -> Unit
         }
     }
 }
