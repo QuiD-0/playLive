@@ -12,7 +12,7 @@ defineProps(["channel"]);
         class="thumbnail"
         :src="THUMBNAIL+'/thumbnail/'+channel+'.jpg'"
         alt="thumbnail"
-        onerror="this.src='https://afreehp.kr/update/bnr/bnr_penalty_type_1.png'">
+        onerror="this.src='https://media.istockphoto.com/id/1219150055/vector/please-standby.jpg?s=612x612&w=0&k=20&c=6BMztLSIqWtcwcmRXmo7jOLitrFw7tTBVedLzbIrqZs='">
   </div>
 </template>
 

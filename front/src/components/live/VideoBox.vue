@@ -28,7 +28,7 @@ function playHls(channel) {
 <template>
   <div class="video__container">
     <video id="video-player" class="m-5"
-           poster="https://afreehp.kr/update/bnr/bnr_penalty_type_1.png"
+           poster="https://media.istockphoto.com/id/1219150055/vector/please-standby.jpg?s=612x612&w=0&k=20&c=6BMztLSIqWtcwcmRXmo7jOLitrFw7tTBVedLzbIrqZs="
            playsinline="" autoplay muted controls x-webkit-airplay="" webkit-playsinline=""
            controlsList="noplaybackrate nodownload" width="1200px"></video>
   </div>
