@@ -1,5 +1,6 @@
 package com.quid.playLive.global.s3
 
+import io.awspring.cloud.s3.S3Template
 import org.springframework.stereotype.Component
 
 @Component
