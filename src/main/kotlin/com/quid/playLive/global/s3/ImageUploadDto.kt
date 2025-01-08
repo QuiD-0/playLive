@@ -6,17 +6,15 @@ import java.security.MessageDigest
 
 data class ImageUploadDto(
     private val fileExtension: String,
-    private val contentType: String,
-    private val inputStream: InputStream,
-    private val size: Long,
-    private val byte: ByteArray
+    private val byte: ByteArray,
+    val contentType: String,
+    val inputStream: InputStream,
 ) {
 
     constructor(image: MultipartFile) : this(
         fileExtension = image.originalFilename!!.substringAfterLast("."),
         contentType = image.contentType!!,
         inputStream = image.inputStream,
-        size = image.size,
         byte = image.bytes
     )
 

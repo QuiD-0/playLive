@@ -25,4 +25,8 @@ data class Member(
     fun updateProfile(nickname: String): Member {
         return this.copy(nickname = nickname)
     }
+
+    fun updateAvatar(hashName: String): Member {
+        return this.copy(avatar = hashName)
+    }
 }
