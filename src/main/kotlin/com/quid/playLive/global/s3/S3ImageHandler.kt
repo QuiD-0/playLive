@@ -19,4 +19,8 @@ class S3ImageHandler(
                 .build()
         )
     }
+
+    fun deleteImage(key: String) {
+        s3Template.deleteObject(s3Config.bucket, key)
+    }
 }
