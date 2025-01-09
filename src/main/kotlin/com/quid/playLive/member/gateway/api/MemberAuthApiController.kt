@@ -3,6 +3,7 @@ package com.quid.playLive.member.gateway.api
 import com.quid.playLive.global.api.Success
 import com.quid.playLive.global.s3.ImageUploadDto
 import com.quid.playLive.member.domain.MemberDetail
+import com.quid.playLive.member.gateway.api.model.AvatarResponse
 import com.quid.playLive.member.gateway.api.model.MemberInfoResponse
 import com.quid.playLive.member.gateway.api.model.UpdateProfileRequest
 import com.quid.playLive.member.usecase.LogOut
@@ -42,5 +43,10 @@ class MemberAuthApiController(
     fun updateAvatar(
         @RequestPart image: MultipartFile,
         @AuthenticationPrincipal memberDetail: MemberDetail
-    ) = Success { memberUpdate.avatar(memberDetail.member, ImageUploadDto(image)) }
+    ): AvatarResponse {
+        return with(ImageUploadDto(image)) {
+            memberUpdate.avatar(memberDetail.member, this)
+            AvatarResponse(this.hashName())
+        }
+    }
 }

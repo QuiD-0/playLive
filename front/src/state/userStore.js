@@ -17,6 +17,9 @@ const store = new Vuex.Store({
         setRefreshToken(state, refreshToken) {
             state.refreshToken = refreshToken;
         },
+        setAvatar(state, avatar) {
+            state.user.avatar = avatar;
+        },
         logout(state) {
             state.user = null;
             state.accessToken = null;

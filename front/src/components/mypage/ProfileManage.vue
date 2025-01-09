@@ -2,6 +2,7 @@
 import {computed, onMounted, ref} from "vue";
 import {errorToast, successToast} from "@/module/toast.js";
 import {authInstance} from "@/module/axiosFactory.js";
+import userStore from "@/state/userStore.js";
 
 const AWS_CDN_PATH = import.meta.env.VITE_AWS_CDN_PATH;
 const avatar = ref("");
@@ -46,10 +47,14 @@ const updateAvatar = () => {
   file.click();
 
   file.onchange = () => {
-    data.append("iamge", file.files[0]);
-    authInstance.post('/api/auth/member/avatar', data).then(response => {
-      avatar.value = response.data.message;
+    data.append("image", file.files[0]);
+    authInstance.put('/api/auth/member/avatar', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then(response => {
       successToast("프로필 사진 변경 성공");
+      userStore.commit("setAvatar", response.data.message.imgName);
     }).catch(_ => {
       errorToast("프로필 사진 변경 실패");
     });
@@ -74,7 +79,7 @@ const updateAvatar = () => {
         <div class="avatar">
           <div>내 프로필</div>
           <img :src="profile" alt="프로필" class="profile__img">
-          <div @click="updateAvatar">프로필 변경</div>
+          <div class="update" @click="updateAvatar">프로필 변경</div>
         </div>
         <div class="button" @click="updateProfile">업데이트</div>
       </div>
@@ -155,5 +160,11 @@ input::placeholder {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+
+.update {
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
 }
 </style>
