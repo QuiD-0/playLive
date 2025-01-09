@@ -20,7 +20,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.2")
+        mavenBom("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.0")
     }
 }
 
@@ -41,7 +41,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
-    implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies')
+    implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:3.1.0')
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -38,6 +38,24 @@ const updateProfile = () => {
   });
 };
 
+const updateAvatar = () => {
+  let data = new FormData();
+  let file = document.createElement("input");
+  file.type = "file";
+  file.accept = "image/*";
+  file.click();
+
+  file.onchange = () => {
+    data.append("iamge", file.files[0]);
+    authInstance.post('/api/auth/member/avatar', data).then(response => {
+      avatar.value = response.data.message;
+      successToast("프로필 사진 변경 성공");
+    }).catch(_ => {
+      errorToast("프로필 사진 변경 실패");
+    });
+  };
+}
+
 </script>
 
 <template>
@@ -56,6 +74,7 @@ const updateProfile = () => {
         <div class="avatar">
           <div>내 프로필</div>
           <img :src="profile" alt="프로필" class="profile__img">
+          <div @click="updateAvatar">프로필 변경</div>
         </div>
         <div class="button" @click="updateProfile">업데이트</div>
       </div>
