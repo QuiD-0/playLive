@@ -48,4 +48,4 @@ OBS 를 통해 실시간 방송을 송출할 수 있습니다.
 ![1.png](/assets/home.png)  
 
 실시간 방송 시청   
-![record1.gif](assets/record1.gif)
+[![Video Label](http://img.youtube.com/vi/ecdJny36SF4/0.jpg)](https://youtu.be/ecdJny36SF4)
