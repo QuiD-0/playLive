@@ -16,5 +16,9 @@ export default defineConfig({
         deleteOutDir: true,
         outDir: '../src/main/resources/static',
         assetsDir: './',
+    },
+    test: {
+        environment: 'jsdom',
+        globals: true,
     }
 })
