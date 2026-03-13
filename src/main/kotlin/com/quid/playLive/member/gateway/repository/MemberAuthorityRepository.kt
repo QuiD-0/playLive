@@ -14,7 +14,7 @@ interface MemberAuthorityRepository {
         private val authority: JpaAuthorityRepository
     ) : MemberAuthorityRepository {
         override fun findByUserId(id: Long): List<MemberAuthority> =
-            authority.findAll().map { it.toDomain() }
+            authority.findByMemberId(id).map { it.toDomain() }
 
         override fun save(memberAuthority: MemberAuthority): MemberAuthority =
             authority.save(MemberAuthorityEntity(memberAuthority)).toDomain()
