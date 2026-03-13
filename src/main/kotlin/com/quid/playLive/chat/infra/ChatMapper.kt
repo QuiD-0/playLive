@@ -30,6 +30,16 @@ data object ChatMapper {
         )
     }
 
+    fun toDomain(chat: ChatRequest, memberId: Long, nickname: String): Chat {
+        return Chat(
+            chatroomId = UUID(chat.chatroomId),
+            senderId = memberId,
+            message = chat.message,
+            chatType = ChatType.valueOf(chat.type.uppercase()),
+            nickname = nickname,
+        )
+    }
+
     fun toDomain(chat: ChatEntity): Chat {
         return Chat(
             id = UUID(chat.id),

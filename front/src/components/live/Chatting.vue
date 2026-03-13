@@ -5,13 +5,17 @@
         {{ chat.nickname }} : {{ chat.message }}
       </div>
     </div>
-    <div class="chatting__container">
+    <div v-if="isLoggedIn" class="chatting__container">
       <div class="chatting__container__input">
-        <textarea placeholder="채팅을 입력하세요." @keyup.enter="sendMessage"/>
+        <textarea ref="chatInput" placeholder="채팅을 입력하세요." @keyup.enter="sendMessage"/>
       </div>
       <div class="chatting__container__button">
         <button @click="sendMessage">→</button>
       </div>
+    </div>
+    <div v-else class="chatting__login-prompt">
+      <p>로그인 후 채팅에 참여할 수 있습니다</p>
+      <router-link to="/login" class="chatting__login-button">로그인</router-link>
     </div>
   </div>
 </template>
@@ -25,49 +29,65 @@ import clientStore from "@/state/clientStore.js";
 
 const SERVER_URL = import.meta.env.VITE_SOCKET_URL;
 const chatroomId = ref("");
-const userId = computed(() => {
-  if (userStore.state.user == null) return 0;
-  return userStore.state.user.id;
-});
-const nickname = computed(() => {
-  if (userStore.state.user == null) return "익명";
-  return userStore.state.user.nickname;
-});
+const isLoggedIn = computed(() => userStore.state.accessToken != null);
 const chatList = ref([]);
 const chatBox = ref(null);
+const chatInput = ref(null);
 const isAutoScroll = ref(true);
-const ws = new WebSocket(`${SERVER_URL}/chat`);
+let ws = null;
 let ping = null;
 
 onMounted(() => {
   init();
-  ping = setInterval(() => {
-    pong();
-  }, 10_000);
 });
 
 const init = () => {
   let channel = clientStore.state.watchingChannel;
   instance.get(`/api/chat/roomId/${channel}`).then((response) => {
     chatroomId.value = response.data;
-    openWebSocket();
+    if (isLoggedIn.value) {
+      connectWebSocket();
+    }
   });
 };
 
-const openWebSocket = () => {
-  let data = new Chat(chatroomId.value, userId.value, "", "join", nickname.value);
-  ws.send(JSON.stringify(data));
+const connectWebSocket = () => {
+  const token = userStore.state.accessToken;
+  ws = new WebSocket(`${SERVER_URL}/chat?token=${token}`);
+
+  ws.onopen = () => {
+    let data = new Chat(chatroomId.value, "", "join");
+    ws.send(JSON.stringify(data));
+    ping = setInterval(() => pong(), 10_000);
+  };
+
+  ws.onmessage = async (event) => {
+    let message = JSON.parse(event.data);
+    chatList.value.push(message);
+
+    await nextTick();
+    if (chatBox.value && isAutoScroll.value) {
+      chatBox.value.scrollTo({
+        top: chatBox.value.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
 };
 
 const pong = () => {
-  let data = new Chat(chatroomId.value, userId.value, "", "ping", nickname.value);
-  ws.send(JSON.stringify(data));
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    let data = new Chat(chatroomId.value, "", "ping");
+    ws.send(JSON.stringify(data));
+  }
 };
 
 onUnmounted(() => {
-  let data = new Chat(chatroomId.value, userId.value, "", "leave", nickname.value);
-  ws.send(JSON.stringify(data));
-  ws.close();
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    let data = new Chat(chatroomId.value, "", "leave");
+    ws.send(JSON.stringify(data));
+    ws.close();
+  }
   clearInterval(ping);
 });
 
@@ -79,27 +99,15 @@ const handleScroll = () => {
 };
 
 const sendMessage = () => {
-  let message = document.querySelector("textarea").value;
-  let data = new Chat(chatroomId.value, userId.value, message.trim(), "chat", nickname.value);
+  if (!ws || ws.readyState !== WebSocket.OPEN) return;
+  let message = chatInput.value.value;
+  let data = new Chat(chatroomId.value, message.trim(), "chat");
   if (data.message.trim() === "") {
-    document.querySelector("textarea").value = "";
+    chatInput.value.value = "";
     return;
   }
   ws.send(JSON.stringify(data));
-  document.querySelector("textarea").value = "";
-};
-
-ws.onmessage = async (event) => {
-  let message = JSON.parse(event.data);
-  chatList.value.push(message);
-
-  await nextTick();
-  if (chatBox.value && isAutoScroll.value) {
-    chatBox.value.scrollTo({
-      top: chatBox.value.scrollHeight,
-      behavior: "smooth",
-    });
-  }
+  chatInput.value.value = "";
 };
 </script>
 
@@ -192,5 +200,34 @@ ws.onmessage = async (event) => {
   background-color: #f5f5f5;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.chatting__login-prompt {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.chatting__login-prompt p {
+  font-size: 14px;
+  color: #888;
+}
+
+.chatting__login-button {
+  padding: 8px 20px;
+  background-color: #141516;
+  color: #dfe2ea;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.chatting__login-button:hover {
+  background-color: #333;
 }
 </style>
