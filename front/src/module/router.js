@@ -1,37 +1,30 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Live from "@/components/live/Live.vue";
-import LiveList from "@/components/live/LiveList.vue";
-import Login from "@/components/mypage/Login.vue";
-import SignUp from "@/components/mypage/SignUp.vue";
-import Studio from "@/components/mypage/Studio.vue";
-import StageManage from "@/components/mypage/StageManage.vue";
-import ProfileManage from "@/components/mypage/ProfileManage.vue";
 import userStore from "@/state/userStore.js";
 
 const routes = [
     {
         path: '/',
-        component: LiveList
+        component: () => import("@/components/live/LiveList.vue")
     },
     {
         path: '/login',
-        component: Login
+        component: () => import("@/components/mypage/Login.vue")
     },
     {
         path: '/signup',
-        component: SignUp
+        component: () => import("@/components/mypage/SignUp.vue")
     },
     {
         path: '/live/:channel',
-        component: Live
+        component: () => import("@/components/live/Live.vue")
     },
     {
         path: '/studio',
-        component: Studio,
+        component: () => import("@/components/mypage/Studio.vue"),
         meta: { requiresAuth: true },
         children: [
-            { path: 'me', component: StageManage },
-            { path: 'profile', component: ProfileManage },
+            { path: 'me', component: () => import("@/components/mypage/StageManage.vue") },
+            { path: 'profile', component: () => import("@/components/mypage/ProfileManage.vue") },
         ]
     }
 ]
