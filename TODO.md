@@ -51,14 +51,12 @@
 # 백엔드 개선 TODO
 
 ## CRITICAL (즉시 수정 필요)
-- [ ] B1. JWT 시크릿 키 환경변수 분리
-  - application.yaml에 하드코딩된 JWT secret을 환경변수로 분리
-- [ ] B2. AWS 자격증명 제거
-  - application-live.yaml에 평문 노출된 AWS Access Key/Secret Key 제거
-  - IAM Role 또는 환경변수로 전환
-- [ ] B3. WebSocket 인증 추가
-  - /chat 엔드포인트에 JWT 인증 적용
-  - 사용자 사칭 방지
+- [x] ~~B1. JWT 시크릿 키 환경변수 분리~~ (스킵 - yaml이 git에 안 올라감)
+- [x] ~~B2. AWS 자격증명 제거~~ (스킵 - yaml이 git에 안 올라감)
+- [x] B3. WebSocket 인증 추가
+  - HandshakeInterceptor로 JWT 검증, 실패 시 연결 거부
+  - 서버에서 세션 기반 사용자 정보 사용 (사칭 방지)
+  - 프론트 비로그인 시 채팅 읽기 전용 + 로그인 안내 UI
 
 ## HIGH
 - [ ] B4. CORS 설정 강화
