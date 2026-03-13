@@ -11,17 +11,5 @@ data class Chat(
     val nickname: String,
     val message: String,
     val regDate: LocalDateTime = LocalDateTime.now(),
-) {
-    fun toJson(): String {
-        return """
-            {
-                "id": "$id",
-                "chatroomId": "$chatroomId",
-                "nickname": "$nickname",
-                "message": "$message",
-                "regDate": "$regDate"
-            }
-        """.trimIndent()
-    }
-}
+)
 

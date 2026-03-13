@@ -1,5 +1,6 @@
 package com.quid.playLive.chat.infra
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.quid.playLive.chat.domain.Chat
 import com.quid.playLive.chat.domain.ChatType
 import com.quid.playLive.chat.infra.repository.ChatEntity
@@ -8,16 +9,16 @@ import com.quid.playLive.global.UUID
 import org.springframework.web.socket.TextMessage
 
 data object ChatMapper {
+    private val objectMapper = ObjectMapper()
+
     fun toTextMessage(chat: Chat): TextMessage {
-        val message = """
-            {
-                "id": "${chat.id}",
-                "nickname": "${chat.nickname}",
-                "message": "${chat.message}",
-                "regDate": "${chat.regDate}"
-            }
-        """.trimIndent()
-        return TextMessage(message)
+        val map = mapOf(
+            "id" to chat.id.id,
+            "nickname" to chat.nickname,
+            "message" to chat.message,
+            "regDate" to chat.regDate.toString()
+        )
+        return TextMessage(objectMapper.writeValueAsString(map))
     }
 
     fun toDomain(chat: ChatRequest): Chat {
