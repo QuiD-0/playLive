@@ -15,9 +15,16 @@ function createTestRouter() {
     })
 }
 
+const mockGet = vi.fn((url) => {
+    if (url.includes('/history/')) {
+        return Promise.resolve({ data: [] })
+    }
+    return Promise.resolve({ data: 'room-123' })
+})
+
 vi.mock('@/module/axiosFactory.js', () => ({
     instance: {
-        get: vi.fn().mockResolvedValue({ data: 'room-123' }),
+        get: mockGet,
     },
     authInstance: {
         get: vi.fn().mockResolvedValue({ data: {} }),
@@ -96,5 +103,58 @@ describe('Chatting - 로그인 상태별 UI', () => {
 
         expect(wrapper.find('.chatting__container').exists()).toBe(true)
         expect(wrapper.find('.chatting__login-prompt').exists()).toBe(false)
+    })
+})
+
+describe('Chatting - 메시지 상한', () => {
+    beforeEach(async () => {
+        userStoreState.accessToken = 'test-token'
+        userStoreState.user = { id: 1, nickname: '테스터' }
+        const mod = await import('@/components/live/Chatting.vue')
+        Chatting = mod.default
+    })
+
+    it('chatList가 1000개를 초과하면 오래된 메시지를 제거한다', async () => {
+        const router = createTestRouter()
+        await router.push('/')
+        await router.isReady()
+
+        const wrapper = mount(Chatting, {
+            global: { plugins: [router] },
+        })
+        await flushPromises()
+
+        for (let i = 0; i < 1001; i++) {
+            wrapper.vm.chatList.push({ id: `msg-${i}`, nickname: 'user', message: `msg ${i}` })
+        }
+        // trigger the watch/cap manually if needed
+        await flushPromises()
+
+        expect(wrapper.vm.chatList.length).toBeLessThanOrEqual(1000)
+    })
+
+    it('입장 시 히스토리 API를 호출한다', async () => {
+        const historyData = [
+            { id: '1', nickname: 'user1', message: 'hello', regDate: '2026-03-15T10:00:00' },
+            { id: '2', nickname: 'user2', message: 'world', regDate: '2026-03-15T10:00:01' },
+        ]
+        mockGet.mockImplementation((url) => {
+            if (url.includes('/history/')) {
+                return Promise.resolve({ data: historyData })
+            }
+            return Promise.resolve({ data: 'room-123' })
+        })
+
+        const router = createTestRouter()
+        await router.push('/')
+        await router.isReady()
+
+        const wrapper = mount(Chatting, {
+            global: { plugins: [router] },
+        })
+        await flushPromises()
+
+        expect(mockGet).toHaveBeenCalledWith(expect.stringContaining('/history/'))
+        expect(wrapper.vm.chatList.length).toBe(2)
     })
 })

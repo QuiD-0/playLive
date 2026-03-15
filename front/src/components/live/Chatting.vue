@@ -21,13 +21,14 @@
 </template>
 
 <script setup>
-import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
+import {computed, nextTick, onMounted, onUnmounted, ref, watch} from "vue";
 import userStore from "@/state/userStore.js";
 import Chat from "@/model/Chat.js";
 import {instance} from "@/module/axiosFactory.js";
 import clientStore from "@/state/clientStore.js";
 
 const SERVER_URL = import.meta.env.VITE_SOCKET_URL;
+const MAX_MESSAGES = 1000;
 const chatroomId = ref("");
 const isLoggedIn = computed(() => userStore.state.accessToken != null);
 const chatList = ref([]);
@@ -37,6 +38,12 @@ const isAutoScroll = ref(true);
 let ws = null;
 let ping = null;
 
+watch(() => chatList.value.length, (len) => {
+  if (len > MAX_MESSAGES) {
+    chatList.value.splice(0, len - MAX_MESSAGES);
+  }
+});
+
 onMounted(() => {
   init();
 });
@@ -45,9 +52,21 @@ const init = () => {
   let channel = clientStore.state.watchingChannel;
   instance.get(`/api/chat/roomId/${channel}`).then((response) => {
     chatroomId.value = response.data;
+    loadHistory();
     if (isLoggedIn.value) {
       connectWebSocket();
     }
+  });
+};
+
+const loadHistory = () => {
+  instance.get(`/api/chat/history/${chatroomId.value}?size=50`).then((response) => {
+    chatList.value = response.data;
+    nextTick(() => {
+      if (chatBox.value) {
+        chatBox.value.scrollTop = chatBox.value.scrollHeight;
+      }
+    });
   });
 };
 

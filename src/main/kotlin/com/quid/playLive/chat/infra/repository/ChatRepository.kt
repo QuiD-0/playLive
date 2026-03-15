@@ -2,6 +2,7 @@ package com.quid.playLive.chat.infra.repository
 
 import com.quid.playLive.chat.domain.Chat
 import com.quid.playLive.chat.infra.ChatMapper
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -12,8 +13,9 @@ class ChatRepository(
         jpa.save(ChatMapper.toEntity(chat))
     }
 
-    fun findLast50(chatroomId: String): List<Chat> {
-        return jpa.findLast50ByChatroomIdOrderByRegDate(chatroomId)
+    fun findRecent(chatroomId: String, size: Int = 50): List<Chat> {
+        return jpa.findByChatroomIdOrderByRegDateDesc(chatroomId, PageRequest.of(0, size))
+            .reversed()
             .map { ChatMapper.toDomain(it) }
     }
 }
