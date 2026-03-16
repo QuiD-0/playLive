@@ -1,17 +1,18 @@
 <script setup>
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import Hls from 'hls.js';
 import clientStore from "@/state/clientStore.js";
 
 const MEDIA_URL = import.meta.env.VITE_MEDIA_URL;
 const channel = computed(() => clientStore.state.watchingChannel);
+const videoPlayer = ref(null);
 
 onMounted(() => {
   playHls(channel);
 });
 
 function playHls(channel) {
-  let video = document.getElementById('video-player');
+  let video = videoPlayer.value;
   let videoSrc = MEDIA_URL + `/hls/${channel.value}.m3u8`;
 
   if (video.canPlayType('application/vnd.apple.mpegurl')) {
@@ -27,7 +28,7 @@ function playHls(channel) {
 
 <template>
   <div class="video__container">
-    <video id="video-player" class="m-5"
+    <video ref="videoPlayer" class="m-5"
            poster="https://media.istockphoto.com/id/1219150055/vector/please-standby.jpg?s=612x612&w=0&k=20&c=6BMztLSIqWtcwcmRXmo7jOLitrFw7tTBVedLzbIrqZs="
            playsinline="" autoplay muted controls x-webkit-airplay="" webkit-playsinline=""
            controlsList="noplaybackrate nodownload" width="1200px"></video>

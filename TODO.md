@@ -18,8 +18,9 @@
   - 방송 종료 후에도 채팅 기록 조회 가능
 
 ## 코드 품질
-- [ ] 5. DOM 직접 조작 제거 → Vue ref 사용
-  - ProfileManage.vue 등에서 document.querySelector(), document.createElement() 사용하는 부분을 Vue template ref로 리팩토링
+- [x] 5. DOM 직접 조작 제거 → Vue ref 사용
+  - ProfileManage.vue: document.createElement → hidden input ref
+  - VideoBox.vue: document.getElementById → template ref
 - [ ] 9. Vuex → Pinia 전환
   - Vue 3 공식 상태 관리인 Pinia로 전환
   - userStore, clientStore를 Pinia store로 마이그레이션
